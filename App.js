@@ -13,7 +13,7 @@ const ObfuscatedText = ({ length }) => {
         result += chars.charAt(Math.floor(Math.random() * chars.length));
       }
       setGlitchText(result);
-    }, 50); 
+    }, 1); 
     return () => clearInterval(interval);
   }, [length]);
 

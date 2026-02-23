@@ -11,12 +11,52 @@
         h1 { font-size: 22px; color: #007AFF; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
         .bio { color: #00FF00; font-family: monospace; font-size: 14px; margin: 15px 0 30px 0; }
         .button-container { width: 100%; max-width: 350px; }
-        .btn { background-color: #1A1A1A; border: 1px solid #333; color: #fff; text-decoration: none; display: block; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; }
+        .btn { background-color: #1A1A1A; border: 1px solid #333; color: #fff; text-decoration: none; display: block; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; cursor: pointer; }
         .btn:hover { border-color: #007AFF; background-color: #001a33; }
+        
+        /* Botão especial OnlyFans */
+        .btn-of:hover { border-color: #ff00ff; background-color: #2b002b; }
+
         .btn-back { color: #888; text-decoration: none; margin-top: 20px; font-size: 14px; }
+
+        /* Estilo do Pop-up Zoado */
+        #popup-of {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #111;
+            border: 2px solid #ff00ff;
+            padding: 25px;
+            z-index: 1000;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+            width: 80%;
+            max-width: 300px;
+        }
+        #popup-of h2 { color: #ff00ff; margin-top: 0; font-size: 18px; }
+        #popup-of p { font-size: 16px; margin-bottom: 20px; font-weight: bold; }
+        #popup-of button { background: #ff00ff; border: none; color: #fff; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 999;
+        }
     </style>
 </head>
 <body>
+
+    <div id="overlay"></div>
+    <div id="popup-of">
+        <h2>OPA! 🤨</h2>
+        <p>TÁ INTERESSADO POR QUÊ?<br>QUER ME VER PELADO?</p>
+        <button onclick="fecharPopup()">SAIR FORA</button>
+    </div>
+
     <div class="photo-container">
         <img src="https://images.steamusercontent.com/ugc/1707411824065086559/2A529F1C69440493566E31AB4242623DC50F8875/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false">
     </div>
@@ -27,11 +67,25 @@
     <div class="button-container">
         <a href="https://discord.com/users/688116774092144669" target="_blank" class="btn">Discord (Principal)</a>
         <a href="https://wa.me/5521971839439" target="_blank" class="btn">WhatsApp</a>
-        <a href="https://steamcommunity.com/id/near_rem" class="btn">Steam</a>
+        <a href="https://steamcommunity.com/id/near_rem" target="_blank" class="btn">Steam</a>
+        <a href="https://www.xbox.com/pt-BR/play/user/yIluminado" target="_blank" class="btn">Xbox</a>
+        
+        <div class="btn btn-of" onclick="abrirPopup()">OnlyFans</div>
+
         <a href="index.html" class="btn-back">← Voltar</a>
     </div>
 
     <script>
+        function abrirPopup() {
+            document.getElementById('popup-of').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function fecharPopup() {
+            document.getElementById('popup-of').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
         const chars = '0123456789';
         const glitchElement = document.getElementById('glitch');
         setInterval(() => {

@@ -86,13 +86,13 @@
             document.getElementById('overlay').style.display = 'none';
         }
 
-        const chars = '0123456789';
+        const chars = '01';
         const glitchElement = document.getElementById('glitch');
         setInterval(() => {
             let result = '';
             for (let i = 0; i < 12; i++) result += chars.charAt(Math.floor(Math.random() * chars.length));
-            glitchElement.innerText = 'USR-' + result;
-        }, 100);
+            glitchElement.innerText = 'BRS-' + result;
+        }, 1);
     </script>
 </body>
 </html>

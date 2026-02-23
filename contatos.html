@@ -14,36 +14,36 @@
         .btn { background-color: #1A1A1A; border: 1px solid #333; color: #fff; text-decoration: none; display: block; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; cursor: pointer; }
         .btn:hover { border-color: #007AFF; background-color: #001a33; }
         
-        /* Botão especial OnlyFans */
-        .btn-of:hover { border-color: #ff00ff; background-color: #2b002b; }
+        /* Botão OnlyFans com hover Vermelho */
+        .btn-of:hover { border-color: #ff0000; background-color: #2b0000; }
 
         .btn-back { color: #888; text-decoration: none; margin-top: 20px; font-size: 14px; }
 
-        /* Estilo do Pop-up Zoado */
+        /* Pop-up Vermelho */
         #popup-of {
             display: none;
             position: fixed;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             background-color: #111;
-            border: 2px solid #ff00ff;
+            border: 2px solid #ff0000;
             padding: 25px;
             z-index: 1000;
             text-align: center;
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
-            width: 80%;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+            width: 85%;
             max-width: 300px;
         }
-        #popup-of h2 { color: #ff00ff; margin-top: 0; font-size: 18px; }
-        #popup-of p { font-size: 16px; margin-bottom: 20px; font-weight: bold; }
-        #popup-of button { background: #ff00ff; border: none; color: #fff; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        #popup-of h2 { color: #ff0000; margin-top: 0; font-size: 20px; font-weight: bold; }
+        #popup-of p { font-size: 16px; margin-bottom: 25px; font-weight: bold; line-height: 1.4; }
+        #popup-of button { background: #ff0000; border: none; color: #fff; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         
         #overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.9);
             z-index: 999;
         }
     </style>

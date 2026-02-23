@@ -11,7 +11,7 @@
         h1 { font-size: 22px; color: #ff0000; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
         .bio { color: #00FF00; font-family: monospace; font-size: 14px; margin: 15px 0 30px 0; }
         .button-container { width: 100%; max-width: 350px; }
-        .btn { background-color: #1A1A1A; border: 1px solid #444; color: #fff; text-decoration: none; display: block; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; }
+        .btn { background-color: #1A1A1A; border: 1px solid #444; color: #fff; text-decoration: none; display: block; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; cursor: pointer; }
         .btn:hover { border-color: #ff0000; background-color: #220000; }
         .btn-back { color: #888; text-decoration: none; margin-top: 20px; font-size: 14px; }
     </style>
@@ -26,12 +26,20 @@
 
     <div class="button-container">
         <a href="https://discord.gg/kDJCpD8kch" target="_blank" class="btn">Servidor sem rastro</a>
-        <a href="LINK_DO_HACK_2" target="_blank" class="btn">❌Sem autorização❌</a>
-        <a href="LINK_DO_HACK_3" target="_blank" class="btn">❌Sem autorização❌</a>
+        
+        <div class="btn" onclick="acessoNegado()">❌Sem autorização❌</div>
+        <div class="btn" onclick="acessoNegado()">❌Sem autorização❌</div>
+        
         <a href="index.html" class="btn-back">← Voltar para Início</a>
     </div>
 
     <script>
+        // Função para o Pop-up
+        function acessoNegado() {
+            alert("ACESSO NEGADO\nCódigo de segurança não aprovado!");
+        }
+
+        // Efeito Glitch
         const chars = '0123456789ABCDEF';
         const glitchElement = document.getElementById('glitch');
         setInterval(() => {

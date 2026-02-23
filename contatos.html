@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Near Rem - Contatos</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 50px 20px; margin: 0; }
+        .photo-container { width: 120px; height: 120px; border-radius: 60px; border: 2px solid #007AFF; overflow: hidden; margin-bottom: 20px; }
+        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
+        h1 { font-size: 22px; color: #007AFF; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
+        .bio { color: #00FF00; font-family: monospace; font-size: 14px; margin: 15px 0 30px 0; }
+        .button-container { width: 100%; max-width: 350px; }
+        .btn { background-color: #1A1A1A; border: 1px solid #333; color: #fff; text-decoration: none; display: block; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; }
+        .btn:hover { border-color: #007AFF; background-color: #001a33; }
+        .btn-back { color: #888; text-decoration: none; margin-top: 20px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="photo-container">
+        <img src="https://images.steamusercontent.com/ugc/1707411824065086559/2A529F1C69440493566E31AB4242623DC50F8875/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false">
+    </div>
+
+    <h1>Meus Contatos</h1>
+    <div class="bio">ID da Sessão: <span id="glitch"></span></div>
+
+    <div class="button-container">
+        <a href="https://discord.com/users/688116774092144669" target="_blank" class="btn">Discord (Principal)</a>
+        <a href="https://wa.me/5521971839439" target="_blank" class="btn">WhatsApp</a>
+        <a href="mailto:SEU_EMAIL_AQUI@gmail.com" class="btn">E-mail Profissional</a>
+        <a href="index.html" class="btn-back">← Voltar para Início</a>
+    </div>
+
+    <script>
+        const chars = '0123456789';
+        const glitchElement = document.getElementById('glitch');
+        setInterval(() => {
+            let result = '';
+            for (let i = 0; i < 12; i++) result += chars.charAt(Math.floor(Math.random() * chars.length));
+            glitchElement.innerText = 'USR-' + result;
+        }, 100);
+    </script>
+</body>
+</html>

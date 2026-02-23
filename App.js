@@ -49,7 +49,6 @@ export default function App() {
           />
         </View>
 
-        {/* Nome */}
         <Text style={styles.name}>Near Rem</Text>
         
         {/* Bio com prefixo + efeito §k e cor Verde */}

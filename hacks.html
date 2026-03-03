@@ -6,7 +6,7 @@
     <title>Near Rem - Hacks</title>
     <style>
         body { background-color: #000; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 50px 20px; margin: 0; }
-        .photo-container { width: 120px; height: 120px; border-radius: 60px; border: 2px solid #ff0000; overflow: hidden; margin-bottom: 20px; }
+        .photo-container { width: 120px; height: 120px; border-radius: 60px; border: 2px solid #ff0000; overflow: hidden; margin-bottom: 20px; box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
         .photo-container img { width: 100%; height: 100%; object-fit: cover; }
         h1 { font-size: 22px; color: #ff0000; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
         .bio { color: #00FF00; font-family: monospace; font-size: 14px; margin: 15px 0 30px 0; }
@@ -15,35 +15,11 @@
         .btn:hover { border-color: #ff0000; background-color: #220000; }
         .btn-back { color: #888; text-decoration: none; margin-top: 20px; font-size: 14px; }
 
-        /* Estilo do Pop-up Personalizado */
-        #custom-alert {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #111;
-            border: 2px solid #ff0000;
-            padding: 25px;
-            z-index: 1000;
-            text-align: center;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-            width: 80%;
-            max-width: 300px;
-        }
+        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 999; }
+        #custom-alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #111; border: 2px solid #ff0000; padding: 25px; z-index: 1000; text-align: center; border-radius: 15px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); width: 80%; max-width: 300px; }
         #custom-alert h2 { color: #ff0000; margin-top: 0; font-size: 18px; }
         #custom-alert p { font-family: monospace; color: #fff; font-size: 14px; margin-bottom: 20px; }
         #custom-alert button { background: #ff0000; border: none; color: #fff; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        
-        /* Fundo escuro atrás do pop-up */
-        #overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 999;
-        }
     </style>
 </head>
 <body>
@@ -56,7 +32,7 @@
     </div>
 
     <div class="photo-container">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJqZ3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lM8A5pBAH7M5e0/giphy.gif">
+        <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJqZ3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lM8A5pBAH7M5e0/giphy.gif" alt="Hacker GIF">
     </div>
 
     <h1>Hacks</h1>
@@ -74,12 +50,10 @@
             document.getElementById('custom-alert').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
         }
-
         function fecharPopUp() {
             document.getElementById('custom-alert').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         }
-
         const chars = '0123456789ABCDEF';
         const glitchElement = document.getElementById('glitch');
         setInterval(() => {

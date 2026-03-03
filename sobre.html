@@ -20,11 +20,12 @@
             margin: 20px 0;
             font-family: monospace;
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.8;
             color: #00FF00;
+            min-height: 200px; /* Mantém a caixa aberta enquanto escreve */
         }
 
-        .cursor { display: inline-block; width: 8px; height: 15px; background: #00FF00; margin-left: 5px; animation: blink 0.8s infinite; }
+        .cursor { display: inline-block; width: 8px; height: 15px; background: #00FF00; margin-left: 5px; animation: blink 0.8s infinite; vertical-align: middle; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .button-container { width: 100%; max-width: 350px; }
@@ -41,10 +42,7 @@
     <h1>System Profile</h1>
 
     <div class="terminal-box">
-        > Carregando dados...<br>
-        > Usuário: Near Rem<br>
-        > Status: Online<br>
-        > <span id="typing"></span><span class="cursor"></span>
+        <span id="terminal-content"></span><span class="cursor"></span>
     </div>
 
     <div class="button-container">
@@ -53,15 +51,33 @@
     </div>
 
     <script>
-        const text = "Especialista em scripts, entusiasta de segurança digital e focado em projetos open-source. Sempre em busca do próximo desafio no código.";
-        let i = 0;
+        // Use <br> para pular linha no efeito
+        const lines = [
+            "> Carregando dados...",
+            "> Usuário: Near Rem",
+            "> Status: Online",
+            "> Bio: Especialista em scripts, entusiasta de segurança digital e focado em projetos open-source. Sempre em busca do próximo desafio no código."
+        ];
+
+        let lineIndex = 0;
+        let charIndex = 0;
+        const target = document.getElementById("terminal-content");
+
         function typeWriter() {
-            if (i < text.length) {
-                document.getElementById("typing").innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 50);
+            if (lineIndex < lines.length) {
+                if (charIndex < lines[lineIndex].length) {
+                    target.innerHTML += lines[lineIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeWriter, 40); // Velocidade das letras
+                } else {
+                    target.innerHTML += "<br>"; // Pula linha após terminar a frase
+                    lineIndex++;
+                    charIndex = 0;
+                    setTimeout(typeWriter, 500); // Pausa entre as linhas
+                }
             }
         }
+
         window.onload = typeWriter;
     </script>
 </body>

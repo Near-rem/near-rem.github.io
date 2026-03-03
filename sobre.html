@@ -1,63 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Near Rem - Sobre</title>
-    <style>
-        body { background-color: #000; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 50px 20px; margin: 0; }
-        .photo-container { width: 120px; height: 120px; border-radius: 60px; border: 2px solid #00FF00; overflow: hidden; margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
-        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
-        h1 { font-size: 22px; color: #00FF00; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
-        
-        .terminal-box { 
-            width: 100%; 
-            max-width: 350px; 
-            background-color: #0a0a0a; 
-            border: 1px solid #00FF00; 
-            padding: 20px; 
-            border-radius: 8px; 
-            margin: 20px 0;
-            font-family: monospace;
-            font-size: 14px;
-            line-height: 1.8;
-            color: #00FF00;
-            min-height: 200px; /* Mantém a caixa aberta enquanto escreve */
-        }
-
-        .cursor { display: inline-block; width: 8px; height: 15px; background: #00FF00; margin-left: 5px; animation: blink 0.8s infinite; vertical-align: middle; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        .button-container { width: 100%; max-width: 350px; }
-        .btn { background-color: #1A1A1A; border: 1px solid #333; color: #fff; text-decoration: none; display: block; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; }
-        .btn:hover { border-color: #00FF00; background-color: #002200; }
-        .btn-back { color: #888; text-decoration: none; margin-top: 20px; font-size: 14px; }
-    </style>
-</head>
-<body>
-    <div class="photo-container">
-        <img src="https://images.steamusercontent.com/ugc/1707411824065086559/2A529F1C69440493566E31AB4242623DC50F8875/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false">
-    </div>
-
-    <h1>System Profile</h1>
-
-    <div class="terminal-box">
-        <span id="terminal-content"></span><span class="cursor"></span>
-    </div>
-
-    <div class="button-container">
-        <a href="https://wa.me/5521971839439" target="_blank" class="btn">Chamar no Zap</a>
-        <a href="index.html" class="btn-back">← Voltar</a>
-    </div>
-
-    <script>
-        // Use <br> para pular linha no efeito
+<script>
+        // Observe as vírgulas no final de cada linha agora:
         const lines = [
             "> Carregando dados...",
             "> Usuário: Near Rem",
             "> Status: Online",
-            "> Conhecimentos: HTML, CSS, JavaScript> Python, Java, Php, C, C++, C#, React, Lua, SQL e outras."
-            "> Dados: Humilde o suficiente para saber que sou descartável. Bom o suficiente para saber que será um downgrade."
+            "> Conhecimentos: HTML, CSS, JavaScript, Python, Java, PHP, C, C++, C#, React, Lua, SQL e outras.",
+            "> Dados: Humilde o suficiente para saber que sou descartável. Bom o suficiente para saber que será um downgrade.",
             "> OBS: Seus dados já foram colhidos assim que você clicou no link."
         ];
 
@@ -70,17 +18,15 @@
                 if (charIndex < lines[lineIndex].length) {
                     target.innerHTML += lines[lineIndex].charAt(charIndex);
                     charIndex++;
-                    setTimeout(typeWriter, 40); // Velocidade das letras
+                    setTimeout(typeWriter, 40); 
                 } else {
-                    target.innerHTML += "<br>"; // Pula linha após terminar a frase
+                    target.innerHTML += "<br>"; 
                     lineIndex++;
                     charIndex = 0;
-                    setTimeout(typeWriter, 500); // Pausa entre as linhas
+                    setTimeout(typeWriter, 500); 
                 }
             }
         }
 
         window.onload = typeWriter;
     </script>
-</body>
-</html>

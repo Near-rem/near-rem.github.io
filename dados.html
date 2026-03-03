@@ -32,13 +32,13 @@
     <h2 class="header-red">DADOS COLETADOS</h2>
 
     <div class="data-box">
-        <div class="data-line"><span class="label">IPv4:</span> <span id="ip" class="value">Carregando...</span></div>
-        <div class="data-line"><span class="label">Provedor:</span> <span id="isp" class="value">Carregando...</span></div>
-        <div class="data-line"><span class="label">Local:</span> <span id="loc" class="value">Carregando...</span></div>
-        <div class="data-line"><span class="label">Sistema:</span> <span id="os" class="value">Identificando...</span></div>
-        <div class="data-line"><span class="label">Browser:</span> <span id="brw" class="value">Identificando...</span></div>
+        <div class="data-line"><span class="label">IPv4:</span> <span id="ip" class="value">Buscando...</span></div>
+        <div class="data-line"><span class="label">Provedor:</span> <span id="isp" class="value">Buscando...</span></div>
+        <div class="data-line"><span class="label">Local:</span> <span id="loc" class="value">Buscando...</span></div>
+        <div class="data-line"><span class="label">Sistema:</span> <span id="os" class="value">...</span></div>
+        <div class="data-line"><span class="label">Browser:</span> <span id="brw" class="value">...</span></div>
         <div class="data-line"><span class="label">Tela:</span> <span id="res" class="value">...</span></div>
-        <div class="data-line"><span class="label">Bateria:</span> <span id="bat" class="value">Aguardando...</span></div>
+        <div class="data-line"><span class="label">Bateria:</span> <span id="bat" class="value">...</span></div>
     </div>
 
     <p class="warning">VOCÊ NÃO "DEU" NADA. O SEU NAVEGADOR APENAS ENTREGOU O QUE EU SOLICITEI.</p>
@@ -47,36 +47,38 @@
 
     <script>
         async function coletar() {
-            // 1. Coleta de IP e Geolocalização (Usando ip-api - Sem HTTPS direto pode precisar de atenção, mas é excelente para testes)
+            // 1. Coleta de IP, ISP e Localização usando ipwho.is (Compatível com HTTPS)
             try {
-                const res = await fetch('http://ip-api.com/json/?fields=status,message,country,regionName,city,isp,query');
-                const data = await res.json();
+                const response = await fetch('https://ipwho.is/');
+                const data = await response.json();
                 
-                if(data.status === "success") {
-                    document.getElementById('ip').innerText = data.query;
-                    document.getElementById('isp').innerText = data.isp;
-                    document.getElementById('loc').innerText = `${data.city}, ${data.regionName}`;
+                if(data.success) {
+                    document.getElementById('ip').innerText = data.ip;
+                    document.getElementById('isp').innerText = data.connection.isp;
+                    document.getElementById('loc').innerText = `${data.city}, ${data.region_code}`;
                 } else {
                     document.getElementById('ip').innerText = "Bloqueado";
                 }
             } catch (e) {
-                document.getElementById('ip').innerText = "Erro na API";
+                document.getElementById('ip').innerText = "Erro na Captura";
+                document.getElementById('isp').innerText = "Falha de Conexão";
+                document.getElementById('loc').innerText = "Indisponível";
             }
 
             // 2. Hardware e Navegador
             const ua = navigator.userAgent;
-            let os = "Desconhecido";
-            if (ua.indexOf("Win") != -1) os = "Windows";
-            else if (ua.indexOf("Android") != -1) os = "Android";
-            else if (ua.indexOf("iPhone") != -1 || ua.indexOf("iPad") != -1) os = "iOS";
-            else if (ua.indexOf("Mac") != -1) os = "macOS";
-            else if (ua.indexOf("Linux") != -1) os = "Linux";
+            let os = "Desktop";
+            if (/Android/i.test(ua)) os = "Android";
+            else if (/iPhone|iPad|iPod/i.test(ua)) os = "iOS";
+            else if (/Win/i.test(ua)) os = "Windows";
+            else if (/Mac/i.test(ua)) os = "macOS";
+            else if (/Linux/i.test(ua)) os = "Linux";
             
             let brw = "Browser";
-            if (ua.indexOf("Chrome") != -1) brw = "Chrome";
-            else if (ua.indexOf("Firefox") != -1) brw = "Firefox";
-            else if (ua.indexOf("Safari") != -1) brw = "Safari";
-            else if (ua.indexOf("Edge") != -1) brw = "Edge";
+            if (/Edge/i.test(ua)) brw = "Edge";
+            else if (/Chrome/i.test(ua)) brw = "Chrome";
+            else if (/Firefox/i.test(ua)) brw = "Firefox";
+            else if (/Safari/i.test(ua)) brw = "Safari";
 
             document.getElementById('os').innerText = os;
             document.getElementById('brw').innerText = brw;
@@ -85,14 +87,10 @@
             // 3. Bateria
             if (navigator.getBattery) {
                 navigator.getBattery().then(function(battery) {
-                    const updateBattery = () => {
-                        document.getElementById('bat').innerText = Math.round(battery.level * 100) + "%";
-                    };
-                    updateBattery();
-                    battery.addEventListener('levelchange', updateBattery);
+                    document.getElementById('bat').innerText = Math.round(battery.level * 100) + "%";
                 });
             } else {
-                document.getElementById('bat').innerText = "Privado/Indisponível";
+                document.getElementById('bat').innerText = "Privado";
             }
         }
 

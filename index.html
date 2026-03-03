@@ -31,7 +31,7 @@
 
         h1 { font-size: 28px; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* Estilo da Bio e do IP */
+        /* Estilo da Bio e dos dados capturados */
         .bio { 
             color: #00FF00; 
             font-family: monospace; 
@@ -40,7 +40,13 @@
             text-align: center; 
             line-height: 1.6;
         }
-        #user-ip { font-weight: bold; color: #ff0000; text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+        
+        /* Destaque para os dados sensíveis em vermelho */
+        #user-ip, #user-os { 
+            font-weight: bold; 
+            color: #ff0000; 
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); 
+        }
 
         .button-container { width: 100%; max-width: 350px; margin-top: 20px; }
         
@@ -86,7 +92,8 @@
 
     <div class="bio">
         SESSÃO: <span id="glitch"></span><br>
-        PROTOCOL_IP: <span id="user-ip">LOCALIZANDO...</span>
+        PROTOCOL_IP: <span id="user-ip">LOCALIZANDO...</span><br>
+        SYSTEM_OS: <span id="user-os">IDENTIFICANDO...</span>
     </div>
 
     <div class="button-container">
@@ -110,6 +117,27 @@
             }
         }
 
+        // Função para identificar o Sistema Operacional
+        function getOS() {
+            const userAgent = window.navigator.userAgent;
+            const platform = window.navigator.platform;
+            let os = "DESCONHECIDO";
+
+            if (/iPhone|iPad|iPod/.test(userAgent)) {
+                os = "iOS (Apple)";
+            } else if (/Android/.test(userAgent)) {
+                os = "Android";
+            } else if (/Win/.test(platform)) {
+                os = "Windows";
+            } else if (/Mac/.test(platform)) {
+                os = "macOS";
+            } else if (/Linux/.test(platform)) {
+                os = "Linux";
+            }
+
+            document.getElementById('user-os').innerText = os.toUpperCase();
+        }
+
         // Script do efeito Glitch nos caracteres
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789бвгджзклмнпрстфхцчшщ';
         const glitchElement = document.getElementById('glitch');
@@ -120,10 +148,13 @@
                 result += chars.charAt(Math.floor(Math.random() * chars.length));
             }
             glitchElement.innerText = result;
-        }, 1);
+        }, 80); // Ajustado para 80ms para ser legível e frenético ao mesmo tempo
 
-        // Inicia a busca do IP ao carregar a página
-        window.onload = getIP;
+        // Inicia as funções ao carregar a página
+        window.onload = () => {
+            getIP();
+            getOS();
+        };
     </script>
 </body>
 </html>

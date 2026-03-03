@@ -5,9 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Near Rem - Links</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 50px 20px; margin: 0; }
-        
-        /* Alterado a cor da borda para branco (#fff) */
+        body { 
+            background-color: #000; 
+            color: #fff; 
+            font-family: sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 50px 20px; 
+            margin: 0; 
+            overflow-x: hidden;
+        }
+
+        /* Foto com borda branca e brilho sutil */
         .photo-container { 
             width: 150px; 
             height: 150px; 
@@ -15,37 +25,105 @@
             border: 3px solid #fff; 
             overflow: hidden; 
             margin-bottom: 20px; 
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); /* Adicionei um leve brilho branco para combinar */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
-        
         .photo-container img { width: 100%; height: 100%; object-fit: cover; }
-        h1 { font-size: 26px; margin: 0; letter-spacing: 1px; }
-        .bio { color: #00FF00; font-family: monospace; font-size: 14px; margin: 15px 0 30px 0; text-align: center; }
-        .button-container { width: 100%; max-width: 350px; }
-        .btn { background-color: #1A1A1A; border: 1px solid #333; color: #fff; text-decoration: none; display: block; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; }
-        .btn:hover { background-color: #252525; border-color: #fff; } /* Hover também alterado para branco */
+
+        h1 { font-size: 28px; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Estilo da Bio e do IP */
+        .bio { 
+            color: #00FF00; 
+            font-family: monospace; 
+            font-size: 14px; 
+            margin: 10px 0; 
+            text-align: center; 
+            line-height: 1.6;
+        }
+        #user-ip { font-weight: bold; color: #ff0000; text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+
+        .button-container { width: 100%; max-width: 350px; margin-top: 20px; }
+        
+        .btn { 
+            background-color: #1A1A1A; 
+            border: 1px solid #333; 
+            color: #fff; 
+            text-decoration: none; 
+            display: block; 
+            padding: 18px; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            text-align: center; 
+            font-weight: bold; 
+            transition: 0.4s; 
+        }
+
+        /* Hover branco para combinar com a borda da foto */
+        .btn:hover { 
+            background-color: #fff; 
+            color: #000; 
+            border-color: #fff; 
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-msg {
+            font-size: 10px;
+            color: #444;
+            margin-top: 30px;
+            font-family: monospace;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
+
     <div class="photo-container">
         <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a2f7c9d8-a913-4273-847f-705be41395df/da61r89-10eafa98-1292-47fe-86f4-0690a95fc681.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi9hMmY3YzlkOC1hOTEzLTQyNzMtODQ3Zi03MDViZTQxMzk1ZGYvZGE2MXI4OS0xMGVhZmE5OC0xMjkyLTQ3ZmUtODZmNC0wNjkwYTk1ZmM2ODEuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.GpJnJyaxOTYBAQXaDWDSOyBth_nsIpV0OC6kYy6ioaQ">
     </div>
+
     <h1>Near Rem</h1>
-    <div class="bio">Código de segurança: <span id="glitch"></span></div>
+
+    <div class="bio">
+        SESSÃO: <span id="glitch"></span><br>
+        PROTOCOL_IP: <span id="user-ip">LOCALIZANDO...</span>
+    </div>
+
     <div class="button-container">
         <a href="contatos.html" class="btn">Meus Contatos</a>
         <a href="hacks.html" class="btn">Hacks</a>
         <a href="sobre.html" class="btn">Sobre Mim</a>
         <a href="https://discord.gg/q6fjFP6y9f" target="_blank" class="btn">Projetos (DEMO)</a>
     </div>
+
+    <div class="footer-msg">> MONITORAMENTO ATIVO PELO IP-LOGGER</div>
+
     <script>
+        // Função para capturar o IP real do visitante
+        async function getIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                document.getElementById('user-ip').innerText = data.ip;
+            } catch (error) {
+                document.getElementById('user-ip').innerText = "ERRO_DE_CONEXAO";
+            }
+        }
+
+        // Script do efeito Glitch nos caracteres
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789бвгджзклмнпрстфхцчшщ';
         const glitchElement = document.getElementById('glitch');
+        
         setInterval(() => {
             let result = '';
-            for (let i = 0; i < 10; i++) result += chars.charAt(Math.floor(Math.random() * chars.length));
+            for (let i = 0; i < 10; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
             glitchElement.innerText = result;
-        }, 1);
+        }, 80);
+
+        // Inicia a busca do IP ao carregar a página
+        window.onload = getIP;
     </script>
 </body>
 </html>

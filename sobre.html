@@ -22,19 +22,59 @@
             font-size: 14px;
             line-height: 1.8;
             color: #00FF00;
-            min-height: 250px; /* Aumentei um pouco para caber o novo texto */
+            min-height: 250px;
         }
 
         .cursor { display: inline-block; width: 8px; height: 15px; background: #00FF00; margin-left: 5px; animation: blink 0.8s infinite; vertical-align: middle; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .button-container { width: 100%; max-width: 350px; }
-        .btn { background-color: #1A1A1A; border: 1px solid #333; color: #fff; text-decoration: none; display: block; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; }
+        .btn { background-color: #1A1A1A; border: 1px solid #333; color: #fff; text-decoration: none; display: block; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; cursor: pointer; }
         .btn:hover { border-color: #00FF00; background-color: #002200; }
+        
+        /* Botão de Delete (Estilo Alerta) */
+        .btn-delete:hover { border-color: #ff0000; background-color: #2b0000; color: #ff0000; }
+
         .btn-back { color: #888; text-decoration: none; margin-top: 20px; font-size: 14px; }
+
+        /* Pop-up de Erro */
+        #popup-negado {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #111;
+            border: 2px solid #ff0000;
+            padding: 25px;
+            z-index: 1000;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+            width: 85%;
+            max-width: 300px;
+        }
+        #popup-negado h2 { color: #ff0000; margin-top: 0; font-size: 20px; }
+        #popup-negado p { font-size: 16px; margin-bottom: 20px; font-weight: bold; }
+        #popup-negado button { background: #ff0000; border: none; color: #fff; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 999;
+        }
     </style>
 </head>
 <body>
+
+    <div id="overlay"></div>
+    <div id="popup-negado">
+        <h2>AÇÃO NEGADA! ❌</h2>
+        <p>Mas não se preocupe...<br>você não é tão importante assim.</p>
+        <button onclick="fecharPopup()">FECHAR</button>
+    </div>
+
     <div class="photo-container">
         <img src="https://images.steamusercontent.com/ugc/1707411824065086559/2A529F1C69440493566E31AB4242623DC50F8875/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false">
     </div>
@@ -46,11 +86,21 @@
     </div>
 
     <div class="button-container">
-        <a href="https://wa.me/5521971839439" target="_blank" class="btn">Chamar no Zap</a>
+        <div class="btn btn-delete" onclick="abrirPopup()">Delete meus dados coletados</div>
         <a href="index.html" class="btn-back">← Voltar</a>
     </div>
 
     <script>
+        function abrirPopup() {
+            document.getElementById('popup-negado').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function fecharPopup() {
+            document.getElementById('popup-negado').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
         const lines = [
             "> Carregando dados...",
             "> Usuário: Near Rem",

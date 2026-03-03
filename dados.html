@@ -6,7 +6,7 @@
     <title>Near Rem - O que eu dei?</title>
     <style>
         body { background-color: #000; color: #fff; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; margin: 0; }
-        .header-red { color: #ff0000; text-transform: uppercase; letter-spacing: 4px; font-weight: bold; margin-bottom: 30px; text-shadow: 0 0 10px #ff0000; }
+        .header-red { color: #ff0000; text-transform: uppercase; letter-spacing: 4px; font-weight: bold; margin-bottom: 30px; text-shadow: 0 0 10px #ff0000; text-align: center; }
         
         .data-box { 
             width: 100%; 
@@ -19,7 +19,7 @@
         }
 
         .data-line { margin-bottom: 12px; font-size: 14px; border-bottom: 1px solid #1a1a1a; padding-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
-        .label { color: #00FF00; text-transform: uppercase; }
+        .label { color: #00FF00; text-transform: uppercase; font-size: 12px; }
         .value { color: #ff0000; font-weight: bold; text-align: right; word-break: break-all; margin-left: 10px; }
 
         .warning { color: #888; font-size: 11px; margin-top: 25px; text-align: center; max-width: 300px; line-height: 1.4; }
@@ -29,43 +29,41 @@
 </head>
 <body>
 
-    <h2 class="header-red">DADOS COLETADOS</h2>
+    <h2 class="header-red">DADOS EXTRAÍDOS</h2>
 
     <div class="data-box">
-        <div class="data-line"><span class="label">IPv4:</span> <span id="ip" class="value">Buscando...</span></div>
-        <div class="data-line"><span class="label">Provedor:</span> <span id="isp" class="value">Buscando...</span></div>
-        <div class="data-line"><span class="label">Local:</span> <span id="loc" class="value">Buscando...</span></div>
+        <div class="data-line"><span class="label">IPv4:</span> <span id="ip" class="value">Aguardando...</span></div>
+        <div class="data-line"><span class="label">Provedor:</span> <span id="isp" class="value">Aguardando...</span></div>
+        <div class="data-line"><span class="label">Local:</span> <span id="loc" class="value">Aguardando...</span></div>
         <div class="data-line"><span class="label">Sistema:</span> <span id="os" class="value">...</span></div>
         <div class="data-line"><span class="label">Browser:</span> <span id="brw" class="value">...</span></div>
         <div class="data-line"><span class="label">Tela:</span> <span id="res" class="value">...</span></div>
         <div class="data-line"><span class="label">Bateria:</span> <span id="bat" class="value">...</span></div>
     </div>
 
-    <p class="warning">VOCÊ NÃO "DEU" NADA. O SEU NAVEGADOR APENAS ENTREGOU O QUE EU SOLICITEI.</p>
+    <p class="warning">VOCÊ NÃO ENTREGOU NADA. O NAVEGADOR APENAS SEGUIU O PROTOCOLO DE EXPOSIÇÃO.</p>
 
-    <a href="index.html" class="btn-back">VOLTAR AO SISTEMA</a>
+    <a href="index.html" class="btn-back">VOLTAR AO TERMINAL</a>
 
     <script>
-        async function coletar() {
-            // 1. Coleta de IP, ISP e Localização usando ipwho.is (Compatível com HTTPS)
+        async function coletarDados() {
+            // 1. Tenta a API ip-api (via JSONP/CORS fallback) ou ipwhois
             try {
-                const response = await fetch('https://ipwho.is/');
+                // Usando ipapi.co que é bem completa e aceita HTTPS
+                const response = await fetch('https://ipapi.co/json/');
                 const data = await response.json();
                 
-                if(data.success) {
-                    document.getElementById('ip').innerText = data.ip;
-                    document.getElementById('isp').innerText = data.connection.isp;
-                    document.getElementById('loc').innerText = `${data.city}, ${data.region_code}`;
-                } else {
-                    document.getElementById('ip').innerText = "Bloqueado";
-                }
+                document.getElementById('ip').innerText = data.ip || "Não capturado";
+                document.getElementById('isp').innerText = data.org || "Não identificado";
+                document.getElementById('loc').innerText = `${data.city}, ${data.region} - ${data.country_code}`;
             } catch (e) {
-                document.getElementById('ip').innerText = "Erro na Captura";
-                document.getElementById('isp').innerText = "Falha de Conexão";
-                document.getElementById('loc').innerText = "Indisponível";
+                // Fallback se a primeira falhar
+                document.getElementById('ip').innerText = "Bloqueado";
+                document.getElementById('isp').innerText = "Erro ISP";
+                document.getElementById('loc').innerText = "Erro Local";
             }
 
-            // 2. Hardware e Navegador
+            // 2. Hardware e Navegador (Identificando OPERA corretamente)
             const ua = navigator.userAgent;
             let os = "Desktop";
             if (/Android/i.test(ua)) os = "Android";
@@ -75,7 +73,9 @@
             else if (/Linux/i.test(ua)) os = "Linux";
             
             let brw = "Browser";
-            if (/Edge/i.test(ua)) brw = "Edge";
+            // O segredo para detectar Opera é procurar por OPR ou Opera
+            if (/OPR/i.test(ua) || /Opera/i.test(ua)) brw = "Opera";
+            else if (/Edg/i.test(ua)) brw = "Edge";
             else if (/Chrome/i.test(ua)) brw = "Chrome";
             else if (/Firefox/i.test(ua)) brw = "Firefox";
             else if (/Safari/i.test(ua)) brw = "Safari";
@@ -94,7 +94,7 @@
             }
         }
 
-        window.onload = coletar;
+        window.onload = coletarDados;
     </script>
 </body>
 </html>

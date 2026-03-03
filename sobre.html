@@ -32,7 +32,6 @@
         .btn { background-color: #1A1A1A; border: 1px solid #333; color: #fff; text-decoration: none; display: block; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; cursor: pointer; }
         .btn:hover { border-color: #00FF00; background-color: #002200; }
         
-        /* Botão de Delete (Estilo Alerta) */
         .btn-delete:hover { border-color: #ff0000; background-color: #2b0000; color: #ff0000; }
 
         .btn-back { color: #888; text-decoration: none; margin-top: 20px; font-size: 14px; }
@@ -53,8 +52,19 @@
             width: 85%;
             max-width: 300px;
         }
+
+        /* Foto dentro do Pop-up */
+        .popup-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #ff0000;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
         #popup-negado h2 { color: #ff0000; margin-top: 0; font-size: 20px; }
-        #popup-negado p { font-size: 16px; margin-bottom: 20px; font-weight: bold; }
+        #popup-negado p { font-size: 14px; margin-bottom: 20px; font-weight: bold; color: #ccc; }
         #popup-negado button { background: #ff0000; border: none; color: #fff; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; }
         
         #overlay {
@@ -70,6 +80,8 @@
 
     <div id="overlay"></div>
     <div id="popup-negado">
+        <img src="https://images.steamusercontent.com/ugc/1707411824065086559/2A529F1C69440493566E31AB4242623DC50F8875/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" class="popup-photo">
+        
         <h2>AÇÃO NEGADA! ❌</h2>
         <p>Mas não se preocupe...<br>você não é tão importante assim.</p>
         <button onclick="fecharPopup()">FECHAR</button>

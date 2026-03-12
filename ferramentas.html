@@ -3,156 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Near Rem - Sistemas Locais</title>
+    <title>Near Rem - Arsenal</title>
     <style>
-        body { 
-            background-color: #050005; /* Fundo roxo quase preto */
-            color: #d1d1d1; 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            display: flex; flex-direction: column; align-items: center; 
-            padding: 40px 20px; margin: 0; min-height: 100vh;
-        }
-
-        /* Container da foto com gradiente Vermelho e Roxo */
-        .photo-container { 
-            width: 120px; height: 120px; border-radius: 50%; 
-            border: 2px solid #b30000; overflow: hidden; margin-bottom: 15px; 
-            box-shadow: 0 0 20px rgba(179, 0, 0, 0.4), 0 0 10px rgba(138, 43, 226, 0.4); 
-            background: #000;
-        }
+        body { background-color: #000; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 30px 15px; margin: 0; min-height: 100vh; }
+        .photo-container { width: 110px; height: 110px; border-radius: 50%; border: 2px solid #00f2ff; overflow: hidden; margin-bottom: 15px; box-shadow: 0 0 20px rgba(0, 242, 255, 0.3); }
         .photo-container img { width: 100%; height: 100%; object-fit: cover; }
-
-        h1 { 
-            font-size: 20px; 
-            color: #fff; 
-            margin: 0; 
-            letter-spacing: 4px; 
-            text-transform: uppercase; 
-            font-weight: 300;
-            text-shadow: 2px 2px #b30000, -1px -1px #8a2be2; /* Efeito Glitch sutil */
-        }
-        .subtitle { 
-            color: #8a2be2; /* Roxo Neon */
-            font-family: monospace; font-size: 11px; margin: 8px 0 30px 0; 
-            letter-spacing: 2px; text-transform: uppercase;
-        }
-
-        .button-container { width: 100%; max-width: 380px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-        /* Botões com transição entre borda Roxa e Vermelha */
-        .btn { 
-            background-color: #0a0a0a; 
-            border: 1px solid #2d004d; /* Borda roxa escura */
-            color: #a0a0a0; 
-            padding: 15px 5px; border-radius: 8px; text-align: center; 
-            font-size: 10px; font-weight: 600; transition: 0.4s; 
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        
-        .btn:hover { 
-            border-color: #ff00ff; /* Roxo Neon ao passar o mouse */
-            color: #fff; 
-            background-color: #12001a; 
-            transform: translateY(-2px); 
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.2), 0 0 5px rgba(255, 0, 0, 0.2);
-        }
-        
-        .btn-full { 
-            grid-column: span 2; margin-top: 15px; opacity: 0.6; 
-            border: 1px dashed #b30000; text-decoration: none; color: #b30000;
-        }
-        .btn-full:hover { border-color: #ff0000; color: #fff; background: #200000; }
-
-        /* Pop-up Customizado Roxo/Vermelho */
-        #overlay { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(8px); z-index: 999; 
-        }
-
-        #tool-popup { 
-            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-            background: #050005; border: 1px solid #8a2be2; padding: 25px; z-index: 1000; 
-            text-align: center; border-radius: 20px; width: 85%; max-width: 320px;
-            box-shadow: 0 0 40px rgba(138, 43, 226, 0.2);
-        }
-
-        #popup-title { color: #8a2be2; font-size: 14px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
-        
-        .popup-link {
-            display: block; background: #0e0014; border: 1px solid #33004d; color: #fff; 
-            padding: 12px; margin-bottom: 10px; text-decoration: none; border-radius: 8px;
-            font-size: 13px; font-family: monospace; transition: 0.2s;
-        }
-        .popup-link:hover { 
-            background: linear-gradient(90deg, #8a2be2, #b30000); 
-            color: #fff; font-weight: bold; border-color: #fff;
-        }
-        
-        .close-btn { margin-top: 15px; color: #555; font-size: 11px; cursor: pointer; text-transform: uppercase; }
-        .close-btn:hover { color: #ff00ff; }
+        h1 { font-size: 18px; color: #fff; margin: 0; letter-spacing: 4px; text-transform: uppercase; font-weight: 300; }
+        .subtitle { color: #00f2ff; font-family: monospace; font-size: 10px; margin: 5px 0 25px 0; letter-spacing: 1px; }
+        .button-container { width: 100%; max-width: 400px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .btn { background-color: #0d0d0d; border: 1px solid #222; color: #ccc; padding: 12px 4px; border-radius: 6px; text-align: center; font-size: 10px; font-weight: 600; transition: 0.3s; cursor: pointer; display: flex; align-items: center; justify-content: center; text-transform: uppercase; letter-spacing: 1px; }
+        .btn:hover { border-color: #00f2ff; color: #fff; background-color: #111; transform: translateY(-2px); }
+        .btn-full { grid-column: span 2; margin-top: 10px; opacity: 0.5; border: 1px dashed #444; text-decoration: none; }
+        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px); z-index: 999; }
+        #tool-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #0a0a0a; border: 1px solid #00f2ff; padding: 20px; z-index: 1000; text-align: center; border-radius: 15px; width: 85%; max-width: 320px; }
+        #popup-title { color: #00f2ff; font-size: 13px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #222; padding-bottom: 10px; }
+        .popup-link { display: block; background: #151515; border: 1px solid #222; color: #fff; padding: 10px; margin-bottom: 8px; text-decoration: none; border-radius: 6px; font-size: 12px; font-family: monospace; transition: 0.2s; }
+        .popup-link:hover { background: #00f2ff; color: #000; font-weight: bold; }
+        .close-btn { margin-top: 10px; color: #ff4d4d; font-size: 10px; cursor: pointer; text-transform: uppercase; }
     </style>
 </head>
 <body>
-
-    <div class="photo-container">
-        <img src="https://64.media.tumblr.com/7a1a7ea33336dd28f1a0499be9534afb/f3416c2782181375-af/s250x400/95007b9ca7746a231306ff4cfed6c088df67d664.gifv">
-    </div>
-
-    <h1>Sistemas Locais</h1>
-    <div class="subtitle">NEON_STATION_OVERRIDE</div>
-
+    <div class="photo-container"><img src="https://64.media.tumblr.com/5cab77a299d2902fb7dae22ffca6800d/f3416c2782181375-a5/s250x400/b6c03af6e062d404f86f4b8c388a9435b9452b37.gifv"></div>
+    <h1>Arsenal</h1>
+    <div class="subtitle">ULTIMATE_CORE_V8</div>
     <div class="button-container">
-        
-        <div class="btn" onclick="openTool('Redes & Sniffing', [
-            {n: 'Nmap (Scanner)', u: 'https://nmap.org/download.html'},
-            {n: 'Wireshark (Sniffer)', u: 'https://www.wireshark.org/'},
-            {n: 'Bettercap', u: 'https://www.bettercap.org/'},
-            {n: 'Ettercap', u: 'https://www.ettercap-project.org/'}
-        ])">Redes & Sniffing</div>
-
-        <div class="btn" onclick="openTool('Pentest Web', [
-            {n: 'Burp Suite', u: 'https://portswigger.net/burp/communitydownload'},
-            {n: 'OWASP ZAP', u: 'https://www.zaproxy.org/'},
-            {n: 'Nikto', u: 'https://github.com/sullo/nikto'},
-            {n: 'Sqlmap', u: 'https://sqlmap.org/'}
-        ])">Pentest Web</div>
-
-        <div class="btn" onclick="openTool('Análise & OSINT', [
-            {n: 'Maltego (Soft)', u: 'https://www.maltego.com/downloads/'},
-            {n: 'SpiderFoot CLI', u: 'https://github.com/smicallef/spiderfoot'},
-            {n: 'Sherlock (User)', u: 'https://github.com/sherlock-project/sherlock'},
-            {n: 'Autopsy (Forense)', u: 'https://www.autopsy.com/'}
-        ])">Forense & OSINT</div>
-
-        <div class="btn" onclick="openTool('Quebra de Senha', [
-            {n: 'John the Ripper', u: 'https://www.openwall.com/john/'},
-            {n: 'Hashcat', u: 'https://hashcat.net/hashcat/'},
-            {n: 'Hydra', u: 'https://github.com/vanhauser-thc/thc-hydra'}
-        ])">Bruteforce</div>
-
-        <div class="btn" onclick="openTool('Anonimato Local', [
-            {n: 'Tor Browser', u: 'https://www.torproject.org/'},
-            {n: 'ProxyChains', u: 'https://github.com/rofl0r/proxychains-ng'},
-            {n: 'Whonix OS', u: 'https://www.whonix.org/'}
-        ])">Anonimato</div>
-
-        <div class="btn" onclick="openTool('Exploração', [
-            {n: 'Metasploit', u: 'https://www.metasploit.com/'},
-            {n: 'BeEF Framework', u: 'https://beefproject.com/'},
-            {n: 'Aircrack-ng', u: 'https://www.aircrack-ng.org/'}
-        ])">Exploração</div>
-
-        <a href="hacks.html" class="btn btn-full">← Voltar ao Terminal</a>
+        <div class="btn" onclick="openTool('Threat Intel', [{n:'Maltego',u:'https://www.maltego.com/'},{n:'SpiderFoot',u:'https://www.spiderfoot.net/'},{n:'Babel Street',u:'https://www.babelstreet.com/'},{n:'Recon-ng',u:'https://github.com/lanmaster53/recon-ng'},{n:'Censys Search',u:'https://search.censys.io/'}])">Threat Intel</div>
+        <div class="btn" onclick="openTool('Darknet', [{n:'Daniel\'s Onion',u:'https://onion.danwin1210.de/'},{n:'Dread Forum',u:'https://dread.com/'},{n:'SecureDrop',u:'https://securedrop.org/'},{n:'ZeroBin',u:'https://zerobin.org/'}])">Darknet</div>
+        <div class="btn" onclick="openTool('Judicial', [{n:'Jusbrasil',u:'https://www.jusbrasil.com.br/'},{n:'Escavador',u:'https://www.escavador.com/'},{n:'CNJ PJe',u:'https://www.cnj.jus.br/pje/'}])">Judicial</div>
+        <div class="btn" onclick="openTool('Telefonia', [{n:'Consulta Operadora',u:'http://consultaoperadora.com.br/site2015/'},{n:'Qual Empresa Chamou',u:'https://www.qualempresamechamou.com.br/'}])">Telefonia</div>
+        <div class="btn" onclick="openTool('IP Tracking', [{n:'IP-API',u:'https://ip-api.com/'},{n:'IPWhois',u:'https://ipwho.is/'},{n:'Iplogger',u:'https://iplogger.org/'},{n:'Site24x7 IP',u:'https://www.site24x7.com/pt/tools/localizar-ip.html'},{n:'WHTop Tools',u:'https://www.whtop.com/pt/tools.ip'}])">IP Tracking</div>
+        <div class="btn" onclick="openTool('Host & Geo', [{n:'KingHost GeoIP',u:'https://king.host/wiki/geoip/'},{n:'Shodan.io',u:'https://www.shodan.io'}])">Host & Geo</div>
+        <div class="btn" onclick="openTool('Dados / CEP', [{n:'CEP.la',u:'https://cep.la/'},{n:'ViaCEP',u:'https://viacep.com.br/'},{n:'Brasil API',u:'https://brasilapi.com.br/'},{n:'4Devs (Gerador)',u:'https://www.4devs.com.br/'}])">Dados / CEP</div>
+        <div class="btn" onclick="openTool('E-mail Temp', [{n:'Temp Mail',u:'https://temp-mail.org/pt/'},{n:'Tempail',u:'https://tempail.com/pt/'},{n:'10 Minute Mail',u:'https://10minutemail.com/'}])">E-mail Temp</div>
+        <div class="btn" onclick="openTool('Dorks & OSINT', [{n:'DorkSearch',u:'https://dorksearch.pro'},{n:'OSINT.rocks',u:'https://osint.rocks'},{n:'OSINT Framework',u:'https://osintframework.com/'}])">Dorks/OSINT</div>
+        <div class="btn" onclick="openTool('Deep Search (+18)', [{n:'Coomer.su',u:'https://coomer.su/'},{n:'Kemono.su',u:'https://kemono.su/'}])">Deep Search</div>
+        <div class="btn" onclick="openTool('Scanners', [{n:'VirusTotal',u:'https://www.virustotal.com/'},{n:'Hybrid Analysis',u:'https://www.hybrid-analysis.com/'}])">Malware</div>
+        <div class="btn" onclick="openTool('Vazamentos', [{n:'HaveIBeenPwned',u:'https://haveibeenpwned.com/'},{n:'IntelX',u:'https://intelx.io/'}])">Vazamentos</div>
+        <a href="hacks.html" class="btn btn-full">← Voltar ao Menu</a>
     </div>
-
     <div id="overlay" onclick="closeTool()"></div>
-    <div id="tool-popup">
-        <div id="popup-title">Acessar Software</div>
-        <div id="popup-links-container"></div>
-        <div class="close-btn" onclick="closeTool()">[ Desconectar ]</div>
-    </div>
-
+    <div id="tool-popup"><div id="popup-title">Selecionar Link</div><div id="popup-links-container"></div><div class="close-btn" onclick="closeTool()">[ FECHAR ]</div></div>
     <script>
         function openTool(title, links) {
             const container = document.getElementById('popup-links-container');
@@ -167,10 +57,7 @@
             document.getElementById('tool-popup').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
         }
-        function closeTool() {
-            document.getElementById('tool-popup').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
+        function closeTool() { document.getElementById('tool-popup').style.display = 'none'; document.getElementById('overlay').style.display = 'none'; }
     </script>
 </body>
 </html>

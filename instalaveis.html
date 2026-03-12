@@ -8,7 +8,7 @@
         body { 
             background-color: #000; 
             color: #fff; 
-            font-family: 'Segoe UI', sans-serif; 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
             display: flex; flex-direction: column; align-items: center; 
             padding: 50px 20px; margin: 0; min-height: 100vh;
         }
@@ -35,7 +35,7 @@
             text-decoration: none; 
             display: block; 
             padding: 16px; 
-            border-radius: 4px; 
+            border-radius: 8px; /* Cantos um pouco mais arredondados */
             margin-bottom: 12px; 
             text-align: center; 
             font-weight: bold; 
@@ -49,7 +49,7 @@
         .btn-back { color: #555; text-decoration: none; margin-top: 30px; font-size: 13px; font-family: monospace; display: block; }
         .btn-back:hover { color: #8a2be2; }
 
-        /* Pop-up Estilo Terminal (Mais limpo) */
+        /* Pop-up Estilo Terminal (Limpo e Ligeiramente Arredondado) */
         #overlay { 
             display: none; 
             position: fixed; top: 0; left: 0; 
@@ -67,8 +67,9 @@
             padding: 25px; 
             z-index: 1000; 
             text-align: center; 
-            width: 80%; max-width: 300px;
+            width: 80%; max-width: 320px;
             box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
+            border-radius: 12px; /* Pop-up ligeiramente arredondado */
         }
 
         #popup-title { 
@@ -92,6 +93,7 @@
             font-size: 13px; 
             font-family: monospace;
             transition: 0.2s;
+            border-radius: 6px; /* Links do pop-up ligeiramente arredondados */
         }
         .popup-link:hover { background: #8a2be2; color: #000; border-color: #fff; }
         
@@ -116,11 +118,11 @@
     <div class="subtitle">LOCAL_STATION_ENV</div>
 
     <div class="button-container">
-        <div class="btn" onclick="openTool('Redes & Sniffing', [{n:'Nmap',u:'https://nmap.org/'},{n:'Wireshark',u:'https://www.wireshark.org/'},{n:'Bettercap',u:'https://www.bettercap.org/'}])">Redes & Sniffing</div>
-        <div class="btn" onclick="openTool('Pentest Web', [{n:'Burp Suite',u:'https://portswigger.net/'},{n:'Sqlmap',u:'https://sqlmap.org/'},{n:'OWASP ZAP',u:'https://www.zaproxy.org/'}])">Pentest Web</div>
-        <div class="btn" onclick="openTool('Análise & OSINT', [{n:'Maltego',u:'https://www.maltego.com/'},{n:'Sherlock',u:'https://github.com/sherlock-project/sherlock'},{n:'Autopsy',u:'https://www.autopsy.com/'}])">Análise & OSINT</div>
+        <div class="btn" onclick="openTool('Redes & Sniffing', [{n:'Nmap',u:'https://nmap.org/'},{n:'Wireshark',u:'https://www.wireshark.org/'},{n:'Bettercap',u:'https://www.bettercap.org/'},{n:'Ettercap',u:'https://www.ettercap-project.org/'}])">Redes & Sniffing</div>
+        <div class="btn" onclick="openTool('Pentest Web', [{n:'Burp Suite',u:'https://portswigger.net/'},{n:'Sqlmap',u:'https://sqlmap.org/'},{n:'OWASP ZAP',u:'https://www.zaproxy.org/'},{n:'Nikto',u:'https://github.com/sullo/nikto'}])">Pentest Web</div>
+        <div class="btn" onclick="openTool('Análise & OSINT', [{n:'Maltego',u:'https://www.maltego.com/'},{n:'SpiderFoot CLI',u:'https://github.com/smicallef/spiderfoot'},{n:'Sherlock',u:'https://github.com/sherlock-project/sherlock'},{n:'Autopsy',u:'https://www.autopsy.com/'}])">Análise & OSINT</div>
         <div class="btn" onclick="openTool('Quebra de Senha', [{n:'John the Ripper',u:'https://www.openwall.com/john/'},{n:'Hashcat',u:'https://hashcat.net/'},{n:'Hydra',u:'https://github.com/vanhauser-thc/thc-hydra'}])">Quebra de Senha</div>
-        <div class="btn" onclick="openTool('Anonimato', [{n:'Tor Browser',u:'https://www.torproject.org/'},{n:'ProxyChains',u:'https://github.com/rofl0r/proxychains-ng'}])">Anonimato</div>
+        <div class="btn" onclick="openTool('Anonimato', [{n:'Tor Browser',u:'https://www.torproject.org/'},{n:'ProxyChains',u:'https://github.com/rofl0r/proxychains-ng'},{n:'Whonix OS',u:'https://www.whonix.org/'}])">Anonimato</div>
         <div class="btn" onclick="openTool('Exploração', [{n:'Metasploit',u:'https://www.metasploit.com/'},{n:'BeEF',u:'https://beefproject.com/'},{n:'Aircrack-ng',u:'https://www.aircrack-ng.org/'}])">Exploração</div>
         
         <a href="hacks.html" class="btn-back">← Voltar</a>

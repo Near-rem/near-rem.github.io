@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Near Rem - Sistemas Locais</title>
+    <style>
+        body { 
+            background-color: #000; color: #e0e0e0; 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            display: flex; flex-direction: column; align-items: center; 
+            padding: 40px 20px; margin: 0; min-height: 100vh;
+        }
+
+        .photo-container { 
+            width: 110px; height: 110px; border-radius: 50%; 
+            border: 2px solid #b30000; overflow: hidden; margin-bottom: 15px; 
+            box-shadow: 0 0 15px rgba(179, 0, 0, 0.3); 
+        }
+        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        h1 { font-size: 20px; color: #cc0000; margin: 0; letter-spacing: 4px; text-transform: uppercase; font-weight: 300; }
+        .subtitle { color: #888; font-family: monospace; font-size: 11px; margin: 5px 0 30px 0; letter-spacing: 1px; }
+
+        /* Grid de 2 colunas para ferramentas locais */
+        .button-container { width: 100%; max-width: 380px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        .btn { 
+            background-color: #0a0a0a; border: 1px solid #1a1a1a; color: #b0b0b0; 
+            padding: 15px 5px; border-radius: 8px; text-align: center; 
+            font-size: 11px; font-weight: 600; transition: 0.3s; 
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn:hover { border-color: #cc0000; color: #fff; background-color: #1a0000; transform: translateY(-2px); }
+        
+        .btn-full { grid-column: span 2; margin-top: 15px; opacity: 0.6; border: 1px dashed #444; text-decoration: none;}
+
+        /* Pop-up Glassmorphism Suave */
+        #overlay { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 999; 
+        }
+
+        #tool-popup { 
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            background: #050505; border: 1px solid #cc0000; padding: 25px; z-index: 1000; 
+            text-align: center; border-radius: 20px; width: 85%; max-width: 320px;
+            box-shadow: 0 0 30px rgba(204, 0, 0, 0.2);
+        }
+
+        #popup-title { color: #cc0000; font-size: 14px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .popup-link {
+            display: block; background: #111; border: 1px solid #222; color: #fff; 
+            padding: 12px; margin-bottom: 10px; text-decoration: none; border-radius: 8px;
+            font-size: 13px; font-family: monospace; transition: 0.2s;
+        }
+        .popup-link:hover { background: #cc0000; color: #000; font-weight: bold; }
+        
+        .close-btn { margin-top: 15px; color: #666; font-size: 11px; cursor: pointer; text-transform: uppercase; }
+        .close-btn:hover { color: #cc0000; }
+    </style>
+</head>
+<body>
+
+    <div class="photo-container">
+        <img src="https://i.makeagif.com/media/10-02-2016/A4wmZs.gif">
+    </div>
+
+    <h1>Sistemas Locais</h1>
+    <div class="subtitle">LOCAL_STATION_ENV</div>
+
+    <div class="button-container">
+        
+        <div class="btn" onclick="openTool('Redes & Sniffing', [
+            {n: 'Nmap (Scanner)', u: 'https://nmap.org/download.html'},
+            {n: 'Wireshark (Sniffer)', u: 'https://www.wireshark.org/'},
+            {n: 'Bettercap', u: 'https://www.bettercap.org/'},
+            {n: 'Ettercap', u: 'https://www.ettercap-project.org/'}
+        ])">Redes & Sniffing</div>
+
+        <div class="btn" onclick="openTool('Pentest Web', [
+            {n: 'Burp Suite', u: 'https://portswigger.net/burp/communitydownload'},
+            {n: 'OWASP ZAP', u: 'https://www.zaproxy.org/'},
+            {n: 'Nikto', u: 'https://github.com/sullo/nikto'},
+            {n: 'Sqlmap', u: 'https://sqlmap.org/'}
+        ])">Pentest Web</div>
+
+        <div class="btn" onclick="openTool('Análise & OSINT', [
+            {n: 'Maltego (Soft)', u: 'https://www.maltego.com/downloads/'},
+            {n: 'SpiderFoot CLI', u: 'https://github.com/smicallef/spiderfoot'},
+            {n: 'Sherlock (User)', u: 'https://github.com/sherlock-project/sherlock'},
+            {n: 'Autopsy (Forense)', u: 'https://www.autopsy.com/'}
+        ])">Forense & OSINT</div>
+
+        <div class="btn" onclick="openTool('Quebra de Senha', [
+            {n: 'John the Ripper', u: 'https://www.openwall.com/john/'},
+            {n: 'Hashcat', u: 'https://hashcat.net/hashcat/'},
+            {n: 'Hydra', u: 'https://github.com/vanhauser-thc/thc-hydra'}
+        ])">Bruteforce</div>
+
+        <div class="btn" onclick="openTool('Anonimato Local', [
+            {n: 'Tor Browser', u: 'https://www.torproject.org/'},
+            {n: 'ProxyChains', u: 'https://github.com/rofl0r/proxychains-ng'},
+            {n: 'Whonix OS', u: 'https://www.whonix.org/'}
+        ])">Anonimato</div>
+
+        <div class="btn" onclick="openTool('Exploração', [
+            {n: 'Metasploit', u: 'https://www.metasploit.com/'},
+            {n: 'BeEF Framework', u: 'https://beefproject.com/'},
+            {n: 'Aircrack-ng', u: 'https://www.aircrack-ng.org/'}
+        ])">Exploração</div>
+
+        <a href="hacks.html" class="btn btn-full">← Voltar ao Menu</a>
+    </div>
+
+    <div id="overlay" onclick="closeTool()"></div>
+    <div id="tool-popup">
+        <div id="popup-title">Selecionar Link</div>
+        <div id="popup-links-container"></div>
+        <div class="close-btn" onclick="closeTool()">[ FECHAR ]</div>
+    </div>
+
+    <script>
+        function openTool(title, links) {
+            const container = document.getElementById('popup-links-container');
+            document.getElementById('popup-title').innerText = title;
+            container.innerHTML = ''; 
+            links.forEach(link => {
+                const a = document.createElement('a');
+                a.href = link.u; a.target = '_blank'; a.className = 'popup-link';
+                a.innerText = '>> ' + link.n;
+                container.appendChild(a);
+            });
+            document.getElementById('tool-popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        function closeTool() {
+            document.getElementById('tool-popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

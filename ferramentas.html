@@ -27,12 +27,12 @@
         .btn { 
             background-color: #0d0d0d; border: 1px solid #222; color: #ccc; 
             padding: 14px 5px; border-radius: 8px; text-align: center; 
-            font-size: 12px; font-weight: 500; transition: 0.3s; 
+            font-size: 11px; font-weight: 500; transition: 0.3s; 
             cursor: pointer; display: flex; align-items: center; justify-content: center;
+            text-transform: uppercase; letter-spacing: 1px;
         }
         .btn:hover { border-color: #00f2ff; color: #fff; background-color: #111; transform: translateY(-2px); }
         
-        /* Botão de voltar ocupa as duas colunas */
         .btn-full { grid-column: span 2; margin-top: 10px; opacity: 0.6; border: 1px dashed #444; }
 
         /* Pop-up Glassmorphism */
@@ -69,9 +69,23 @@
     </div>
 
     <h1>Arsenal</h1>
-    <div class="subtitle">MULTI_TOOL_VAULT_V4</div>
+    <div class="subtitle">DATA_INTEL_SYSTEM_V5</div>
 
     <div class="button-container">
+        <div class="btn" onclick="openTool('Justiça & Tel', [
+            {n: 'Jusbrasil', u: 'https://www.jusbrasil.com.br/consulta-processual/'},
+            {n: 'Escavador (Preciso)', u: 'https://www.escavador.com/'},
+            {n: 'CNJ (Processos)', u: 'https://www.cnj.jus.br/pje/'},
+            {n: 'Consulta Operadora', u: 'http://consultaoperadora.com.br/site2015/'},
+            {n: 'Qual Empresa Chamou', u: 'https://www.qualempresamechamou.com.br/'}
+        ])">Judicial & Tel</div>
+
+        <div class="btn" onclick="openTool('Dados & CEP', [
+            {n: 'CEP.la', u: 'https://cep.la/'},
+            {n: 'ViaCEP', u: 'https://viacep.com.br/'},
+            {n: '4Devs (Gerador)', u: 'https://www.4devs.com.br/gerador_de_cpf'}
+        ])">Dados & CEP</div>
+
         <div class="btn" onclick="openTool('Localizar IP', [
             {n: 'IP-API', u: 'https://ip-api.com/'},
             {n: 'IPWhois', u: 'https://ipwho.is/'},
@@ -84,12 +98,11 @@
             {n: 'WHTop Tools', u: 'https://www.whtop.com/pt/tools.ip'}
         ])">Host & GeoIP</div>
 
-        <div class="btn" onclick="openTool('Dados & CEP', [
-            {n: 'CEP.la', u: 'https://cep.la/'},
-            {n: 'ViaCEP', u: 'https://viacep.com.br/'},
-            {n: 'Brasil API', u: 'https://brasilapi.com.br/'},
-            {n: 'Gerador/Validador', u: 'https://www.4devs.com.br/gerador_de_cpf'}
-        ])">Consultar Dados</div>
+        <div class="btn" onclick="openTool('Dorks & Infra', [
+            {n: 'DorkSearch', u: 'https://dorksearch.pro'},
+            {n: 'Shodan.io', u: 'https://www.shodan.io'},
+            {n: 'OSINT.rocks', u: 'https://osint.rocks'}
+        ])">Dorks & Infra</div>
 
         <div class="btn" onclick="openTool('E-mail Temp', [
             {n: 'Temp Mail', u: 'https://temp-mail.org/pt/'},
@@ -97,24 +110,18 @@
             {n: '10 Minute Mail', u: 'https://10minutemail.com/'}
         ])">E-mail Temp</div>
 
-        <div class="btn" onclick="openTool('Dorks & Infra', [
-            {n: 'DorkSearch', u: 'https://dorksearch.pro'},
-            {n: 'Shodan.io', u: 'https://www.shodan.io'},
-            {n: 'OSINT.rocks', u: 'https://osint.rocks'}
-        ])">Dorks & Infra</div>
-
-        <div class="btn" onclick="openTool('OSINT & Vazamentos', [
+        <div class="btn" onclick="openTool('OSINT', [
             {n: 'HaveIBeenPwned', u: 'https://haveibeenpwned.com/'},
-            {n: 'IntelX', u: 'https://intelx.io/'},
-            {n: 'OSINT Framework', u: 'https://osintframework.com/'}
-        ])">OSINT</div>
+            {n: 'OSINT Framework', u: 'https://osintframework.com/'},
+            {n: 'IntelX', u: 'https://intelx.io/'}
+        ])">OSINT Geral</div>
 
         <div class="btn" onclick="openTool('Deep Search (+18)', [
             {n: 'Coomer.su', u: 'https://coomer.su/'},
             {n: 'Kemono.su', u: 'https://kemono.su/'}
         ])">Deep Search</div>
 
-        <div class="btn" onclick="openTool('Malware Scanners', [
+        <div class="btn" onclick="openTool('Malware', [
             {n: 'VirusTotal', u: 'https://www.virustotal.com/'},
             {n: 'Hybrid Analysis', u: 'https://www.hybrid-analysis.com/'}
         ])">Scanners</div>

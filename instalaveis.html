@@ -6,70 +6,101 @@
     <title>Near Rem - Sistemas Locais</title>
     <style>
         body { 
-            background-color: #000; color: #e0e0e0; 
+            background-color: #050005; /* Fundo roxo quase preto */
+            color: #d1d1d1; 
             font-family: 'Segoe UI', Roboto, sans-serif; 
             display: flex; flex-direction: column; align-items: center; 
             padding: 40px 20px; margin: 0; min-height: 100vh;
         }
 
+        /* Container da foto com gradiente Vermelho e Roxo */
         .photo-container { 
-            width: 110px; height: 110px; border-radius: 50%; 
+            width: 120px; height: 120px; border-radius: 50%; 
             border: 2px solid #b30000; overflow: hidden; margin-bottom: 15px; 
-            box-shadow: 0 0 15px rgba(179, 0, 0, 0.3); 
+            box-shadow: 0 0 20px rgba(179, 0, 0, 0.4), 0 0 10px rgba(138, 43, 226, 0.4); 
+            background: #000;
         }
         .photo-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        h1 { font-size: 20px; color: #cc0000; margin: 0; letter-spacing: 4px; text-transform: uppercase; font-weight: 300; }
-        .subtitle { color: #888; font-family: monospace; font-size: 11px; margin: 5px 0 30px 0; letter-spacing: 1px; }
+        h1 { 
+            font-size: 20px; 
+            color: #fff; 
+            margin: 0; 
+            letter-spacing: 4px; 
+            text-transform: uppercase; 
+            font-weight: 300;
+            text-shadow: 2px 2px #b30000, -1px -1px #8a2be2; /* Efeito Glitch sutil */
+        }
+        .subtitle { 
+            color: #8a2be2; /* Roxo Neon */
+            font-family: monospace; font-size: 11px; margin: 8px 0 30px 0; 
+            letter-spacing: 2px; text-transform: uppercase;
+        }
 
-        /* Grid de 2 colunas para ferramentas locais */
         .button-container { width: 100%; max-width: 380px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
+        /* Botões com transição entre borda Roxa e Vermelha */
         .btn { 
-            background-color: #0a0a0a; border: 1px solid #1a1a1a; color: #b0b0b0; 
+            background-color: #0a0a0a; 
+            border: 1px solid #2d004d; /* Borda roxa escura */
+            color: #a0a0a0; 
             padding: 15px 5px; border-radius: 8px; text-align: center; 
-            font-size: 11px; font-weight: 600; transition: 0.3s; 
+            font-size: 10px; font-weight: 600; transition: 0.4s; 
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             text-transform: uppercase; letter-spacing: 1px;
         }
-        .btn:hover { border-color: #cc0000; color: #fff; background-color: #1a0000; transform: translateY(-2px); }
         
-        .btn-full { grid-column: span 2; margin-top: 15px; opacity: 0.6; border: 1px dashed #444; text-decoration: none;}
+        .btn:hover { 
+            border-color: #ff00ff; /* Roxo Neon ao passar o mouse */
+            color: #fff; 
+            background-color: #12001a; 
+            transform: translateY(-2px); 
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.2), 0 0 5px rgba(255, 0, 0, 0.2);
+        }
+        
+        .btn-full { 
+            grid-column: span 2; margin-top: 15px; opacity: 0.6; 
+            border: 1px dashed #b30000; text-decoration: none; color: #b30000;
+        }
+        .btn-full:hover { border-color: #ff0000; color: #fff; background: #200000; }
 
-        /* Pop-up Glassmorphism Suave */
+        /* Pop-up Customizado Roxo/Vermelho */
         #overlay { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 999; 
+            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(8px); z-index: 999; 
         }
 
         #tool-popup { 
             display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-            background: #050505; border: 1px solid #cc0000; padding: 25px; z-index: 1000; 
+            background: #050005; border: 1px solid #8a2be2; padding: 25px; z-index: 1000; 
             text-align: center; border-radius: 20px; width: 85%; max-width: 320px;
-            box-shadow: 0 0 30px rgba(204, 0, 0, 0.2);
+            box-shadow: 0 0 40px rgba(138, 43, 226, 0.2);
         }
 
-        #popup-title { color: #cc0000; font-size: 14px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        #popup-title { color: #8a2be2; font-size: 14px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
         
         .popup-link {
-            display: block; background: #111; border: 1px solid #222; color: #fff; 
+            display: block; background: #0e0014; border: 1px solid #33004d; color: #fff; 
             padding: 12px; margin-bottom: 10px; text-decoration: none; border-radius: 8px;
             font-size: 13px; font-family: monospace; transition: 0.2s;
         }
-        .popup-link:hover { background: #cc0000; color: #000; font-weight: bold; }
+        .popup-link:hover { 
+            background: linear-gradient(90deg, #8a2be2, #b30000); 
+            color: #fff; font-weight: bold; border-color: #fff;
+        }
         
-        .close-btn { margin-top: 15px; color: #666; font-size: 11px; cursor: pointer; text-transform: uppercase; }
-        .close-btn:hover { color: #cc0000; }
+        .close-btn { margin-top: 15px; color: #555; font-size: 11px; cursor: pointer; text-transform: uppercase; }
+        .close-btn:hover { color: #ff00ff; }
     </style>
 </head>
 <body>
 
     <div class="photo-container">
-        <img src="https://i.makeagif.com/media/10-02-2016/A4wmZs.gif">
+        <img src="https://64.media.tumblr.com/7a1a7ea33336dd28f1a0499be9534afb/f3416c2782181375-af/s250x400/95007b9ca7746a231306ff4cfed6c088df67d664.gifv">
     </div>
 
     <h1>Sistemas Locais</h1>
-    <div class="subtitle">LOCAL_STATION_ENV</div>
+    <div class="subtitle">NEON_STATION_OVERRIDE</div>
 
     <div class="button-container">
         
@@ -112,14 +143,14 @@
             {n: 'Aircrack-ng', u: 'https://www.aircrack-ng.org/'}
         ])">Exploração</div>
 
-        <a href="hacks.html" class="btn btn-full">← Voltar ao Menu</a>
+        <a href="hacks.html" class="btn btn-full">← Voltar ao Terminal</a>
     </div>
 
     <div id="overlay" onclick="closeTool()"></div>
     <div id="tool-popup">
-        <div id="popup-title">Selecionar Link</div>
+        <div id="popup-title">Acessar Software</div>
         <div id="popup-links-container"></div>
-        <div class="close-btn" onclick="closeTool()">[ FECHAR ]</div>
+        <div class="close-btn" onclick="closeTool()">[ Desconectar ]</div>
     </div>
 
     <script>

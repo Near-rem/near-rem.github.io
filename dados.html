@@ -3,98 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Near Rem - O que eu dei?</title>
+    <title>Near Rem - Data Extraction</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; margin: 0; }
-        .header-red { color: #ff0000; text-transform: uppercase; letter-spacing: 4px; font-weight: bold; margin-bottom: 30px; text-shadow: 0 0 10px #ff0000; text-align: center; }
-        
-        .data-box { 
-            width: 100%; 
-            max-width: 400px; 
-            background: rgba(10, 10, 10, 0.9); 
-            border: 1px solid #333; 
-            padding: 20px; 
-            border-radius: 5px; 
-            box-shadow: inset 0 0 15px rgba(255, 0, 0, 0.1);
+        :root {
+            --red: #ff0000;
+            --dark-red: #4d0000;
+            --green: #00ff00;
+            --bg: #050505;
         }
 
-        .data-line { margin-bottom: 12px; font-size: 14px; border-bottom: 1px solid #1a1a1a; padding-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
-        .label { color: #00FF00; text-transform: uppercase; font-size: 12px; }
-        .value { color: #ff0000; font-weight: bold; text-align: right; word-break: break-all; margin-left: 10px; }
+        body { 
+            background-color: var(--bg); 
+            color: #fff; 
+            font-family: 'Courier New', Courier, monospace; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 30px 15px; 
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-        .warning { color: #888; font-size: 11px; margin-top: 25px; text-align: center; max-width: 300px; line-height: 1.4; }
-        .btn-back { margin-top: 30px; color: #fff; text-decoration: none; border: 1px solid #fff; padding: 10px 20px; border-radius: 5px; transition: 0.3s; font-size: 13px; }
-        .btn-back:hover { background: #fff; color: #000; }
+        /* Efeito de Scanline */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .header-container {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--red);
+            width: 100%;
+            max-width: 450px;
+            padding-bottom: 10px;
+        }
+
+        .header-red { 
+            color: var(--red); 
+            text-transform: uppercase; 
+            letter-spacing: 6px; 
+            font-weight: bold; 
+            margin: 0;
+            text-shadow: 0 0 15px var(--red); 
+            font-size: 20px;
+        }
+
+        .status-scan {
+            font-size: 10px;
+            color: var(--green);
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .data-grid { 
+            width: 100%; 
+            max-width: 450px; 
+            background: rgba(10, 0, 0, 0.8); 
+            border: 1px solid var(--dark-red); 
+            padding: 20px; 
+            border-radius: 4px; 
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+            position: relative;
+            z-index: 3;
+        }
+
+        .category-title {
+            font-size: 11px;
+            color: #555;
+            border-bottom: 1px solid #222;
+            margin: 15px 0 10px 0;
+            padding-bottom: 3px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .data-line { 
+            margin-bottom: 8px; 
+            font-size: 13px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start;
+        }
+
+        .label { color: #888; text-transform: uppercase; font-size: 11px; }
+        .value { color: var(--red); font-weight: bold; text-align: right; word-break: break-all; max-width: 65%; }
+        .green-val { color: var(--green); }
+
+        .warning { color: #444; font-size: 10px; margin-top: 25px; text-align: center; max-width: 350px; text-transform: uppercase; }
+        
+        .btn-back { 
+            margin-top: 25px; 
+            color: var(--red); 
+            text-decoration: none; 
+            border: 1px solid var(--red); 
+            padding: 12px 25px; 
+            border-radius: 2px; 
+            transition: 0.3s; 
+            font-size: 12px;
+            font-weight: bold;
+            background: transparent;
+            z-index: 3;
+        }
+        .btn-back:hover { background: var(--red); color: #000; box-shadow: 0 0 15px var(--red); }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .blinking { animation: pulse 1s infinite; }
     </style>
 </head>
 <body>
 
-    <h2 class="header-red">DADOS EXTRAÍDOS</h2>
-
-    <div class="data-box">
-        <div class="data-line"><span class="label">IPv4:</span> <span id="ip" class="value">Aguardando...</span></div>
-        <div class="data-line"><span class="label">Provedor:</span> <span id="isp" class="value">Aguardando...</span></div>
-        <div class="data-line"><span class="label">Local:</span> <span id="loc" class="value">Aguardando...</span></div>
-        <div class="data-line"><span class="label">Sistema:</span> <span id="os" class="value">...</span></div>
-        <div class="data-line"><span class="label">Browser:</span> <span id="brw" class="value">...</span></div>
-        <div class="data-line"><span class="label">Tela:</span> <span id="res" class="value">...</span></div>
-        <div class="data-line"><span class="label">Bateria:</span> <span id="bat" class="value">...</span></div>
+    <div class="header-container">
+        <h2 class="header-red">SYSTEM INTRUSION</h2>
+        <div class="status-scan blinking">Copiando arquivos locais... 74%</div>
     </div>
 
-    <p class="warning">Ainda estou aprendendo a exportar os dados coletados para cá. Por esse motivo, o volume atual não representa nem 1/10 do total</p>
+    <div class="data-grid">
+        <div class="category-title">Conexão & Rede</div>
+        <div class="data-line"><span class="label">Endereço IP:</span> <span id="ip" class="value">...</span></div>
+        <div class="data-line"><span class="label">Provedor:</span> <span id="isp" class="value">...</span></div>
+        <div class="data-line"><span class="label">Localização:</span> <span id="loc" class="value">...</span></div>
+        <div class="data-line"><span class="label">Fuso Horário:</span> <span id="tz" class="value">...</span></div>
+
+        <div class="category-title">Hardware & Performance</div>
+        <div class="data-line"><span class="label">Sistema:</span> <span id="os" class="value">...</span></div>
+        <div class="data-line"><span class="label">GPU:</span> <span id="gpu" class="value">...</span></div>
+        <div class="data-line"><span class="label">CPU Cores:</span> <span id="cpu" class="value green-val">...</span></div>
+        <div class="data-line"><span class="label">RAM Est.:</span> <span id="ram" class="value green-val">...</span></div>
+        <div class="data-line"><span class="label">Bateria:</span> <span id="bat" class="value">...</span></div>
+
+        <div class="category-title">Software & Navegação</div>
+        <div class="data-line"><span class="label">Navegador:</span> <span id="brw" class="value">...</span></div>
+        <div class="data-line"><span class="label">Resolução:</span> <span id="res" class="value green-val">...</span></div>
+        <div class="data-line"><span class="label">Linguagem:</span> <span id="lang" class="value">...</span></div>
+    </div>
+
+    <p class="warning">Aviso: Os metadados acima foram coletados via instâncias de API e objetos de hardware. <br> O rastreamento continua em segundo plano.</p>
 
     <a href="index.html" class="btn-back">VOLTAR AO TERMINAL</a>
 
     <script>
-        async function coletarDados() {
-            // 1. Tenta a API ip-api (via JSONP/CORS fallback) ou ipwhois
+        async function coletarTudo() {
+            // 1. DADOS DE REDE (IPAPI)
             try {
-                // Usando ipapi.co que é bem completa e aceita HTTPS
                 const response = await fetch('https://ipapi.co/json/');
                 const data = await response.json();
-                
-                document.getElementById('ip').innerText = data.ip || "Não capturado";
-                document.getElementById('isp').innerText = data.org || "Não identificado";
-                document.getElementById('loc').innerText = `${data.city}, ${data.region} - ${data.country_code}`;
+                document.getElementById('ip').innerText = data.ip || "N/A";
+                document.getElementById('isp').innerText = data.org || "N/A";
+                document.getElementById('loc').innerText = `${data.city}, ${data.region} (${data.country_name})`;
+                document.getElementById('tz').innerText = data.timezone || "N/A";
             } catch (e) {
-                // Fallback se a primeira falhar
-                document.getElementById('ip').innerText = "Bloqueado";
-                document.getElementById('isp').innerText = "Erro ISP";
-                document.getElementById('loc').innerText = "Erro Local";
+                document.getElementById('ip').innerText = "Bloqueado/VPN";
             }
 
-            // 2. Hardware e Navegador (Identificando OPERA corretamente)
+            // 2. IDENTIFICAÇÃO DO BROWSER E OS
             const ua = navigator.userAgent;
-            let os = "Desktop";
-            if (/Android/i.test(ua)) os = "Android";
+            let os = "Desconhecido";
+            if (/Windows/i.test(ua)) os = "Windows";
+            else if (/Android/i.test(ua)) os = "Android";
             else if (/iPhone|iPad|iPod/i.test(ua)) os = "iOS";
-            else if (/Win/i.test(ua)) os = "Windows";
-            else if (/Mac/i.test(ua)) os = "macOS";
             else if (/Linux/i.test(ua)) os = "Linux";
-            
-            let brw = "Browser";
-            // O segredo para detectar Opera é procurar por OPR ou Opera
+            else if (/Mac/i.test(ua)) os = "macOS";
+
+            let brw = "Desconhecido";
             if (/OPR/i.test(ua) || /Opera/i.test(ua)) brw = "Opera";
-            else if (/Edg/i.test(ua)) brw = "Edge";
-            else if (/Chrome/i.test(ua)) brw = "Chrome";
-            else if (/Firefox/i.test(ua)) brw = "Firefox";
+            else if (/Edg/i.test(ua)) brw = "Microsoft Edge";
+            else if (/Chrome/i.test(ua)) brw = "Google Chrome";
+            else if (/Firefox/i.test(ua)) brw = "Mozilla Firefox";
             else if (/Safari/i.test(ua)) brw = "Safari";
 
             document.getElementById('os').innerText = os;
             document.getElementById('brw').innerText = brw;
-            document.getElementById('res').innerText = `${window.screen.width}x${window.screen.height}`;
+            document.getElementById('res').innerText = `${window.screen.width}x${window.screen.height} (${window.devicePixelRatio}x)`;
+            document.getElementById('lang').innerText = navigator.language.toUpperCase();
 
-            // 3. Bateria
+            // 3. HARDWARE (CPU E RAM)
+            document.getElementById('cpu').innerText = navigator.hardwareConcurrency ? navigator.hardwareConcurrency + " Threads" : "N/A";
+            document.getElementById('ram').innerText = navigator.deviceMemory ? navigator.deviceMemory + " GB" : "N/A";
+
+            // 4. GPU (PLACA DE VÍDEO)
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+                document.getElementById('gpu').innerText = renderer.replace(/ANGLE \(.*\)/, "").trim();
+            } catch (e) {
+                document.getElementById('gpu').innerText = "Não detectada";
+            }
+
+            // 5. BATERIA
             if (navigator.getBattery) {
-                navigator.getBattery().then(function(battery) {
-                    document.getElementById('bat').innerText = Math.round(battery.level * 100) + "%";
+                navigator.getBattery().then(bat => {
+                    const updateBat = () => {
+                        let nivel = Math.round(bat.level * 100) + "%";
+                        let status = bat.charging ? " (Carregando)" : "";
+                        document.getElementById('bat').innerText = nivel + status;
+                    };
+                    updateBat();
+                    bat.addEventListener('levelchange', updateBat);
                 });
             } else {
-                document.getElementById('bat').innerText = "Privado";
+                document.getElementById('bat').innerText = "Privado/N/A";
             }
         }
 
-        window.onload = coletarDados;
+        window.onload = coletarTudo;
     </script>
 </body>
 </html>

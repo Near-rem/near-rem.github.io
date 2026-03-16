@@ -3,167 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Near Rem - Sobre</title>
+    <title>Near Rem - Contatos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         body { background-color: #000; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 50px 20px; margin: 0; }
-        .photo-container { width: 120px; height: 120px; border-radius: 60px; border: 2px solid #00FF00; overflow: hidden; margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
+        .photo-container { width: 120px; height: 120px; border-radius: 60px; border: 2px solid #007AFF; overflow: hidden; margin-bottom: 20px; }
         .photo-container img { width: 100%; height: 100%; object-fit: cover; }
-        h1 { font-size: 22px; color: #00FF00; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
-        
-        .terminal-box { 
-            width: 100%; 
-            max-width: 350px; 
-            background-color: #0a0a0a; 
-            border: 1px solid #00FF00; 
-            padding: 20px; 
-            border-radius: 8px; 
-            margin: 20px 0;
-            font-family: monospace;
-            font-size: 14px;
-            line-height: 1.8;
-            color: #00FF00;
-            min-height: 250px;
-        }
-
-        .cursor { display: inline-block; width: 8px; height: 15px; background: #00FF00; margin-left: 5px; animation: blink 0.8s infinite; vertical-align: middle; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
+        h1 { font-size: 22px; color: #007AFF; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
+        .bio { color: #00FF00; font-family: monospace; font-size: 14px; margin: 15px 0 30px 0; }
         .button-container { width: 100%; max-width: 350px; }
-        .btn { background-color: #1A1A1A; border: 1px solid #333; color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: center; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; cursor: pointer; }
-        .btn i { margin-right: 10px; font-size: 18px; }
         
-        .btn:hover { border-color: #00FF00; background-color: #002200; }
+        .btn { 
+            background-color: #1A1A1A; 
+            border: 1px solid #333; 
+            color: #fff; 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            padding: 18px; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            font-weight: bold; 
+            transition: 0.4s; 
+            cursor: pointer; 
+        }
+        .btn i { margin-right: 12px; font-size: 20px; }
+
+        /* --- Cores Customizadas no Hover --- */
         
-        .btn-linkedin:hover { border-color: #0077b5; background-color: #001a29; color: #0077b5; }
-        .btn-delete:hover { border-color: #ff0000; background-color: #2b0000; color: #ff0000; }
-        .btn-real-name:hover { border-color: #ffaa00; background-color: #332200; color: #ffaa00; }
+        .btn-discord:hover { border-color: #5865F2; background-color: #1e224f; color: #5865F2; box-shadow: 0 0 15px rgba(88, 101, 242, 0.4); }
+        .btn-whatsapp:hover { border-color: #25D366; background-color: #0d2e1a; color: #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.4); }
+        .btn-instagram:hover { border-color: #E1306C; background-color: #2b1019; color: #E1306C; box-shadow: 0 0 15px rgba(225, 48, 108, 0.4); }
+        
+        /* Estilo LinkedIn */
+        .btn-linkedin:hover { border-color: #0077b5; background-color: #001a29; color: #0077b5; box-shadow: 0 0 15px rgba(0, 119, 181, 0.4); }
+        
+        .btn-steam:hover { border-color: #171a21; background-color: #2a475e; color: #66c0f4; box-shadow: 0 0 15px rgba(102, 192, 244, 0.3); }
+        .btn-xbox:hover { border-color: #107C10; background-color: #062e06; color: #107C10; box-shadow: 0 0 15px rgba(16, 124, 16, 0.4); }
+        .btn-of:hover { border-color: #ff0000; background-color: #2b0000; color: #ff0000; box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
 
-        .btn-back { color: #888; text-decoration: none; margin-top: 20px; font-size: 14px; }
+        .btn-back { color: #888; text-decoration: none; margin-top: 20px; font-size: 14px; transition: 0.3s; }
+        .btn-back:hover { color: #fff; }
 
-        /* Estilo Base Pop-ups */
-        .modal {
+        /* Pop-up */
+        #popup-of {
             display: none;
             position: fixed;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #000;
+            background-color: #111;
+            border: 2px solid #ff0000;
             padding: 25px;
             z-index: 1000;
             text-align: center;
             border-radius: 15px;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
             width: 85%;
             max-width: 300px;
         }
-
-        #popup-negado { border: 2px solid #ff0000; box-shadow: 0 0 25px rgba(255, 0, 0, 0.6); }
-        #popup-info { border: 2px solid #ffaa00; box-shadow: 0 0 25px rgba(255, 170, 0, 0.4); }
-
-        .popup-photo { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 15px; object-fit: cover; }
-        .photo-red { border: 2px solid #ff0000; }
-
-        .modal h2 { margin-top: 0; font-size: 18px; text-transform: uppercase; }
-        .modal p { font-size: 13px; margin-bottom: 20px; color: #ccc; line-height: 1.5; }
-        
-        .btn-group { display: flex; gap: 10px; justify-content: center; }
-        .modal button, .modal a.btn-popup { 
-            background: #222; border: 1px solid #444; color: #fff; 
-            padding: 10px 15px; border-radius: 5px; font-weight: bold; 
-            cursor: pointer; text-decoration: none; font-size: 12px;
-        }
-        
-        .btn-red { background: #ff0000 !important; border: none !important; }
-        .btn-warn { background: #ffaa00 !important; border: none !important; color: #000 !important; }
-
-        #overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 999;
-        }
+        #popup-of h2 { color: #ff0000; margin-top: 0; }
+        #popup-of button { background: #ff0000; border: none; color: #fff; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 999; }
     </style>
 </head>
 <body>
 
     <div id="overlay"></div>
-
-    <div id="popup-negado" class="modal">
-        <img src="https://64.media.tumblr.com/c4ec718efde48186f6661ff3c6b108d0/f3416c2782181375-90/s400x600/0acf943f4485e20e6a8e59292910ab8f6ff59abd.gifv" class="popup-photo photo-red">
-        <h2 style="color: #ff0000;">AÇÃO NEGADA!</h2>
-        <p>Mas não se preocupe...<br>entre em contato com o dev</p>
-        <button class="btn-red" onclick="fecharPopups()">OK</button>
-    </div>
-
-    <div id="popup-info" class="modal">
-        <h2 style="color: #ffaa00;">AVISO DE SEGURANÇA</h2>
-        <p>Entregar dados reais pode ser uma ferramenta usada contra o desenvolvedor. <br><br>Se deseja saber minha identidade, entre em contato diretamente.</p>
-        <div class="btn-group">
-            <button onclick="fecharPopups()">OK</button>
-            <a href="contatos.html" class="btn-popup btn-warn">CONTATOS</a>
-        </div>
+    <div id="popup-of">
+        <h2>OPA! 🤨</h2>
+        <p>TÁ INTERESSADO POR QUÊ?<br>QUER ME VER PELADO?</p>
+        <button onclick="fecharPopup()">SAIR FORA</button>
     </div>
 
     <div class="photo-container">
-        <img src="https://64.media.tumblr.com/a1ccce290f6302c53aaa1cfa302fed5e/f3416c2782181375-9b/s250x400/f9a89983b59cee443b6c50d81c614cc926dab844.gifv">
+        <img src="https://64.media.tumblr.com/eccc7dbeb27adb09abd52f0390dae90b/f3416c2782181375-0d/s400x600/3c1c61f4b31528dcf5252bcbde46832113f73f32.gifv">
     </div>
 
-    <h1>DEV Profile</h1>
-
-    <div class="terminal-box">
-        <span id="terminal-content"></span><span class="cursor"></span>
-    </div>
+    <h1>Meus Contatos</h1>
+    <div class="bio">ID da Sessão: <span id="glitch"></span></div>
 
     <div class="button-container">
-        <a href="https://www.linkedin.com/in/paulo-renato-40b43a32a/" target="_blank" class="btn btn-linkedin">
-            <i class="fa-brands fa-linkedin"></i> LinkedIn Profissional
+        <a href="https://discord.com/users/688116774092144669" target="_blank" class="btn btn-discord">
+            <i class="fa-brands fa-discord"></i> Discord
         </a>
-        <div class="btn btn-delete" onclick="abrirPopup('popup-negado')">Delete meus dados</div>
-        <div class="btn btn-real-name" onclick="abrirPopup('popup-info')">Nome Real do DEV</div>
+        <a href="https://wa.me/5521971839439" target="_blank" class="btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="https://www.instagram.com/near_rem/" target="_blank" class="btn btn-instagram">
+            <i class="fa-brands fa-instagram"></i> Instagram
+        </a>
+        
+        <a href="https://www.linkedin.com/in/paulo-renato-40b43a32a/" target="_blank" class="btn btn-linkedin">
+            <i class="fa-brands fa-linkedin"></i> LinkedIn
+        </a>
+
+        <a href="https://steamcommunity.com/id/near_rem" target="_blank" class="btn btn-steam">
+            <i class="fa-brands fa-steam"></i> Steam
+        </a>
+        <a href="https://www.xbox.com/pt-BR/play/user/yIluminado" target="_blank" class="btn btn-xbox">
+            <i class="fa-brands fa-xbox"></i> Xbox
+        </a>
+        
+        <div class="btn btn-of" onclick="abrirPopup()">
+            <i class="fa-solid fa-lock"></i> OnlyFans
+        </div>
+
         <a href="index.html" class="btn-back">← Voltar</a>
     </div>
 
     <script>
-        function abrirPopup(id) {
-            document.getElementById(id).style.display = 'block';
+        function abrirPopup() {
+            document.getElementById('popup-of').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
         }
-
-        function fecharPopups() {
-            document.getElementById('popup-negado').style.display = 'none';
-            document.getElementById('popup-info').style.display = 'none';
+        function fecharPopup() {
+            document.getElementById('popup-of').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         }
-
-        const lines = [
-            "> Carregando dados...",
-            "> Usuário: Near Rem",
-            "> Status: Online",
-            "> Conhecimentos: HTML, CSS, JavaScript, Python, Java, PHP, C, C++, C#, React, Lua, SQL e outras.",
-            "> Dados: Humilde o suficiente para saber que sou descartável. Bom o suficiente para saber que será um downgrade.",
-            "> OBS: Seus dados já foram colhidos assim que você clicou no link."
-        ];
-
-        let lineIndex = 0;
-        let charIndex = 0;
-        const target = document.getElementById("terminal-content");
-
-        function typeWriter() {
-            if (lineIndex < lines.length) {
-                if (charIndex < lines[lineIndex].length) {
-                    target.innerHTML += lines[lineIndex].charAt(charIndex);
-                    charIndex++;
-                    setTimeout(typeWriter, 40); 
-                } else {
-                    target.innerHTML += "<br>"; 
-                    lineIndex++;
-                    charIndex = 0;
-                    setTimeout(typeWriter, 500); 
-                }
-            }
-        }
-
-        window.onload = typeWriter;
+        const chars = '01';
+        const glitchElement = document.getElementById('glitch');
+        setInterval(() => {
+            let result = '';
+            for (let i = 0; i < 12; i++) result += chars.charAt(Math.floor(Math.random() * chars.length));
+            glitchElement.innerText = 'BRS-' + result;
+        }, 1);
     </script>
 </body>
 </html>

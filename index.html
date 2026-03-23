@@ -20,10 +20,9 @@
             overflow: hidden;
             width: 100vw; height: 100vh;
             color: #fff;
-            perspective: 1200px; /* Base para o 3D */
+            perspective: 1200px;
         }
 
-        /* Background Fix */
         #canvas-bg { position: fixed; inset: 0; z-index: -2; pointer-events: none; }
         .grid-overlay { 
             position: fixed; inset: 0; z-index: -1; 
@@ -32,7 +31,6 @@
             pointer-events: none;
         }
 
-        /* O Palco 3D */
         #scene {
             position: relative;
             height: 100vh;
@@ -51,32 +49,37 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            pointer-events: none; /* Deixa passar clique para os filhos */
+            pointer-events: none;
         }
 
-        /* Foto com profundidade */
+        /* Foto do Near Corrigida */
         .photo-wrap {
             position: relative;
             margin-bottom: 30px;
-            transform: translateZ(80px); /* Salta da tela */
+            transform: translateZ(80px);
         }
 
         .photo-container {
             width: 140px; height: 140px;
             border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.5);
+            border: 2px solid rgba(255,255,255,0.6);
             overflow: hidden;
-            box-shadow: 0 0 40px rgba(255,255,255,0.1);
+            box-shadow: 0 0 40px rgba(255,255,255,0.2);
+            background: #111; /* Fundo caso a imagem demore a carregar */
         }
 
-        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-container img { 
+            width: 100%; height: 100%; 
+            object-fit: cover;
+            display: block;
+        }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
             letter-spacing: 10px;
             margin-bottom: 20px;
             transform: translateZ(50px);
-            text-shadow: 0 0 15px rgba(255,255,255,0.3);
+            text-transform: uppercase;
         }
 
         .bio {
@@ -88,16 +91,16 @@
             margin-bottom: 35px;
             transform: translateZ(30px);
             backdrop-filter: blur(5px);
+            text-align: center;
         }
 
-        /* Botões com Hitbox Real */
         .button-container {
             display: flex;
             flex-direction: column;
             gap: 15px;
             width: 320px;
-            transform: translateZ(100px); /* Fica bem na frente */
-            pointer-events: auto; /* IMPORTANTE: Habilita clique aqui */
+            transform: translateZ(100px);
+            pointer-events: auto;
         }
 
         .btn {
@@ -108,21 +111,21 @@
             padding: 18px;
             border-radius: 10px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             transition: 0.3s;
-            pointer-events: auto; /* Garante que o botão seja clicável */
             cursor: pointer;
         }
 
         .btn:hover {
             background: rgba(255,255,255,0.15);
             border-color: #fff;
-            transform: scale(1.05) translateZ(20px); /* Efeito de pop ao passar o mouse */
+            transform: scale(1.05) translateZ(20px);
         }
 
-        .scanlines { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px); pointer-events: none; z-index: 100; }
+        .scanlines { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px); pointer-events: none; z-index: 100; }
     </style>
 </head>
 <body>
@@ -136,7 +139,7 @@
         <div class="layer">
             <div class="photo-wrap">
                 <div class="photo-container">
-                    <img src="=https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a2f7c9d8-a913-4273-847f-705be41395df/da61r89-10eafa98-1292-47fe-86f4-0690a95fc681.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi9hMmY3YzlkOC1hOTEzLTQyNzMtODQ3Zi03MDViZTQxMzk1ZGYvZGE2MXI4OS0xMGVhZmE5OC0xMjkyLTQ3ZmUtODZmNC0wNjkwYTk1ZmM2ODEuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.GpJnJyaxOTYBAQXaDWDSOyBth_nsIpV0OC6kYy6ioaQ">
+                    <img src="https://i.pinimg.com/originals/a2/f7/c9/a2f7c9d8a9134273847f705be41395df.gif" alt="Near">
                 </div>
             </div>
 
@@ -158,7 +161,6 @@
     </div>
 
     <script>
-        // Parallax 3D Real
         const scene = document.getElementById('scene');
         let tX = 0, tY = 0, cX = 0, cY = 0;
 
@@ -170,23 +172,20 @@
         function animate() {
             cX += (tX - cX) * 0.1;
             cY += (tY - cY) * 0.1;
-            
-            // Aqui a mágica: rotaciona o palco inteiro no espaço 3D
             scene.style.transform = `rotateY(${cX * 15}deg) rotateX(${-cY * 15}deg)`;
             requestAnimationFrame(animate);
         }
         animate();
 
-        // Glitch e IP
         setInterval(() => {
             document.getElementById('glitch').textContent = Math.random().toString(16).slice(2, 8).toUpperCase();
-        }, 100);
+        }, 120);
 
         fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => {
             document.getElementById('user-ip').textContent = d.ip;
-        });
+        }).catch(() => document.getElementById('user-ip').textContent = '127.0.0.1');
 
-        // Partículas Simples
+        // Partículas
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let w, h;
@@ -194,10 +193,10 @@
         window.addEventListener('resize', resize);
         resize();
 
-        const dots = Array.from({length: 50}, () => ({ x: Math.random()*w, y: Math.random()*h, v: Math.random()*0.5 }));
+        const dots = Array.from({length: 40}, () => ({ x: Math.random()*w, y: Math.random()*h, v: Math.random()*0.4 + 0.1 }));
         function drawDots() {
             ctx.clearRect(0,0,w,h);
-            ctx.fillStyle = "rgba(255,255,255,0.2)";
+            ctx.fillStyle = "rgba(255,255,255,0.15)";
             dots.forEach(d => {
                 ctx.beginPath(); ctx.arc(d.x, d.y, 1, 0, 7); ctx.fill();
                 d.y -= d.v; if(d.y < 0) d.y = h;

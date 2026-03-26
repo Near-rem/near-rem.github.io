@@ -17,6 +17,7 @@
             min-height: 100vh;
             color: #fff;
             overflow-x: hidden;
+            perspective: 1200px; /* Perspectiva no body para o palco funcionar */
         }
 
         #canvas-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
@@ -47,6 +48,13 @@
             padding: 50px 20px;
             transform-style: preserve-3d;
             will-change: transform;
+            transition: transform 0.1s ease-out; /* Suaviza a parada no mobile */
+        }
+
+        /* Classe para desativar 3D no mobile */
+        #scene.no-3d {
+            transform: none !important;
+            transform-style: flat !important;
         }
 
         /* ── Foto ── */
@@ -96,27 +104,12 @@
             font-family: 'Share Tech Mono', monospace;
             font-size: 12px;
             color: rgba(255,255,255,0.6);
-            background: transparent;
-            padding: 14px 28px;
-            border: none;
-            border-radius: 0;
             margin-bottom: 35px;
             text-align: center;
             line-height: 2;
             width: 100%; max-width: 340px;
-            position: relative; overflow: hidden;
         }
 
-        .bio::after {
-            content: '';
-            position: absolute; top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
-            animation: sweep 3.5s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        @keyframes sweep { to { left: 200%; } }
         #user-ip { color: #fff; font-weight: bold; }
 
         /* ── Botões ── */
@@ -137,11 +130,9 @@
             letter-spacing: 2px; text-transform: uppercase;
             display: flex; justify-content: space-between; align-items: center;
             width: 100%; cursor: pointer;
-            transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s ease;
             -webkit-tap-highlight-color: transparent;
         }
-
-        .btn span { pointer-events: none; }
 
         .btn:hover {
             background: rgba(255,255,255,0.12);
@@ -172,7 +163,6 @@
     <div class="vignette"></div>
 
     <div id="scene">
-
         <div class="photo-wrap">
             <div class="photo-ring"></div>
             <div class="photo-container">
@@ -195,14 +185,19 @@
         </div>
 
         <div class="footer-tag">> CORE_SYSTEM_V3</div>
-
     </div>
 
     <script>
-    /* ── Partículas com conexões ── */
+    const scene = document.getElementById('scene');
     const canvas = document.getElementById('canvas-bg');
-    const ctx    = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
     let W, H, dots = [];
+
+    // Detecção de Mobile/Touch
+    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    if (isTouch) {
+        scene.classList.add('no-3d');
+    }
 
     function resize() {
         W = canvas.width  = window.innerWidth;
@@ -225,7 +220,6 @@
 
     function drawDots() {
         ctx.clearRect(0, 0, W, H);
-
         for (let i = 0; i < dots.length; i++) {
             for (let j = i + 1; j < dots.length; j++) {
                 const dx = dots[i].x - dots[j].x;
@@ -241,7 +235,6 @@
                 }
             }
         }
-
         dots.forEach(p => {
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
@@ -251,48 +244,33 @@
             if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
             if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
         });
-
         requestAnimationFrame(drawDots);
     }
     drawDots();
 
-    /* ── Parallax 3D ── */
-    const scene = document.getElementById('scene');
+    /* ── Parallax 3D (Apenas PC) ── */
     let tX = 0, tY = 0, cX = 0, cY = 0;
 
-    document.addEventListener('mousemove', e => {
-        tX = (e.clientX - W / 2) / (W / 2);
-        tY = (e.clientY - H / 2) / (H / 2);
-    });
+    if (!isTouch) {
+        document.addEventListener('mousemove', e => {
+            tX = (e.clientX - W / 2) / (W / 2);
+            tY = (e.clientY - H / 2) / (H / 2);
+        });
 
-    window.addEventListener('deviceorientation', e => {
-        if (e.gamma !== null) {
-            tX = Math.max(-1, Math.min(1,  e.gamma / 25));
-            tY = Math.max(-1, Math.min(1, (e.beta - 45) / 25));
+        function animateScene() {
+            cX += (tX - cX) * 0.08;
+            cY += (tY - cY) * 0.08;
+            scene.style.transform = `rotateY(${cX * 14}deg) rotateX(${-cY * 14}deg)`;
+            requestAnimationFrame(animateScene);
         }
-    });
-
-    document.addEventListener('touchmove', e => {
-        const t = e.touches[0];
-        tX = (t.clientX - W / 2) / (W / 2);
-        tY = (t.clientY - H / 2) / (H / 2);
-    }, { passive: true });
-
-    function animateScene() {
-        cX += (tX - cX) * 0.08;
-        cY += (tY - cY) * 0.08;
-        scene.style.transform = `perspective(1200px) rotateY(${cX * 14}deg) rotateX(${-cY * 14}deg)`;
-        requestAnimationFrame(animateScene);
+        animateScene();
     }
-    animateScene();
 
-    /* ── Glitch ── */
+    // Glitch e IP
     setInterval(() => {
-        document.getElementById('glitch').textContent =
-            Math.random().toString(16).slice(2, 10).toUpperCase();
-    }, 1);
+        document.getElementById('glitch').textContent = Math.random().toString(16).slice(2, 10).toUpperCase();
+    }, 80);
 
-    /* ── IP ── */
     fetch('https://api.ipify.org?format=json')
         .then(r => r.json())
         .then(d => document.getElementById('user-ip').textContent = d.ip)

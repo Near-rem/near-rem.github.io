@@ -269,7 +269,7 @@
     // Glitch e IP
     setInterval(() => {
         document.getElementById('glitch').textContent = Math.random().toString(16).slice(2, 10).toUpperCase();
-    }, 80);
+    }, 1);
 
     fetch('https://api.ipify.org?format=json')
         .then(r => r.json())

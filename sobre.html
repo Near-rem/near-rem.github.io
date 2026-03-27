@@ -3,161 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Near Rem - Sobre</title>
+    <title>Paulo Renato | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #000; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 50px 20px; margin: 0; }
-        .photo-container { width: 120px; height: 120px; border-radius: 60px; border: 2px solid #00FF00; overflow: hidden; margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
-        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
-        h1 { font-size: 22px; color: #00FF00; margin: 0; letter-spacing: 2px; text-transform: uppercase; }
-        
-        .terminal-box { 
-            width: 100%; 
-            max-width: 350px; 
-            background-color: #0a0a0a; 
-            border: 1px solid #00FF00; 
-            padding: 20px; 
-            border-radius: 8px; 
-            margin: 20px 0;
-            font-family: monospace;
-            font-size: 14px;
-            line-height: 1.8;
-            color: #00FF00;
-            min-height: 250px;
+        :root {
+            --primary: #007AFF;
+            --primary-glow: rgba(0, 122, 255, 0.5);
+            --bg: #000000;
+            --card: rgba(12, 12, 12, 0.65);
+            --border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        .cursor { display: inline-block; width: 8px; height: 15px; background: #00FF00; margin-left: 5px; animation: blink 0.8s infinite; vertical-align: middle; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        .button-container { width: 100%; max-width: 350px; }
-        .btn { background-color: #1A1A1A; border: 1px solid #333; color: #fff; text-decoration: none; display: block; padding: 18px; border-radius: 12px; margin-bottom: 15px; text-align: center; font-weight: bold; transition: 0.3s; cursor: pointer; }
-        .btn:hover { border-color: #00FF00; background-color: #002200; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        .btn-delete:hover { border-color: #ff0000; background-color: #2b0000; color: #ff0000; }
-        .btn-real-name:hover { border-color: #ffaa00; background-color: #332200; color: #ffaa00; }
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
 
-        .btn-back { color: #888; text-decoration: none; margin-top: 20px; font-size: 14px; }
+        #bg-canvas {
+            position: fixed; inset: 0; z-index: -1;
+            background: radial-gradient(circle at 50% -20%, #001a33 0%, #000 75%);
+        }
 
-        /* Estilo Base Pop-ups */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #000;
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 170px;
+            gap: 15px;
+            max-width: 1100px;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 32px;
             padding: 25px;
-            z-index: 1000;
-            text-align: center;
-            border-radius: 15px;
-            width: 85%;
-            max-width: 300px;
+            backdrop-filter: blur(25px);
+            transition: var(--transition);
+            position: relative;
+            display: flex; flex-direction: column;
+            overflow: hidden;
         }
 
-        #popup-negado { border: 2px solid #ff0000; box-shadow: 0 0 25px rgba(255, 0, 0, 0.6); }
-        #popup-info { border: 2px solid #ffaa00; box-shadow: 0 0 25px rgba(255, 170, 0, 0.4); }
+        .card:hover { border-color: rgba(0, 122, 255, 0.4); transform: translateY(-5px); }
 
-        .popup-photo { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 15px; object-fit: cover; }
-        .photo-red { border: 2px solid #ff0000; }
-        .photo-warn { border: 2px solid #ffaa00; }
-
-        .modal h2 { margin-top: 0; font-size: 18px; text-transform: uppercase; }
-        .modal p { font-size: 13px; margin-bottom: 20px; color: #ccc; line-height: 1.5; }
+        /* ── Grid Config ── */
+        .c-main { grid-column: span 2; grid-row: span 2; justify-content: space-between; }
+        .c-skills { grid-column: span 2; grid-row: span 2; }
+        .c-edu { grid-column: span 1; grid-row: span 1; }
+        .c-lang { grid-column: span 1; grid-row: span 2; }
+        .c-spec { grid-column: span 1; grid-row: span 2; }
+        .c-bio { grid-column: span 3; grid-row: span 1; }
         
-        .btn-group { display: flex; gap: 10px; justify-content: center; }
-        .modal button, .modal a.btn-popup { 
-            background: #222; border: 1px solid #444; color: #fff; 
-            padding: 10px 15px; border-radius: 5px; font-weight: bold; 
-            cursor: pointer; text-decoration: none; font-size: 12px;
+        .btn-action {
+            grid-column: span 2; grid-row: span 1;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            text-decoration: none; color: #fff; border-radius: 32px;
+            border: 1px solid var(--border); background: rgba(255, 255, 255, 0.03);
+            font-weight: 800; font-size: 11px; letter-spacing: 1.5px; transition: var(--transition);
         }
-        
-        .btn-red { background: #ff0000 !important; border: none !important; }
-        .btn-warn { background: #ffaa00 !important; border: none !important; color: #000 !important; }
 
-        #overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 999;
+        .btn-action i { font-size: 18px; color: var(--primary); }
+        .btn-action:hover { background: rgba(0, 122, 255, 0.08); border-color: var(--primary); box-shadow: 0 0 25px rgba(0, 122, 255, 0.2); }
+
+        .profile-img { width: 80px; height: 80px; border-radius: 22px; object-fit: cover; border: 1px solid var(--border); margin-bottom: 12px; }
+        h1 { font-size: 24px; font-weight: 800; letter-spacing: -1px; margin-bottom: 3px; }
+        .tagline { font-size: 10px; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 5px; display: block; }
+        .section-title { font-size: 10px; text-transform: uppercase; color: #555; font-weight: 800; margin-bottom: 18px; letter-spacing: 1px; }
+
+        .skills-container { display: flex; flex-wrap: wrap; gap: 6px; }
+        .skill-chip { font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 4px 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; color: #bbb; }
+
+        /* ── Sistema de Barras Corrigido ── */
+        .lang-item, .spec-item { margin-bottom: 16px; width: 100%; }
+        .bar-label { font-size: 11px; margin-bottom: 8px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .bar-level { color: var(--primary); font-size: 10px; font-weight: 800; }
+        .bar-bg { width: 100%; height: 6px; background: rgba(255, 255, 255, 0.08); border-radius: 10px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #007AFF, #00C6FF); border-radius: 10px; box-shadow: 0 0 10px var(--primary-glow); }
+
+        @media (max-width: 900px) {
+            .bento-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
+            .c-main, .c-skills, .c-bio, .c-spec, .c-lang { grid-column: span 2; }
+            .btn-action { grid-column: span 1; height: 75px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="overlay"></div>
+    <canvas id="bg-canvas"></canvas>
 
-    <div id="popup-negado" class="modal">
-        <img src="https://64.media.tumblr.com/c4ec718efde48186f6661ff3c6b108d0/f3416c2782181375-90/s400x600/0acf943f4485e20e6a8e59292910ab8f6ff59abd.gifv" class="popup-photo photo-red">
-        <h2 style="color: #ff0000;">AÇÃO NEGADA!</h2>
-        <p>Mas não se preocupe...<br>entre em contato com o dev</p>
-        <button class="btn-red" onclick="fecharPopups()">OK</button>
-    </div>
-
-    <div id="popup-info" class="modal">
-        <h2 style="color: #ffaa00;">AVISO DE SEGURANÇA</h2>
-        <p>Entregar dados reais pode ser uma ferramenta usada contra o desenvolvedor. <br><br>Se deseja saber minha identidade, entre em contato diretamente.</p>
-        <div class="btn-group">
-            <button onclick="fecharPopups()">OK</button>
-            <a href="contatos.html" class="btn-popup btn-warn">CONTATOS</a>
+    <div class="bento-grid">
+        
+        <div class="card c-main">
+            <div>
+                <img src="https://64.media.tumblr.com/a1ccce290f6302c53aaa1cfa302fed5e/f3416c2782181375-9b/s250x400/f9a89983b59cee443b6c50d81c614cc926dab844.gifv" class="profile-img">
+                <span class="tagline">Status: Disponivel</span>
+                <h1>Paulo Renato</h1>
+                <p style="color: #888; font-size: 13px; margin-bottom: 12px;">Full-Stack & Security Analyst</p>
+                <p style="font-size: 13px; color: #bbb; line-height: 1.6;">Sou capaz de aprender e criar qualquer coisa; a vontade firme transforma o desejo em realidade.</p>
+            </div>
+            <div style="font-size: 10px; color: #444; font-weight: 800; letter-spacing: 1px;">Niterói, RJ, BRASIL</div>
         </div>
-    </div>
 
-    <div class="photo-container">
-        <img src="https://64.media.tumblr.com/a1ccce290f6302c53aaa1cfa302fed5e/f3416c2782181375-9b/s250x400/f9a89983b59cee443b6c50d81c614cc926dab844.gifv">
-    </div>
+        <div class="card c-skills">
+            <span class="section-title">Core Stack & Expertise</span>
+            <div class="skills-container">
+                <span class="skill-chip">HTML5 / CSS3</span>
+                <span class="skill-chip">JavaScript / TypeScript</span>
+                <span class="skill-chip">React.js / Next.js</span>
+                <span class="skill-chip">Node.js</span>
+                <span class="skill-chip">Python / Lua</span>
+                <span class="skill-chip">Dart / Flutter</span>
+                <span class="skill-chip">C / C++ / C#</span>
+                <span class="skill-chip">Java / PHP</span>
+                <span class="skill-chip">SQL / NoSQL / MongoDB</span>
+                <span class="skill-chip">n8n (Automation)</span>
+                <span class="skill-chip">Docker</span>
+                <span class="skill-chip">AWS / Cloud</span>
+                <span class="skill-chip">Git / CI-CD</span>
+                <span class="skill-chip">Pentesting / Kali Linux</span>
+                <span class="skill-chip">Burp Suite</span>
+                <span class="skill-chip">Unreal Engine 5</span>
+                <span class="skill-chip">Unity</span>
+                <span class="skill-chip">AI Agent Integration</span>
+                <span class="skill-chip">Webhooks / REST APIs</span>
+                <span class="skill-chip">Postman</span>
+                <span class="skill-chip">Redis / RabbitMQ</span>
+                <span class="skill-chip">Nginx / Linux</span>
+            </div>
+        </div>
 
-    <h1>DEV Profile</h1>
+        <div class="card c-spec">
+            <span class="section-title">experiência de desenvolvimento</span>
+            <div class="spec-item">
+                <div class="bar-label">Mobile <span class="bar-level">96%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 96%;"></div></div>
+            </div>
+            <div class="spec-item">
+                <div class="bar-label">Desktop <span class="bar-level">92%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 92%;"></div></div>
+            </div>
+            <div class="spec-item">
+                <div class="bar-label">Jogos <span class="bar-level">89%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 89%;"></div></div>
+            </div>
+            <div class="spec-item">
+                <div class="bar-label">Pentesting <span class="bar-level">87%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 87%;"></div></div>
+            </div>
+            <div class="spec-item">
+                <div class="bar-label">IA <span class="bar-level">79%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 79%;"></div></div>
+            </div>
+        </div>
 
-    <div class="terminal-box">
-        <span id="terminal-content"></span><span class="cursor"></span>
-    </div>
+        <div class="card c-lang">
+            <span class="section-title">Idiomas</span>
+            <div class="lang-item">
+                <div class="bar-label">Português <span class="bar-level">NATIVO</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 100%;"></div></div>
+            </div>
+            <div class="lang-item">
+                <div class="bar-label">Inglês <span class="bar-level">AVANÇADO</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 80%;"></div></div>
+            </div>
+            <div class="lang-item">
+                <div class="bar-label">Espanhol <span class="bar-level">AVANÇADO</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 80%;"></div></div>
+            </div>
+        </div>
 
-    <div class="button-container">
-        <div class="btn btn-delete" onclick="abrirPopup('popup-negado')">Delete meus dados</div>
-        <div class="btn btn-real-name" onclick="abrirPopup('popup-info')">Nome Real do DEV</div>
-        <a href="index.html" class="btn-back">← Voltar</a>
+        <div class="card c-edu" style="justify-content: center;">
+            <span class="section-title">Acadêmico</span>
+            <h2 style="font-size: 18px; font-weight: 800;">ADS</h2>
+            <p style="font-size: 11px; color: #666;">Análise e Desenvolvimento de Sistemas</p>
+            <div style="margin-top: 10px; font-size: 9px; color: var(--primary); font-weight: 800;">[ CURSANDO ]</div>
+        </div>
+
+        <div class="card c-bio">
+            <span class="section-title">Manifesto Profissional</span>
+            <p style="font-size: 13px; color: #aaa; line-height: 1.6;">
+                Minha jornada no ecossistema digital foi impulsionada por uma curiosidade incansável. O que começou aos 14 anos como um desejo de entender o funcionamento das coisas, evoluiu para a capacidade de arquitetar mundos, aplicativos e sistemas complexos. Hoje, transformo ideias audaciosas em soluções tangíveis, com o compromisso de sempre superar as expectativas através da inovação e da tecnologia.
+            </p>
+        </div>
+
+        <a href="contatos.html" class="btn-action">
+            <i class="fa-solid fa-paper-plane"></i> CONTATO
+        </a>
+
+        <a href="index.html" class="btn-action">
+            <i class="fa-solid fa-house"></i> VOLTAR
+        </a>
+
     </div>
 
     <script>
-        function abrirPopup(id) {
-            document.getElementById(id).style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        class Particle {
+            constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 1.5; this.speedX = (Math.random() - 0.5) * 0.15; this.speedY = (Math.random() - 0.5) * 0.15; this.opacity = Math.random(); }
+            update() { this.x += this.speedX; this.y += this.speedY; if (this.x > canvas.width) this.x = 0; if (this.x < 0) this.x = canvas.width; if (this.y > canvas.height) this.y = 0; if (this.y < 0) this.y = canvas.height; }
+            draw() { ctx.fillStyle = `rgba(0, 122, 255, ${this.opacity * 0.3})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
         }
+        function init() { particles = []; for (let i = 0; i < 50; i++) particles.push(new Particle()); }
+        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+        window.addEventListener('resize', () => { resize(); init(); });
+        resize(); init(); animate();
 
-        function fecharPopups() {
-            document.getElementById('popup-negado').style.display = 'none';
-            document.getElementById('popup-info').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
-
-        const lines = [
-            "> Carregando dados...",
-            "> Usuário: Near Rem",
-            "> Status: Online",
-            "> Conhecimentos: HTML, CSS, JavaScript, Python, Java, PHP, C, C++, C#, React, Lua, SQL e outras.",
-            "> Dados: Humilde o suficiente para saber que sou descartável. Bom o suficiente para saber que será um downgrade.",
-            "> OBS: Seus dados já foram coletados."
-        ];
-
-        let lineIndex = 0;
-        let charIndex = 0;
-        const target = document.getElementById("terminal-content");
-
-        function typeWriter() {
-            if (lineIndex < lines.length) {
-                if (charIndex < lines[lineIndex].length) {
-                    target.innerHTML += lines[lineIndex].charAt(charIndex);
-                    charIndex++;
-                    setTimeout(typeWriter, 40); 
-                } else {
-                    target.innerHTML += "<br>"; 
-                    lineIndex++;
-                    charIndex = 0;
-                    setTimeout(typeWriter, 500); 
-                }
-            }
-        }
-
-        window.onload = typeWriter;
+        document.querySelectorAll('.card, .btn-action').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0, 122, 255, 0.12) 0%, rgba(12, 12, 12, 0.65) 80%)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.background = card.classList.contains('btn-action') ? 'rgba(255, 255, 255, 0.03)' : 'var(--card)';
+            });
+        });
     </script>
 </body>
 </html>

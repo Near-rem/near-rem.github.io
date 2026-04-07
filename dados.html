@@ -212,12 +212,12 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .hdr-l{display:flex;align-items:center;gap:12px}
 .hdr-av{
   width:38px;height:38px;border-radius:50%;
-  background:linear-gradient(135deg,rgba(139,109,252,.3),rgba(61,232,160,.2));
   border:1px solid rgba(139,109,252,.3);
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 16px rgba(139,109,252,.25);position:relative;flex-shrink:0;
+  position:relative;flex-shrink:0;
 }
-.hdr-av svg{width:20px;height:20px}
+/* Estilo ajustado para o GIF de avatar */
+.hdr-av img{width:100%;height:100%;border-radius:50%;object-fit:cover;}
 .hdr-av::after{content:'';position:absolute;bottom:0;right:0;width:10px;height:10px;border-radius:50%;background:var(--m);border:2px solid var(--bg1);box-shadow:0 0 8px var(--m)}
 .hdr-name{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--v3);letter-spacing:.08em}
 .hdr-status{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--m);letter-spacing:.15em;margin-top:1px}
@@ -324,12 +324,14 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 <body>
 
 <canvas id="bgc"></canvas>
+
 <div class="cdeco tl"></div>
 <div class="cdeco tr"></div>
 <div class="cdeco bl"></div>
 <div class="cdeco br"></div>
 
 <div class="screen" id="s-enter">
+
   <div class="logo-scene">
     <div class="logo-card">
       <div class="logo-glow"></div>
@@ -339,80 +341,159 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
           <circle cx="23" cy="23" r="7" fill="rgba(139,109,252,.35)" stroke="rgba(176,154,255,.6)" stroke-width="1.5"/>
           <circle cx="23" cy="23" r="3" fill="#b09aff"/>
           <path d="M9 23 Q16 14 23 14 Q30 14 37 23 Q30 32 23 32 Q16 32 9 23Z" stroke="rgba(139,109,252,.4)" stroke-width="1" fill="none"/>
+          <circle cx="26" cy="20" r="2" fill="rgba(255,255,255,.5)"/>
         </svg>
       </div>
       <div class="logo-face back">
         <svg class="logo-icon" viewBox="0 0 46 46" fill="none">
           <rect x="10" y="14" width="26" height="20" rx="5" stroke="rgba(61,232,160,.5)" stroke-width="1.5" fill="none"/>
           <path d="M17 22h12M17 27h8" stroke="rgba(61,232,160,.6)" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="32" cy="14" r="5" fill="rgba(139,109,252,.6)" stroke="rgba(176,154,255,.5)" stroke-width="1"/>
+          <circle cx="32" cy="14" r="2" fill="#d4caff"/>
         </svg>
       </div>
     </div>
   </div>
+
   <div class="logo-title">Chat Rem</div>
   <div class="logo-sub">P2P · Sem rastros · Efêmero</div>
+
   <div class="panel">
     <div class="p-label">Chave de acesso</div>
-    <div class="key-wrap"><span class="key-hash">#</span><input type="text" id="freq-input" placeholder="sua‑chave" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')doConnect()"></div>
+    <div class="key-wrap">
+      <span class="key-hash">#</span>
+      <input type="text" id="freq-input" placeholder="sua‑chave" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')doConnect()">
+    </div>
     <div class="hint">Use a mesma chave nos dois dispositivos para abrir um canal</div>
     <button class="btn-main" onclick="doConnect()">▶ &nbsp;Conectar</button>
     <div class="st" id="st"></div>
   </div>
+
 </div>
 
 <div class="screen hidden" id="s-wait">
   <div class="wait-card">
-    <div class="gif-3d"><div class="gif-inner"><img src="https://64.media.tumblr.com/a3f87ab649160476b7ccf1133901f631/f3416c2782181375-13/s250x400/5f70efa2ad20e71d66e769d3da6089f522545c23.gifv" alt=""></div></div>
+    <div class="gif-3d">
+      <div class="gif-inner">
+        <img src="https://64.media.tumblr.com/a3f87ab649160476b7ccf1133901f631/f3416c2782181375-13/s250x400/5f70efa2ad20e71d66e769d3da6089f522545c23.gifv" alt="">
+      </div>
+    </div>
     <div class="wait-info">
       <div class="w-lbl">Canal aberto</div>
       <div class="w-code" id="w-code">—</div>
-      <div class="w-status"><div class="w-dot"></div>Aguardando...</div>
+      <div class="w-status">
+        <div class="w-dot"></div>
+        Aguardando...
+      </div>
     </div>
   </div>
   <div class="wave" id="wave"></div>
   <div style="text-align:center">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2);letter-spacing:.12em;margin-bottom:14px">Abra o site em outro dispositivo com a mesma chave</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2);letter-spacing:.12em;margin-bottom:14px">
+      Abra o site em outro dispositivo com a mesma chave
+    </div>
     <button class="btn-ghost" onclick="doCancel()">✕ &nbsp;Cancelar</button>
   </div>
 </div>
 
 <div class="screen hidden" id="s-chat">
+
   <div class="chat-hdr">
     <div class="hdr-l">
-      <div class="hdr-av"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="rgba(176,154,255,.6)" stroke-width="1"/><circle cx="10" cy="10" r="3" fill="rgba(139,109,252,.5)" stroke="rgba(176,154,255,.8)" stroke-width="1"/></svg></div>
-      <div><div class="hdr-name" id="hdr-name">#—</div><div class="hdr-status">● Online</div></div>
+      <div class="hdr-av">
+        <img src="https://64.media.tumblr.com/0eb579475a8129ff2403eca94f224a53/f3416c2782181375-48/s250x400/b5915fc9f58de68ee412d1a6600ad3900930decb.gifv" alt="Avatar">
+      </div>
+      <div>
+        <div class="hdr-name" id="hdr-name">#—</div>
+        <div class="hdr-status">● Online</div>
+      </div>
     </div>
     <button class="btn-disc" onclick="doDisc()">✕ Sair</button>
   </div>
+
   <div class="msgs" id="msgs">
     <div class="empty" id="empty">
-      <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke="currentColor" stroke-width="1"/><path d="M12 20 Q20 12 28 20 Q20 28 12 20Z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="17" stroke="currentColor" stroke-width="1"/>
+        <path d="M12 20 Q20 12 28 20 Q20 28 12 20Z" stroke="currentColor" stroke-width="1" fill="none"/>
+        <circle cx="20" cy="20" r="3" fill="currentColor"/>
+      </svg>
       <p>Mensagens não são salvas</p>
     </div>
   </div>
+
   <div class="inp-area">
     <textarea id="msg-in" rows="1" placeholder="Mensagem..." onkeydown="onKey(event)" oninput="autoGrow(this)"></textarea>
-    <button class="btn-send" onclick="doSend()"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    <button class="btn-send" onclick="doSend()" title="Enviar">
+      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
   </div>
+
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-/* ── CANVAS ── */
+/* ── PARTICLE CANVAS ── */
 (function(){
-  const c=document.getElementById('bgc'),ctx=c.getContext('2d');
+  const c=document.getElementById('bgc');
+  const ctx=c.getContext('2d');
   let W,H,pts=[];
   const resize=()=>{W=c.width=innerWidth;H=c.height=innerHeight;};
   resize();addEventListener('resize',resize);
+  const PAL=['rgba(139,109,252,','rgba(61,232,160,','rgba(247,126,177,'];
   class Pt{
     constructor(){this.reset()}
-    reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=.4+Math.random()*1.2;this.vx=(Math.random()-.5)*.25;this.vy=(Math.random()-.5)*.25;this.a=Math.random();this.phase=Math.random()*Math.PI*2;this.col=['rgba(139,109,252,','rgba(61,232,160,'][Math.floor(Math.random()*2)];}
-    tick(t){this.x+=this.vx;this.y+=this.vy;this.a=.15+.35*(.5+.5*Math.sin(t*.0008+this.phase));if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();}
-    draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.col+this.a+')';ctx.fill();}
+    reset(){
+      this.x=Math.random()*W;this.y=Math.random()*H;
+      this.r=.4+Math.random()*1.2;
+      this.vx=(Math.random()-.5)*.25;this.vy=(Math.random()-.5)*.25;
+      this.a=Math.random();this.da=.004+Math.random()*.006;
+      this.col=PAL[Math.floor(Math.random()*PAL.length)];
+      this.phase=Math.random()*Math.PI*2;
+    }
+    tick(t){
+      this.x+=this.vx;this.y+=this.vy;
+      this.a=.15+.35*(.5+.5*Math.sin(t*.0008+this.phase));
+      if(this.x<-10||this.x>W+10||this.y<-10||this.y>H+10)this.reset();
+    }
+    draw(){
+      ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle=this.col+this.a+')';ctx.fill();
+    }
+  }
+  const blobs=[
+    {x:.15,y:.2,r:300,c:'rgba(139,109,252,'},
+    {x:.82,y:.75,r:260,c:'rgba(61,232,160,'},
+    {x:.5,y:.5,r:200,c:'rgba(79,70,229,'},
+  ];
+  function drawBlobs(){
+    blobs.forEach(b=>{
+      const g=ctx.createRadialGradient(b.x*W,b.y*H,0,b.x*W,b.y*H,b.r);
+      g.addColorStop(0,b.c+'.055)');g.addColorStop(1,b.c+'0)');
+      ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    });
   }
   for(let i=0;i<55;i++)pts.push(new Pt());
-  function draw(t){ctx.clearRect(0,0,W,H);pts.forEach(p=>{p.tick(t);p.draw()});requestAnimationFrame(draw);}
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    drawBlobs();
+    ctx.strokeStyle='rgba(139,109,252,.022)';ctx.lineWidth=1;
+    const g=48;
+    for(let x=0;x<W;x+=g){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=g){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    pts.forEach(p=>{p.tick(t);p.draw()});
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<80){
+          ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle='rgba(139,109,252,'+((.08*(1-dist/80)))+')';ctx.lineWidth=.5;ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
   requestAnimationFrame(draw);
 })();
 
@@ -425,6 +506,18 @@ function show(id){['s-enter','s-wait','s-chat'].forEach(s=>$(s).classList.toggle
 function toast(msg,err=false){const t=$('toast');t.textContent=msg;t.className='toast'+(err?' err':'');void t.offsetWidth;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3400);}
 function st(msg,cls=''){const s=$('st');s.textContent=msg;s.className='st '+cls;}
 
+function buildWave(){
+  const w=$('wave');w.innerHTML='';
+  for(let i=0;i<28;i++){
+    const b=document.createElement('div');b.className='wb';
+    b.style.cssText=`--mn:${3+Math.random()*7}px;--mx:${12+Math.random()*26}px;--d:${(.45+Math.random()*.85).toFixed(2)}s;animation-delay:${(Math.random()*.7).toFixed(2)}s`;
+    w.appendChild(b);
+  }
+}
+
+const ts=()=>{const d=new Date();return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');}
+
+/* ── CONNECT ── */
 function doConnect(){
   const raw=$('freq-input').value.trim();
   if(!raw){st('Insira uma chave','err');return;}
@@ -499,7 +592,17 @@ function addMsg(text,side){
   const area=$('msgs'),emp=$('empty'); if(emp)emp.remove();
   const wrap=document.createElement('div');wrap.className='mw '+side;
   const bub=document.createElement('div');bub.className='bubble';bub.textContent=text;
-  const tm=document.createElement('div');tm.className='mtime';tm.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  const cp=document.createElement('button');cp.className='copy-btn';cp.title='Copiar';
+  cp.innerHTML='<svg viewBox="0 0 12 12"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke-width="1.2"/><path d="M1 8V2a1 1 0 011-1h6" stroke-width="1.2" stroke-linecap="round"/></svg>';
+  cp.onclick=e=>{
+    e.stopPropagation();
+    navigator.clipboard.writeText(text).then(()=>{
+      cp.classList.add('copied');
+      setTimeout(()=>cp.classList.remove('copied'),1400);
+    });
+  };
+  bub.appendChild(cp);
+  const tm=document.createElement('div');tm.className='mtime';tm.textContent=ts();
   wrap.appendChild(bub);wrap.appendChild(tm);area.appendChild(wrap);
   area.scrollTop=area.scrollHeight;
 }

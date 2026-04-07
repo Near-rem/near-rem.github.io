@@ -216,7 +216,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
   display:flex;align-items:center;justify-content:center;
   position:relative;flex-shrink:0;
 }
-/* Estilo ajustado para o GIF de avatar */
 .hdr-av img{width:100%;height:100%;border-radius:50%;object-fit:cover;}
 .hdr-av::after{content:'';position:absolute;bottom:0;right:0;width:10px;height:10px;border-radius:50%;background:var(--m);border:2px solid var(--bg1);box-shadow:0 0 8px var(--m)}
 .hdr-name{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--v3);letter-spacing:.08em}
@@ -405,7 +404,7 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
       </div>
       <div>
         <div class="hdr-name" id="hdr-name">#—</div>
-        <div class="hdr-status">● Online</div>
+        <div class="hdr-status" id="hdr-status">● Offline</div>
       </div>
     </div>
     <button class="btn-disc" onclick="doDisc()">✕ Sair</button>
@@ -500,18 +499,20 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 /* ── APP LOGIC ── */
 let peer=null,conn=null,myFreq='', chunks = {};
 const $=id=>document.getElementById(id);
-const CHUNK_SIZE = 16384; // 16KB per packet
+const CHUNK_SIZE = 16384; 
 
 function show(id){['s-enter','s-wait','s-chat'].forEach(s=>$(s).classList.toggle('hidden',s!==id));}
 function toast(msg,err=false){const t=$('toast');t.textContent=msg;t.className='toast'+(err?' err':'');void t.offsetWidth;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3400);}
 function st(msg,cls=''){const s=$('st');s.textContent=msg;s.className='st '+cls;}
 
-function buildWave(){
-  const w=$('wave');w.innerHTML='';
-  for(let i=0;i<28;i++){
-    const b=document.createElement('div');b.className='wb';
-    b.style.cssText=`--mn:${3+Math.random()*7}px;--mx:${12+Math.random()*26}px;--d:${(.45+Math.random()*.85).toFixed(2)}s;animation-delay:${(Math.random()*.7).toFixed(2)}s`;
-    w.appendChild(b);
+function updateStatus(connected) {
+  const statusEl = $('hdr-status');
+  if (connected) {
+    statusEl.textContent = '● 2 Conectados';
+    statusEl.style.color = 'var(--m)';
+  } else {
+    statusEl.textContent = '● 1 Conectado (Você)';
+    statusEl.style.color = 'var(--tx2)';
   }
 }
 
@@ -546,8 +547,9 @@ function asGuest(hid){
 
 function setup(){
   show('s-chat');
+  updateStatus(true);
+  
   conn.on('data', data => {
-    // Sistema de reconstrução de mensagens longas
     if (data.__chunked) {
       if (!chunks[data.id]) chunks[data.id] = [];
       chunks[data.id][data.index] = data.chunk;
@@ -560,30 +562,26 @@ function setup(){
       addMsg(data, 'them');
     }
   });
+
+  conn.on('close', () => {
+    updateStatus(false);
+    toast('O outro usuário saiu.', true);
+  });
 }
 
 function doSend(){
   const inp=$('msg-in'), text=inp.value.trim();
   if(!text || !conn || !conn.open) return;
-
   const msgId = Math.random().toString(36).substr(2, 9);
-  
   if (text.length > CHUNK_SIZE) {
     const numChunks = Math.ceil(text.length / CHUNK_SIZE);
     for (let i = 0; i < numChunks; i++) {
       const chunk = text.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
-      conn.send({
-        __chunked: true,
-        id: msgId,
-        index: i,
-        total: numChunks,
-        chunk: chunk
-      });
+      conn.send({__chunked: true, id: msgId, index: i, total: numChunks, chunk: chunk});
     }
   } else {
     conn.send(text);
   }
-
   addMsg(text, 'me');
   inp.value='';inp.style.height='';inp.focus();
 }
@@ -608,7 +606,11 @@ function addMsg(text,side){
 }
 
 function doCancel(){if(peer)peer.destroy();show('s-enter');}
-function doDisc(){if(peer)peer.destroy();location.reload();}
+function doDisc(){
+  if(conn) conn.close();
+  if(peer) peer.destroy();
+  location.reload();
+}
 function autoGrow(el){el.style.height='';el.style.height=Math.min(el.scrollHeight,120)+'px';}
 function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSend();}}
 window.addEventListener('load',()=>$('freq-input').focus());

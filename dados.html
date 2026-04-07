@@ -337,23 +337,19 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 </head>
 <body>
 
-<!-- Particle canvas -->
 <canvas id="bgc"></canvas>
 
-<!-- Corner decorations -->
 <div class="cdeco tl"></div>
 <div class="cdeco tr"></div>
 <div class="cdeco bl"></div>
 <div class="cdeco br"></div>
 
-<!-- ═══════ TELA 1 ═══════ -->
 <div class="screen" id="s-enter">
 
   <div class="logo-scene">
     <div class="logo-card">
       <div class="logo-glow"></div>
       <div class="logo-face front">
-        <!-- Custom icon SVG -->
         <svg class="logo-icon" viewBox="0 0 46 46" fill="none">
           <circle cx="23" cy="23" r="20" stroke="rgba(139,109,252,.5)" stroke-width="1"/>
           <circle cx="23" cy="23" r="7" fill="rgba(139,109,252,.35)" stroke="rgba(176,154,255,.6)" stroke-width="1.5"/>
@@ -389,7 +385,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 
 </div>
 
-<!-- ═══════ TELA 2 ═══════ -->
 <div class="screen hidden" id="s-wait">
   <div class="wait-card">
     <div class="gif-3d">
@@ -415,7 +410,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
   </div>
 </div>
 
-<!-- ═══════ TELA 3 ═══════ -->
 <div class="screen hidden" id="s-chat">
 
   <div class="chat-hdr">
@@ -486,7 +480,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
       ctx.fillStyle=this.col+this.a+')';ctx.fill();
     }
   }
-  /* Nebula blobs – drawn once, very subtle */
   const blobs=[
     {x:.15,y:.2,r:300,c:'rgba(139,109,252,'},
     {x:.82,y:.75,r:260,c:'rgba(61,232,160,'},
@@ -500,18 +493,14 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
     });
   }
   for(let i=0;i<55;i++)pts.push(new Pt());
-  let last=0;
   function draw(t){
     ctx.clearRect(0,0,W,H);
     drawBlobs();
-    /* Subtle grid */
     ctx.strokeStyle='rgba(139,109,252,.022)';ctx.lineWidth=1;
     const g=48;
     for(let x=0;x<W;x+=g){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
     for(let y=0;y<H;y+=g){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-    /* Particles */
     pts.forEach(p=>{p.tick(t);p.draw()});
-    /* Soft connections */
     for(let i=0;i<pts.length;i++){
       for(let j=i+1;j<pts.length;j++){
         const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,dist=Math.sqrt(dx*dx+dy*dy);
@@ -530,12 +519,10 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 let peer=null,conn=null,myFreq='';
 const $=id=>document.getElementById(id);
 
-/* Screen */
 function show(id){
   ['s-enter','s-wait','s-chat'].forEach(s=>$(s).classList.toggle('hidden',s!==id));
 }
 
-/* Toast */
 function toast(msg,err=false){
   const t=$('toast');t.textContent=msg;
   t.className='toast'+(err?' err':'');
@@ -543,10 +530,8 @@ function toast(msg,err=false){
   clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),3400);
 }
 
-/* Status */
 function st(msg,cls=''){const s=$('st');s.textContent=msg;s.className='st '+cls;}
 
-/* Waveform */
 function buildWave(){
   const w=$('wave');w.innerHTML='';
   for(let i=0;i<28;i++){
@@ -556,7 +541,6 @@ function buildWave(){
   }
 }
 
-/* Time */
 const ts=()=>{const d=new Date();return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');}
 
 /* ── CONNECT ── */
@@ -567,19 +551,20 @@ function doConnect(){
   const pid='chatrem-'+myFreq;
   st('Conectando...','info');
   if(peer){try{peer.destroy()}catch(e){} peer=null;}
-  /* Try as HOST */
   peer=new Peer(pid,{debug:0});
-  let opened=false;
   peer.on('open',()=>{
-    opened=true;
     $('w-code').textContent='#'+myFreq;
     $('hdr-name').textContent='#'+myFreq;
     buildWave();show('s-wait');
-    peer.on('connection',inc=>{conn=inc;setup();});
+    peer.on('connection',inc=>{
+        conn=inc;
+        // Ajuste aqui para garantir estabilidade
+        conn.serialization = 'json';
+        setup();
+    });
   });
   peer.on('error',err=>{
     if(err.type==='unavailable-id'){
-      /* Already taken → GUEST */
       try{peer.destroy()}catch(e){}peer=null;
       asGuest(pid);
     } else {
@@ -592,6 +577,7 @@ function asGuest(hid){
   peer=new Peer(undefined,{debug:0});
   peer.on('open',()=>{
     st('Entrando...','info');
+    // Forçamos reliable: true para mensagens longas
     conn=peer.connect(hid,{reliable:true,serialization:'json'});
     conn.on('open',()=>{$('hdr-name').textContent='#'+myFreq;setup();});
     conn.on('error',()=>st('Falha — verifique a chave','err'));
@@ -622,16 +608,11 @@ function doSend(){
 function addMsg(text,side){
   const area=$('msgs'),emp=$('empty');
   if(emp)emp.remove();
-
   const wrap=document.createElement('div');wrap.className='mw '+side;
-
   const meta=document.createElement('div');meta.className='mmeta';
   meta.textContent=side==='me'?'Você':'Outro';
-
   const bub=document.createElement('div');bub.className='bubble';
   bub.textContent=text;
-
-  /* Copy button */
   const cp=document.createElement('button');cp.className='copy-btn';cp.title='Copiar';
   cp.innerHTML='<svg viewBox="0 0 12 12"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke-width="1.2"/><path d="M1 8V2a1 1 0 011-1h6" stroke-width="1.2" stroke-linecap="round"/></svg>';
   cp.onclick=e=>{
@@ -642,9 +623,7 @@ function addMsg(text,side){
     });
   };
   bub.appendChild(cp);
-
   const tm=document.createElement('div');tm.className='mtime';tm.textContent=ts();
-
   wrap.appendChild(meta);wrap.appendChild(bub);wrap.appendChild(tm);
   area.appendChild(wrap);
   area.scrollTop=area.scrollHeight;
@@ -655,7 +634,6 @@ function sysmsg(t){
   d.className='sys-m';d.textContent=t;area.appendChild(d);area.scrollTop=area.scrollHeight;
 }
 
-/* ── CONTROLS ── */
 function doCancel(){if(peer){try{peer.destroy()}catch(e){}peer=null;}show('s-enter');st('');}
 function doDisc(){
   if(conn){try{conn.close()}catch(e){}}
@@ -665,11 +643,9 @@ function doDisc(){
   show('s-enter');
 }
 
-/* Textarea auto‑grow */
 function autoGrow(el){el.style.height='';el.style.height=Math.min(el.scrollHeight,120)+'px';}
 function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSend();}}
 
-/* Focus on load */
 window.addEventListener('load',()=>$('freq-input').focus());
 </script>
 </body>

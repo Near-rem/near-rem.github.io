@@ -10,18 +10,19 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --cyan: #00f5ff;
-    --green: #00ff88;
-    --amber: #ffaa00;
+    /* MUDANÇA PARA ROXO */
+    --cyan: #bc13fe; /* Roxo Neon */
+    --green: #d896ff; /* Roxo Claro */
+    --amber: #f0abff;
     --red: #ff3366;
-    --bg: #050810;
-    --bg2: #0a1020;
-    --bg3: #0f1830;
-    --panel: rgba(0,245,255,0.04);
-    --border: rgba(0,245,255,0.15);
-    --border2: rgba(0,245,255,0.35);
-    --text: #b0cfe8;
-    --textmuted: #4a6a88;
+    --bg: #0a0510;
+    --bg2: #120a1d;
+    --bg3: #1a0f2b;
+    --panel: rgba(188, 19, 254, 0.04);
+    --border: rgba(188, 19, 254, 0.15);
+    --border2: rgba(188, 19, 254, 0.35);
+    --text: #e8b0ff;
+    --textmuted: #6a4a88;
   }
 
   html, body {
@@ -49,14 +50,13 @@
     position: fixed;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+      linear-gradient(rgba(188, 19, 254, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(188, 19, 254, 0.03) 1px, transparent 1px);
     background-size: 40px 40px;
     pointer-events: none;
     z-index: 0;
   }
 
-  /* ── SCREEN SYSTEM ── */
   .screen {
     position: fixed;
     inset: 0;
@@ -67,28 +67,14 @@
     z-index: 10;
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .screen.hidden {
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.97);
-  }
+  .screen.hidden { opacity: 0; pointer-events: none; transform: scale(0.97); }
 
-  /* ══════════════════════════════════
-     TELA 1 — ENTRADA DE FREQUÊNCIA
-  ══════════════════════════════════ */
-  #screen-enter {
-    gap: 0;
-  }
-
-  .logo-area {
-    text-align: center;
-    margin-bottom: 48px;
-    position: relative;
-  }
+  #screen-enter { gap: 0; }
+  .logo-area { text-align: center; margin-bottom: 48px; position: relative; }
 
   .logo-ring {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     margin: 0 auto 24px;
     position: relative;
     display: flex;
@@ -96,30 +82,19 @@
     justify-content: center;
   }
 
-  .logo-ring svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    animation: spin-slow 12s linear infinite;
-  }
-
-  .logo-ring .inner-icon {
-    font-size: 36px;
-    position: relative;
+  /* GIF NO LUGAR DO EMOJI */
+  .inner-gif {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
     z-index: 2;
-    animation: pulse-glow 2s ease-in-out infinite;
+    border: 2px solid var(--cyan);
+    box-shadow: 0 0 20px var(--cyan);
+    object-fit: cover;
   }
 
-  @keyframes spin-slow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% { filter: drop-shadow(0 0 8px var(--cyan)) drop-shadow(0 0 20px var(--cyan)); opacity: 1; }
-    50% { filter: drop-shadow(0 0 16px var(--cyan)) drop-shadow(0 0 40px var(--cyan)); opacity: 0.8; }
-  }
+  .logo-ring svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin-slow 12s linear infinite; }
+  @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
   .logo-title {
     font-family: 'Orbitron', monospace;
@@ -127,164 +102,35 @@
     font-weight: 900;
     letter-spacing: 0.2em;
     color: var(--cyan);
-    text-shadow:
-      0 0 20px rgba(0,245,255,0.8),
-      0 0 60px rgba(0,245,255,0.3),
-      0 0 100px rgba(0,245,255,0.1);
-    line-height: 1;
+    text-shadow: 0 0 20px rgba(188, 19, 254, 0.8);
   }
 
-  .logo-sub {
-    font-size: 11px;
-    letter-spacing: 0.5em;
-    color: var(--textmuted);
-    margin-top: 8px;
-    text-transform: uppercase;
-  }
+  .logo-sub { font-size: 11px; letter-spacing: 0.5em; color: var(--textmuted); margin-top: 8px; text-transform: uppercase; }
 
-  /* Signal waves decorative */
-  .signal-waves {
-    position: absolute;
-    inset: -40px;
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  .signal-waves span {
-    position: absolute;
-    inset: 0;
-    border: 1px solid var(--cyan);
-    border-radius: 50%;
-    animation: wave-expand 3s ease-out infinite;
-    opacity: 0;
-  }
-  .signal-waves span:nth-child(1) { animation-delay: 0s; }
-  .signal-waves span:nth-child(2) { animation-delay: 1s; }
-  .signal-waves span:nth-child(3) { animation-delay: 2s; }
-
-  @keyframes wave-expand {
-    0% { transform: scale(0.3); opacity: 0.8; }
-    100% { transform: scale(2); opacity: 0; }
-  }
+  .signal-waves { position: absolute; inset: -40px; pointer-events: none; z-index: -1; }
+  .signal-waves span { position: absolute; inset: 0; border: 1px solid var(--cyan); border-radius: 50%; animation: wave-expand 3s ease-out infinite; opacity: 0; }
+  @keyframes wave-expand { 0% { transform: scale(0.3); opacity: 0.8; } 100% { transform: scale(2); opacity: 0; } }
 
   /* Frequency input panel */
   .freq-panel {
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 2px;
     padding: 40px 48px;
     width: min(480px, 90vw);
     position: relative;
-    overflow: hidden;
-  }
-
-  .freq-panel::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--cyan), var(--green), var(--cyan), transparent);
-    animation: scan-line 3s linear infinite;
-  }
-
-  @keyframes scan-line {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-
-  .freq-panel::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-    animation: scan-line 3s linear infinite reverse;
-  }
-
-  .corner-tl, .corner-tr, .corner-bl, .corner-br {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-color: var(--cyan);
-    border-style: solid;
-  }
-  .corner-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
-  .corner-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
-  .corner-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
-  .corner-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
-
-  .panel-label {
-    font-size: 10px;
-    letter-spacing: 0.4em;
-    color: var(--textmuted);
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .panel-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .freq-input-wrap {
-    position: relative;
-    margin-bottom: 12px;
-  }
-
-  .freq-prefix {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Orbitron', monospace;
-    font-size: 18px;
-    color: var(--cyan);
-    font-weight: 700;
-    opacity: 0.6;
-    pointer-events: none;
   }
 
   #freq-input {
     width: 100%;
-    background: rgba(0,245,255,0.06);
+    background: rgba(188, 19, 254, 0.06);
     border: 1px solid var(--border2);
-    border-radius: 2px;
-    padding: 16px 20px 16px 56px;
+    padding: 16px 20px;
     font-family: 'Orbitron', monospace;
     font-size: 28px;
-    font-weight: 700;
     color: var(--cyan);
-    letter-spacing: 0.3em;
     text-align: center;
     outline: none;
-    transition: all 0.3s;
-    caret-color: var(--green);
-    text-shadow: 0 0 20px rgba(0,245,255,0.5);
-  }
-
-  #freq-input:focus {
-    border-color: var(--cyan);
-    background: rgba(0,245,255,0.1);
-    box-shadow: 0 0 30px rgba(0,245,255,0.1), inset 0 0 20px rgba(0,245,255,0.05);
-  }
-
-  #freq-input::placeholder {
-    color: var(--textmuted);
-    opacity: 0.5;
-    font-size: 20px;
-    letter-spacing: 0.2em;
-  }
-
-  .input-hint {
-    font-size: 11px;
-    color: var(--textmuted);
-    text-align: center;
-    margin-bottom: 28px;
-    letter-spacing: 0.1em;
+    text-shadow: 0 0 20px rgba(188, 19, 254, 0.5);
   }
 
   .btn-connect {
@@ -292,203 +138,21 @@
     padding: 16px;
     background: transparent;
     border: 1px solid var(--cyan);
-    border-radius: 2px;
     font-family: 'Orbitron', monospace;
-    font-size: 14px;
+    color: var(--cyan);
+    cursor: pointer;
     font-weight: 700;
     letter-spacing: 0.4em;
-    color: var(--cyan);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s;
-    text-transform: uppercase;
+    margin-top: 20px;
   }
 
-  .btn-connect::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(0,245,255,0.15), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.4s;
-  }
+  .btn-connect:hover { background: rgba(188, 19, 254, 0.1); box-shadow: 0 0 30px rgba(188, 19, 254, 0.2); }
 
-  .btn-connect:hover::before { transform: translateX(100%); }
-  .btn-connect:hover {
-    background: rgba(0,245,255,0.08);
-    box-shadow: 0 0 30px rgba(0,245,255,0.2), inset 0 0 20px rgba(0,245,255,0.05);
-    text-shadow: 0 0 20px var(--cyan);
-  }
-  .btn-connect:active { transform: scale(0.98); }
-
-  .status-msg {
-    font-size: 11px;
-    text-align: center;
-    margin-top: 16px;
-    min-height: 18px;
-    letter-spacing: 0.1em;
-    transition: all 0.3s;
-  }
-  .status-msg.error { color: var(--red); }
-  .status-msg.info { color: var(--amber); }
-
-  /* ══════════════════════════════════
-     TELA 2 — AGUARDANDO
-  ══════════════════════════════════ */
-  #screen-wait {
-    gap: 32px;
-  }
-
-  .broadcast-display {
-    text-align: center;
-    position: relative;
-  }
-
-  .freq-display {
-    font-family: 'Orbitron', monospace;
-    font-size: clamp(48px, 12vw, 96px);
-    font-weight: 900;
-    color: var(--cyan);
-    text-shadow:
-      0 0 30px rgba(0,245,255,0.9),
-      0 0 80px rgba(0,245,255,0.4),
-      0 0 150px rgba(0,245,255,0.1);
-    letter-spacing: 0.1em;
-    animation: flicker 8s step-end infinite;
-  }
-
-  @keyframes flicker {
-    0%, 95%, 97%, 100% { opacity: 1; }
-    96% { opacity: 0.7; }
-  }
-
-  .freq-label {
-    font-size: 10px;
-    letter-spacing: 0.6em;
-    color: var(--textmuted);
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
-  .wait-status {
-    font-size: 13px;
-    color: var(--amber);
-    letter-spacing: 0.2em;
-    animation: blink-text 1.4s step-end infinite;
-  }
-
-  @keyframes blink-text {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  /* VU Meter / waveform */
-  .waveform {
-    display: flex;
-    align-items: flex-end;
-    gap: 4px;
-    height: 60px;
-    padding: 0 4px;
-  }
-
-  .wave-bar {
-    width: 6px;
-    background: var(--cyan);
-    border-radius: 1px 1px 0 0;
-    opacity: 0.6;
-    animation: wave-dance var(--d, 0.8s) ease-in-out infinite alternate;
-    min-height: 4px;
-  }
-
-  @keyframes wave-dance {
-    from { height: var(--min-h, 8px); opacity: 0.3; }
-    to { height: var(--max-h, 40px); opacity: 0.9; }
-  }
-
-  .cancel-btn {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    color: var(--textmuted);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px 16px;
-    transition: color 0.2s;
-    text-transform: uppercase;
-  }
-  .cancel-btn:hover { color: var(--red); }
-
-  /* ══════════════════════════════════
-     TELA 3 — CHAT
-  ══════════════════════════════════ */
-  #screen-chat {
-    padding: 0;
-    justify-content: stretch;
-    flex-direction: column;
-  }
-
-  .chat-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 24px;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg2);
-    flex-shrink: 0;
-  }
-
-  .chat-header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .conn-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--green);
-    box-shadow: 0 0 10px var(--green), 0 0 20px var(--green);
-    animation: conn-pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes conn-pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.3); opacity: 0.7; }
-  }
-
-  .chat-freq-label {
-    font-family: 'Orbitron', monospace;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--cyan);
-    letter-spacing: 0.2em;
-  }
-
-  .chat-status-badge {
-    font-size: 10px;
-    color: var(--green);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
-
-  .disconnect-btn {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--textmuted);
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    cursor: pointer;
-    padding: 6px 12px;
-    transition: all 0.2s;
-    text-transform: uppercase;
-  }
-  .disconnect-btn:hover { color: var(--red); border-color: var(--red); }
-
+  /* ── CHAT ── */
+  #screen-chat { padding: 0; justify-content: stretch; flex-direction: column; }
+  .chat-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; border-bottom: 1px solid var(--border); background: var(--bg2); }
+  .conn-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+  
   .messages-area {
     flex: 1;
     overflow-y: auto;
@@ -496,522 +160,185 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-  }
-
-  .messages-area::-webkit-scrollbar { width: 4px; }
-  .messages-area::-webkit-scrollbar-track { background: transparent; }
-  .messages-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-  .msg-wrap {
-    display: flex;
-    flex-direction: column;
-    max-width: 80%;
-    animation: msg-appear 0.25s ease;
-  }
-
-  @keyframes msg-appear {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .msg-wrap.mine { align-self: flex-end; align-items: flex-end; }
-  .msg-wrap.theirs { align-self: flex-start; align-items: flex-start; }
-
-  .msg-meta {
-    font-size: 10px;
-    color: var(--textmuted);
-    margin-bottom: 4px;
-    letter-spacing: 0.1em;
   }
 
   .msg-bubble {
-    padding: 10px 16px;
-    border-radius: 2px;
+    padding: 12px 18px;
+    background: rgba(188, 19, 254, 0.1);
+    border: 1px solid var(--border);
+    color: var(--text);
     font-size: 14px;
-    line-height: 1.6;
-    word-break: break-word;
-    position: relative;
+    white-space: pre-wrap; /* Mantém formatação de código */
+    max-width: 90%;
   }
 
-  .msg-wrap.mine .msg-bubble {
-    background: rgba(0,245,255,0.1);
-    border: 1px solid rgba(0,245,255,0.25);
-    color: var(--cyan);
-    border-top-right-radius: 0;
-  }
+  .msg-wrap.mine { align-self: flex-end; }
+  .msg-wrap.theirs { align-self: flex-start; }
 
-  .msg-wrap.theirs .msg-bubble {
-    background: rgba(0,255,136,0.07);
-    border: 1px solid rgba(0,255,136,0.2);
-    color: var(--green);
-    border-top-left-radius: 0;
-  }
-
-  .empty-chat {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    opacity: 0.3;
-  }
-
-  .empty-chat .icon { font-size: 32px; }
-  .empty-chat p { font-size: 12px; letter-spacing: 0.2em; color: var(--textmuted); text-transform: uppercase; }
-
-  .input-area {
-    padding: 16px 24px;
-    border-top: 1px solid var(--border);
-    background: var(--bg2);
-    display: flex;
-    gap: 12px;
-    flex-shrink: 0;
-  }
-
+  /* ÁREA DE INPUT SEM LIMITE */
+  .input-area { padding: 16px 24px; border-top: 1px solid var(--border); background: var(--bg2); display: flex; gap: 12px; }
   #msg-input {
     flex: 1;
-    background: rgba(0,245,255,0.04);
+    background: rgba(188, 19, 254, 0.04);
     border: 1px solid var(--border);
-    border-radius: 2px;
     padding: 12px 16px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 14px;
     color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
     outline: none;
-    transition: all 0.2s;
-    caret-color: var(--cyan);
   }
-
-  #msg-input:focus {
-    border-color: var(--border2);
-    background: rgba(0,245,255,0.07);
-  }
-
-  #msg-input::placeholder { color: var(--textmuted); }
 
   .btn-send {
     padding: 12px 20px;
-    background: transparent;
-    border: 1px solid var(--cyan);
-    border-radius: 2px;
+    background: var(--cyan);
+    border: none;
     font-family: 'Orbitron', monospace;
-    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.2em;
-    color: var(--cyan);
+    color: #000;
     cursor: pointer;
-    transition: all 0.2s;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .btn-send:hover {
-    background: rgba(0,245,255,0.1);
-    box-shadow: 0 0 20px rgba(0,245,255,0.15);
-  }
-  .btn-send:active { transform: scale(0.97); }
-
-  /* ── SCANLINE ANIMATION ── */
-  @keyframes scanlines-move {
-    from { background-position: 0 0; }
-    to { background-position: 0 100%; }
   }
 
   .scanlines {
     position: fixed;
     inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,245,255,0.01) 2px,
-      rgba(0,245,255,0.01) 4px
-    );
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(188, 19, 254, 0.01) 2px, rgba(188, 19, 254, 0.01) 4px);
     pointer-events: none;
     z-index: 999;
-    animation: scanlines-move 8s linear infinite;
   }
 
-  /* ── CORNER DECORATIONS ── */
-  .corner-deco {
-    position: fixed;
-    width: 60px;
-    height: 60px;
-    z-index: 5;
-    pointer-events: none;
-  }
-  .corner-deco.tl { top: 20px; left: 20px; border-top: 1px solid var(--border2); border-left: 1px solid var(--border2); }
-  .corner-deco.tr { top: 20px; right: 20px; border-top: 1px solid var(--border2); border-right: 1px solid var(--border2); }
-  .corner-deco.bl { bottom: 20px; left: 20px; border-bottom: 1px solid var(--border2); border-left: 1px solid var(--border2); }
-  .corner-deco.br { bottom: 20px; right: 20px; border-bottom: 1px solid var(--border2); border-right: 1px solid var(--border2); }
-
-  /* ── STATUS LINE ── */
-  .sys-bar {
-    position: fixed;
-    bottom: 14px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    color: var(--textmuted);
-    letter-spacing: 0.3em;
-    z-index: 5;
-    pointer-events: none;
-    text-transform: uppercase;
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 480px) {
-    .freq-panel { padding: 28px 24px; }
-    #freq-input { font-size: 22px; padding: 14px 16px 14px 48px; }
-    .chat-header { padding: 12px 16px; }
-    .messages-area { padding: 16px; }
-    .input-area { padding: 12px 16px; }
-    .msg-wrap { max-width: 92%; }
-    .corner-deco { display: none; }
-    .sys-bar { display: none; }
-  }
-
-  /* ── NOTIFICATION TOAST ── */
-  .toast {
-    position: fixed;
-    top: 24px;
-    right: 24px;
-    background: var(--bg3);
-    border: 1px solid var(--green);
-    border-radius: 2px;
-    padding: 12px 20px;
-    font-size: 12px;
-    color: var(--green);
-    letter-spacing: 0.15em;
-    z-index: 2000;
-    transform: translateX(120%);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 0 30px rgba(0,255,136,0.15);
-    max-width: 280px;
-  }
+  .toast { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background: var(--bg3); border: 1px solid var(--cyan); color: var(--cyan); transform: translateX(150%); transition: 0.3s; z-index: 2000; }
   .toast.show { transform: translateX(0); }
-  .toast.error-toast { border-color: var(--red); color: var(--red); box-shadow: 0 0 30px rgba(255,51,102,0.15); }
 </style>
 </head>
 <body>
 
 <div class="scanlines"></div>
-<div class="corner-deco tl"></div>
-<div class="corner-deco tr"></div>
-<div class="corner-deco bl"></div>
-<div class="corner-deco br"></div>
-<div class="sys-bar" id="sys-bar">RADIOLINK v1.0 — P2P ENCRYPTED — NO LOGS</div>
 
-<!-- TELA 1: ENTRADA -->
 <div class="screen" id="screen-enter">
   <div class="logo-area">
     <div class="logo-ring">
-      <div class="signal-waves">
-        <span></span><span></span><span></span>
-      </div>
-      <svg viewBox="0 0 120 120" fill="none">
-        <circle cx="60" cy="60" r="56" stroke="rgba(0,245,255,0.2)" stroke-width="1"/>
-        <circle cx="60" cy="60" r="50" stroke="rgba(0,245,255,0.1)" stroke-width="1" stroke-dasharray="4 8"/>
-        <circle cx="60" cy="60" r="44" stroke="rgba(0,245,255,0.15)" stroke-width="1"/>
-        <path d="M20 60 A40 40 0 0 1 100 60" stroke="rgba(0,245,255,0.4)" stroke-width="1.5" fill="none"/>
-        <path d="M30 60 A30 30 0 0 1 90 60" stroke="rgba(0,245,255,0.3)" stroke-width="1" fill="none"/>
-        <circle cx="60" cy="60" r="3" fill="rgba(0,245,255,0.8)"/>
-      </svg>
-      <div class="inner-icon">📡</div>
+      <div class="signal-waves"><span></span><span></span><span></span></div>
+      <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" stroke="rgba(188,19,254,0.3)" fill="none"/></svg>
+      <img src="https://64.media.tumblr.com/a3f87ab649160476b7ccf1133901f631/f3416c2782181375-13/s250x400/5f70efa2ad20e71d66e769d3da6089f522545c23.gifv" class="inner-gif">
     </div>
     <div class="logo-title">RADIOLINK</div>
-    <div class="logo-sub">Frequência Segura · Sem Rastros</div>
+    <div class="logo-sub">Frequência Roxa · Sem Limites</div>
   </div>
 
   <div class="freq-panel">
-    <div class="corner-tl"></div><div class="corner-tr"></div>
-    <div class="corner-bl"></div><div class="corner-br"></div>
-
-    <div class="panel-label">Sintonizar Frequência</div>
-
-    <div class="freq-input-wrap">
-      <span class="freq-prefix">#</span>
-      <input
-        type="text"
-        id="freq-input"
-        maxlength="12"
-        placeholder="000"
-        autocomplete="off"
-        spellcheck="false"
-      >
-    </div>
-
-    <div class="input-hint">Digite o mesmo código nos dois dispositivos</div>
-
-    <button class="btn-connect" id="btn-connect" onclick="connect()">
-      ▶ &nbsp; CONECTAR
-    </button>
-
-    <div class="status-msg" id="status-msg"></div>
+    <input type="text" id="freq-input" placeholder="FREQUÊNCIA" autocomplete="off">
+    <button class="btn-connect" onclick="connect()">SINTONIZAR</button>
+    <div id="status-msg" style="text-align:center; margin-top:10px; font-size:12px;"></div>
   </div>
 </div>
 
-<!-- TELA 2: AGUARDANDO -->
 <div class="screen hidden" id="screen-wait">
-  <div class="broadcast-display">
-    <div class="freq-label">Transmitindo na frequência</div>
-    <div class="freq-display" id="display-freq">—</div>
-    <div class="wait-status">◉ &nbsp; AGUARDANDO CONEXÃO...</div>
-  </div>
-
-  <div class="waveform" id="waveform"></div>
-
-  <div style="text-align:center">
-    <div style="font-size:12px; color:var(--textmuted); letter-spacing:0.2em; margin-bottom:16px">
-      Abra no outro dispositivo e use o mesmo código
+    <div class="logo-ring">
+        <img src="https://64.media.tumblr.com/a3f87ab649160476b7ccf1133901f631/f3416c2782181375-13/s250x400/5f70efa2ad20e71d66e769d3da6089f522545c23.gifv" class="inner-gif" style="width:120px; height:120px;">
     </div>
-    <button class="cancel-btn" onclick="cancelWait()">✕ &nbsp; Cancelar</button>
-  </div>
+    <div style="font-family:'Orbitron'; font-size:40px; color:var(--cyan)" id="display-freq">#000</div>
+    <div style="color:var(--amber); letter-spacing:2px;">AGUARDANDO SINAL...</div>
+    <button onclick="location.reload()" style="background:none; border:none; color:var(--textmuted); cursor:pointer; margin-top:20px;">[ CANCELAR ]</button>
 </div>
 
-<!-- TELA 3: CHAT -->
 <div class="screen hidden" id="screen-chat">
   <div class="chat-header">
-    <div class="chat-header-left">
+    <div style="display:flex; align-items:center; gap:10px;">
       <div class="conn-dot"></div>
-      <div>
-        <div class="chat-freq-label" id="chat-freq-label">#000</div>
-        <div class="chat-status-badge">◉ CONECTADO</div>
-      </div>
+      <span id="chat-freq-label" style="font-family:'Orbitron'; color:var(--cyan)">#000</span>
     </div>
-    <button class="disconnect-btn" onclick="disconnect()">✕ &nbsp; Desconectar</button>
+    <button onclick="location.reload()" style="background:none; border:1px solid var(--border); color:var(--text); padding:5px 10px; cursor:pointer;">SAIR</button>
   </div>
 
-  <div class="messages-area" id="messages-area">
-    <div class="empty-chat" id="empty-chat">
-      <div class="icon">📡</div>
-      <p>Canal aberto — pode falar!</p>
-    </div>
-  </div>
+  <div class="messages-area" id="messages-area"></div>
 
   <div class="input-area">
-    <input
-      type="text"
-      id="msg-input"
-      placeholder="Mensagem..."
-      maxlength="2000"
-      autocomplete="off"
-      onkeydown="if(event.key==='Enter')sendMsg()"
-    >
-    <button class="btn-send" onclick="sendMsg()">ENVIAR ↵</button>
+    <textarea id="msg-input" placeholder="Cole seu código ou mensagem aqui..." rows="1" style="resize:none; height:45px;"></textarea>
+    <button class="btn-send" onclick="sendMsg()">ENVIAR</button>
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════
-//   RADIOLINK — P2P via PeerJS / WebRTC
-// ═══════════════════════════════════════
-
 let peer = null;
 let conn = null;
-let myRole = null;  // 'host' | 'guest'
 let currentFreq = '';
-let msgCount = 0;
 
 const $ = id => document.getElementById(id);
 
-// ── UTILS ──
 function showScreen(id) {
-  ['screen-enter','screen-wait','screen-chat'].forEach(s => {
-    $(s).classList.toggle('hidden', s !== id);
-  });
+  ['screen-enter','screen-wait','screen-chat'].forEach(s => $(s).classList.toggle('hidden', s !== id));
 }
 
-function showToast(msg, isError = false) {
-  const t = $('toast');
-  t.textContent = msg;
-  t.className = 'toast' + (isError ? ' error-toast' : '');
-  void t.offsetWidth;
-  t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove('show'), 3000);
+function showToast(msg) {
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-function setStatus(msg, cls = '') {
-  const s = $('status-msg');
-  s.textContent = msg;
-  s.className = 'status-msg ' + cls;
-}
-
-function buildWaveform() {
-  const wf = $('waveform');
-  wf.innerHTML = '';
-  for (let i = 0; i < 28; i++) {
-    const bar = document.createElement('div');
-    bar.className = 'wave-bar';
-    const minH = 4 + Math.random() * 10;
-    const maxH = 20 + Math.random() * 40;
-    const dur = (0.5 + Math.random() * 0.8).toFixed(2);
-    bar.style.cssText = `--min-h:${minH}px;--max-h:${maxH}px;--d:${dur}s;animation-delay:${(Math.random()*0.5).toFixed(2)}s`;
-    wf.appendChild(bar);
-  }
-}
-
-function formatTime() {
-  const d = new Date();
-  return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
-}
-
-// ── CONNECT ──
 function connect() {
   const raw = $('freq-input').value.trim();
-  if (!raw) { setStatus('Insira um código de frequência', 'error'); return; }
+  if (!raw) return;
   currentFreq = raw.toUpperCase();
+  const peerId = 'radiolink-purple-' + currentFreq;
 
-  const peerId = 'radiolink-freq-' + currentFreq;
-  setStatus('Iniciando...', 'info');
-
-  if (peer) { peer.destroy(); peer = null; }
-
-  // Tenta ser HOST (registrar com o ID da frequência)
-  peer = new Peer(peerId, { debug: 0 });
+  peer = new Peer(peerId);
 
   peer.on('open', () => {
-    // Conseguiu o ID → é o HOST
-    myRole = 'host';
     $('display-freq').textContent = '#' + currentFreq;
-    $('chat-freq-label').textContent = '#' + currentFreq;
-    buildWaveform();
     showScreen('screen-wait');
-
-    // Aguarda conexão do guest
-    peer.on('connection', incomingConn => {
-      conn = incomingConn;
-      setupConnection();
-    });
+    peer.on('connection', c => { conn = c; setup(); });
   });
 
   peer.on('error', err => {
     if (err.type === 'unavailable-id') {
-      // ID já em uso → é o GUEST, conecta ao host
       peer.destroy();
-      peer = null;
-      joinAsGuest(peerId);
-    } else {
-      setStatus('Erro: ' + err.message, 'error');
+      join(peerId);
     }
   });
 }
 
-function joinAsGuest(hostId) {
-  myRole = 'guest';
-  peer = new Peer(undefined, { debug: 0 });
-
+function join(id) {
+  peer = new Peer();
   peer.on('open', () => {
-    setStatus('Conectando...', 'info');
-    conn = peer.connect(hostId, { reliable: true });
-
-    conn.on('open', () => {
-      $('chat-freq-label').textContent = '#' + currentFreq;
-      setupConnection();
-    });
-
-    conn.on('error', e => setStatus('Falha na conexão', 'error'));
+    conn = peer.connect(id);
+    conn.on('open', () => { setup(); });
   });
-
-  peer.on('error', e => setStatus('Erro de rede: ' + e.message, 'error'));
 }
 
-function setupConnection() {
+function setup() {
   showScreen('screen-chat');
-  showToast('▶ Canal aberto!');
-  $('msg-input').focus();
-
-  conn.on('data', data => {
-    appendMsg(data, 'theirs');
-  });
-
-  conn.on('close', () => {
-    showToast('Conexão encerrada', true);
-    appendSystemMsg('— CONEXÃO ENCERRADA —');
-  });
+  $('chat-freq-label').textContent = '#' + currentFreq;
+  showToast("CONEXÃO ESTABELECIDA");
+  conn.on('data', data => appendMsg(data, 'theirs'));
 }
 
-// ── MESSAGING ──
 function sendMsg() {
   const input = $('msg-input');
-  const text = input.value.trim();
-  if (!text || !conn || !conn.open) return;
-
+  const text = input.value;
+  if (!text || !conn) return;
   conn.send(text);
   appendMsg(text, 'mine');
   input.value = '';
-  input.focus();
 }
 
 function appendMsg(text, type) {
   const area = $('messages-area');
-  const empty = $('empty-chat');
-  if (empty) empty.remove();
-
-  msgCount++;
   const wrap = document.createElement('div');
   wrap.className = 'msg-wrap ' + type;
-
-  const meta = document.createElement('div');
-  meta.className = 'msg-meta';
-  meta.textContent = (type === 'mine' ? 'VOCÊ' : 'OUTRO') + ' · ' + formatTime();
-
   const bubble = document.createElement('div');
   bubble.className = 'msg-bubble';
   bubble.textContent = text;
-
-  wrap.appendChild(meta);
   wrap.appendChild(bubble);
   area.appendChild(wrap);
   area.scrollTop = area.scrollHeight;
 }
 
-function appendSystemMsg(text) {
-  const area = $('messages-area');
-  const div = document.createElement('div');
-  div.style.cssText = 'text-align:center;font-size:11px;color:var(--textmuted);letter-spacing:0.2em;padding:8px 0;';
-  div.textContent = text;
-  area.appendChild(div);
-  area.scrollTop = area.scrollHeight;
-}
-
-// ── DISCONNECT / CANCEL ──
-function cancelWait() {
-  if (peer) { peer.destroy(); peer = null; }
-  showScreen('screen-enter');
-  setStatus('');
-}
-
-function disconnect() {
-  if (conn) { conn.close(); conn = null; }
-  if (peer) { peer.destroy(); peer = null; }
-  showScreen('screen-enter');
-  $('messages-area').innerHTML = `
-    <div class="empty-chat" id="empty-chat">
-      <div class="icon">📡</div>
-      <p>Canal aberto — pode falar!</p>
-    </div>`;
-  msgCount = 0;
-}
-
-// ── KEYBOARD ──
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && $('screen-enter') && !$('screen-enter').classList.contains('hidden')) {
-    connect();
-  }
-});
-
-// Focus automático
-window.addEventListener('load', () => {
-  $('freq-input').focus();
-  buildWaveform();
+// Enter para enviar (Shift+Enter para pular linha já que é textarea)
+$('msg-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMsg();
+    }
 });
 </script>
 </body>

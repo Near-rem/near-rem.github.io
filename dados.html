@@ -76,7 +76,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
   box-shadow:0 0 60px rgba(61,232,160,.15);
 }
 
-/* Custom SVG icon – replaces emoji */
 .logo-icon{width:46px;height:46px}
 
 .logo-glow{
@@ -99,7 +98,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
   color:var(--tx2);text-align:center;margin-bottom:40px;text-transform:uppercase;
 }
 
-/* Glass panel */
 .panel{
   width:min(440px,94vw);
   background:linear-gradient(160deg,rgba(21,18,36,.85),rgba(14,12,26,.9));
@@ -108,7 +106,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
   box-shadow:0 0 0 1px rgba(255,255,255,.04) inset,0 32px 80px rgba(0,0,0,.6),0 0 80px rgba(139,109,252,.06);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
 }
-/* top shimmer */
 .panel::before{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,rgba(139,109,252,.5),rgba(61,232,160,.4),transparent);border-radius:50%}
 
 .p-label{
@@ -136,7 +133,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 
 .hint{font-size:11px;color:var(--tx2);text-align:center;margin-bottom:22px;line-height:1.6}
 
-/* 3‑D push button */
 .btn-main{
   width:100%;padding:15px;
   background:linear-gradient(180deg,#9d7dfc,#7553eb);
@@ -164,7 +160,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
   box-shadow:0 24px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.04) inset;
 }
 
-/* GIF with 3D frame */
 .gif-3d{perspective:600px}
 .gif-inner{
   width:180px;height:240px;border-radius:20px;overflow:hidden;
@@ -196,7 +191,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .w-dot{width:6px;height:6px;border-radius:50%;background:var(--am);box-shadow:0 0 8px var(--am);animation:dot-blink 1.3s ease-in-out infinite}
 @keyframes dot-blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.25;transform:scale(.7)}}
 
-/* Waveform */
 .wave{display:flex;align-items:center;gap:3px;height:38px}
 .wb{width:4px;background:linear-gradient(to top,rgba(139,109,252,.25),rgba(139,109,252,.8));border-radius:2px;animation:wb-dance var(--d,.8s) ease-in-out infinite alternate}
 @keyframes wb-dance{from{height:var(--mn,6px);opacity:.3}to{height:var(--mx,28px);opacity:1}}
@@ -231,7 +225,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .btn-disc{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--tx2);background:none;border:1px solid var(--b0);border-radius:9px;cursor:pointer;padding:7px 14px;transition:all .2s;text-transform:uppercase}
 .btn-disc:hover{color:var(--ro);border-color:rgba(247,126,177,.3)}
 
-/* Messages */
 .msgs{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:4px;scrollbar-width:thin;scrollbar-color:var(--b0) transparent}
 .msgs::-webkit-scrollbar{width:3px}
 .msgs::-webkit-scrollbar-thumb{background:var(--b1);border-radius:2px}
@@ -240,7 +233,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .empty svg{width:40px;height:40px;opacity:.6}
 .empty p{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--tx2);text-transform:uppercase}
 
-/* Bubble */
 .mw{display:flex;flex-direction:column;max-width:74%;animation:bubble-in .22s cubic-bezier(.34,1.56,.64,1)}
 @keyframes bubble-in{from{opacity:0;transform:scale(.85) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .mw.me  {align-self:flex-end;align-items:flex-end}
@@ -262,7 +254,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .mw.me   .mtime{color:rgba(176,154,255,.35)}
 .mw.them .mtime{color:rgba(61,232,160,.3)}
 
-/* Copy button */
 .copy-btn{
   position:absolute;top:6px;right:8px;
   width:22px;height:22px;border-radius:6px;
@@ -277,10 +268,8 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .copy-btn.copied{background:rgba(61,232,160,.2);border-color:rgba(61,232,160,.3)}
 .copy-btn.copied svg{stroke:var(--m)}
 
-/* System msg */
 .sys-m{text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3);letter-spacing:.2em;padding:8px 0;text-transform:uppercase}
 
-/* Input */
 .inp-area{
   padding:12px 14px;border-top:1px solid var(--b0);flex-shrink:0;
   display:flex;gap:10px;align-items:center;
@@ -305,14 +294,12 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .btn-send:hover{transform:scale(1.07);box-shadow:0 5px 18px rgba(109,77,232,.6)}
 .btn-send:active{transform:scale(.93)}
 
-/* Corner decos */
 .cdeco{position:fixed;width:48px;height:48px;z-index:5;pointer-events:none}
 .cdeco.tl{top:16px;left:16px;border-top:1px solid var(--b1);border-left:1px solid var(--b1);border-radius:6px 0 0 0}
 .cdeco.tr{top:16px;right:16px;border-top:1px solid var(--b1);border-right:1px solid var(--b1);border-radius:0 6px 0 0}
 .cdeco.bl{bottom:16px;left:16px;border-bottom:1px solid var(--b1);border-left:1px solid var(--b1);border-radius:0 0 0 6px}
 .cdeco.br{bottom:16px;right:16px;border-bottom:1px solid var(--b1);border-right:1px solid var(--b1);border-radius:0 0 6px 0}
 
-/* Toast */
 .toast{
   position:fixed;top:18px;right:18px;
   background:rgba(21,18,36,.95);border:1px solid rgba(139,109,252,.3);border-radius:14px;
@@ -324,7 +311,6 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 .toast.on{transform:translateX(0)}
 .toast.err{border-color:rgba(247,126,177,.3);color:var(--ro)}
 
-/* Responsive */
 @media(max-width:520px){
   .panel{padding:26px 22px}
   #freq-input{font-size:20px}
@@ -338,14 +324,12 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
 <body>
 
 <canvas id="bgc"></canvas>
-
 <div class="cdeco tl"></div>
 <div class="cdeco tr"></div>
 <div class="cdeco bl"></div>
 <div class="cdeco br"></div>
 
 <div class="screen" id="s-enter">
-
   <div class="logo-scene">
     <div class="logo-card">
       <div class="logo-glow"></div>
@@ -355,297 +339,175 @@ html,body{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:
           <circle cx="23" cy="23" r="7" fill="rgba(139,109,252,.35)" stroke="rgba(176,154,255,.6)" stroke-width="1.5"/>
           <circle cx="23" cy="23" r="3" fill="#b09aff"/>
           <path d="M9 23 Q16 14 23 14 Q30 14 37 23 Q30 32 23 32 Q16 32 9 23Z" stroke="rgba(139,109,252,.4)" stroke-width="1" fill="none"/>
-          <circle cx="26" cy="20" r="2" fill="rgba(255,255,255,.5)"/>
         </svg>
       </div>
       <div class="logo-face back">
         <svg class="logo-icon" viewBox="0 0 46 46" fill="none">
           <rect x="10" y="14" width="26" height="20" rx="5" stroke="rgba(61,232,160,.5)" stroke-width="1.5" fill="none"/>
           <path d="M17 22h12M17 27h8" stroke="rgba(61,232,160,.6)" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="32" cy="14" r="5" fill="rgba(139,109,252,.6)" stroke="rgba(176,154,255,.5)" stroke-width="1"/>
-          <circle cx="32" cy="14" r="2" fill="#d4caff"/>
         </svg>
       </div>
     </div>
   </div>
-
   <div class="logo-title">Chat Rem</div>
   <div class="logo-sub">P2P · Sem rastros · Efêmero</div>
-
   <div class="panel">
     <div class="p-label">Chave de acesso</div>
-    <div class="key-wrap">
-      <span class="key-hash">#</span>
-      <input type="text" id="freq-input" placeholder="sua‑chave" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')doConnect()">
-    </div>
+    <div class="key-wrap"><span class="key-hash">#</span><input type="text" id="freq-input" placeholder="sua‑chave" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')doConnect()"></div>
     <div class="hint">Use a mesma chave nos dois dispositivos para abrir um canal</div>
     <button class="btn-main" onclick="doConnect()">▶ &nbsp;Conectar</button>
     <div class="st" id="st"></div>
   </div>
-
 </div>
 
 <div class="screen hidden" id="s-wait">
   <div class="wait-card">
-    <div class="gif-3d">
-      <div class="gif-inner">
-        <img src="https://64.media.tumblr.com/a3f87ab649160476b7ccf1133901f631/f3416c2782181375-13/s250x400/5f70efa2ad20e71d66e769d3da6089f522545c23.gifv" alt="">
-      </div>
-    </div>
+    <div class="gif-3d"><div class="gif-inner"><img src="https://64.media.tumblr.com/a3f87ab649160476b7ccf1133901f631/f3416c2782181375-13/s250x400/5f70efa2ad20e71d66e769d3da6089f522545c23.gifv" alt=""></div></div>
     <div class="wait-info">
       <div class="w-lbl">Canal aberto</div>
       <div class="w-code" id="w-code">—</div>
-      <div class="w-status">
-        <div class="w-dot"></div>
-        Aguardando...
-      </div>
+      <div class="w-status"><div class="w-dot"></div>Aguardando...</div>
     </div>
   </div>
   <div class="wave" id="wave"></div>
   <div style="text-align:center">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2);letter-spacing:.12em;margin-bottom:14px">
-      Abra o site em outro dispositivo com a mesma chave
-    </div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2);letter-spacing:.12em;margin-bottom:14px">Abra o site em outro dispositivo com a mesma chave</div>
     <button class="btn-ghost" onclick="doCancel()">✕ &nbsp;Cancelar</button>
   </div>
 </div>
 
 <div class="screen hidden" id="s-chat">
-
   <div class="chat-hdr">
     <div class="hdr-l">
-      <div class="hdr-av">
-        <svg viewBox="0 0 20 20" fill="none">
-          <circle cx="10" cy="10" r="8" stroke="rgba(176,154,255,.6)" stroke-width="1"/>
-          <circle cx="10" cy="10" r="3" fill="rgba(139,109,252,.5)" stroke="rgba(176,154,255,.8)" stroke-width="1"/>
-          <circle cx="10" cy="10" r="1.2" fill="#d4caff"/>
-        </svg>
-      </div>
-      <div>
-        <div class="hdr-name" id="hdr-name">#—</div>
-        <div class="hdr-status">● Online</div>
-      </div>
+      <div class="hdr-av"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="rgba(176,154,255,.6)" stroke-width="1"/><circle cx="10" cy="10" r="3" fill="rgba(139,109,252,.5)" stroke="rgba(176,154,255,.8)" stroke-width="1"/></svg></div>
+      <div><div class="hdr-name" id="hdr-name">#—</div><div class="hdr-status">● Online</div></div>
     </div>
     <button class="btn-disc" onclick="doDisc()">✕ Sair</button>
   </div>
-
   <div class="msgs" id="msgs">
     <div class="empty" id="empty">
-      <svg viewBox="0 0 40 40" fill="none">
-        <circle cx="20" cy="20" r="17" stroke="currentColor" stroke-width="1"/>
-        <path d="M12 20 Q20 12 28 20 Q20 28 12 20Z" stroke="currentColor" stroke-width="1" fill="none"/>
-        <circle cx="20" cy="20" r="3" fill="currentColor"/>
-      </svg>
+      <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke="currentColor" stroke-width="1"/><path d="M12 20 Q20 12 28 20 Q20 28 12 20Z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
       <p>Mensagens não são salvas</p>
     </div>
   </div>
-
   <div class="inp-area">
     <textarea id="msg-in" rows="1" placeholder="Mensagem..." onkeydown="onKey(event)" oninput="autoGrow(this)"></textarea>
-    <button class="btn-send" onclick="doSend()" title="Enviar">
-      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-    </button>
+    <button class="btn-send" onclick="doSend()"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
   </div>
-
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-/* ── PARTICLE CANVAS ── */
+/* ── CANVAS ── */
 (function(){
-  const c=document.getElementById('bgc');
-  const ctx=c.getContext('2d');
+  const c=document.getElementById('bgc'),ctx=c.getContext('2d');
   let W,H,pts=[];
   const resize=()=>{W=c.width=innerWidth;H=c.height=innerHeight;};
   resize();addEventListener('resize',resize);
-  const PAL=['rgba(139,109,252,','rgba(61,232,160,','rgba(247,126,177,'];
   class Pt{
     constructor(){this.reset()}
-    reset(){
-      this.x=Math.random()*W;this.y=Math.random()*H;
-      this.r=.4+Math.random()*1.2;
-      this.vx=(Math.random()-.5)*.25;this.vy=(Math.random()-.5)*.25;
-      this.a=Math.random();this.da=.004+Math.random()*.006;
-      this.col=PAL[Math.floor(Math.random()*PAL.length)];
-      this.phase=Math.random()*Math.PI*2;
-    }
-    tick(t){
-      this.x+=this.vx;this.y+=this.vy;
-      this.a=.15+.35*(.5+.5*Math.sin(t*.0008+this.phase));
-      if(this.x<-10||this.x>W+10||this.y<-10||this.y>H+10)this.reset();
-    }
-    draw(){
-      ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
-      ctx.fillStyle=this.col+this.a+')';ctx.fill();
-    }
-  }
-  const blobs=[
-    {x:.15,y:.2,r:300,c:'rgba(139,109,252,'},
-    {x:.82,y:.75,r:260,c:'rgba(61,232,160,'},
-    {x:.5,y:.5,r:200,c:'rgba(79,70,229,'},
-  ];
-  function drawBlobs(){
-    blobs.forEach(b=>{
-      const g=ctx.createRadialGradient(b.x*W,b.y*H,0,b.x*W,b.y*H,b.r);
-      g.addColorStop(0,b.c+'.055)');g.addColorStop(1,b.c+'0)');
-      ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    });
+    reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=.4+Math.random()*1.2;this.vx=(Math.random()-.5)*.25;this.vy=(Math.random()-.5)*.25;this.a=Math.random();this.phase=Math.random()*Math.PI*2;this.col=['rgba(139,109,252,','rgba(61,232,160,'][Math.floor(Math.random()*2)];}
+    tick(t){this.x+=this.vx;this.y+=this.vy;this.a=.15+.35*(.5+.5*Math.sin(t*.0008+this.phase));if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();}
+    draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=this.col+this.a+')';ctx.fill();}
   }
   for(let i=0;i<55;i++)pts.push(new Pt());
-  function draw(t){
-    ctx.clearRect(0,0,W,H);
-    drawBlobs();
-    ctx.strokeStyle='rgba(139,109,252,.022)';ctx.lineWidth=1;
-    const g=48;
-    for(let x=0;x<W;x+=g){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
-    for(let y=0;y<H;y+=g){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-    pts.forEach(p=>{p.tick(t);p.draw()});
-    for(let i=0;i<pts.length;i++){
-      for(let j=i+1;j<pts.length;j++){
-        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<80){
-          ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
-          ctx.strokeStyle='rgba(139,109,252,'+((.08*(1-dist/80)))+')';ctx.lineWidth=.5;ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(draw);
-  }
+  function draw(t){ctx.clearRect(0,0,W,H);pts.forEach(p=>{p.tick(t);p.draw()});requestAnimationFrame(draw);}
   requestAnimationFrame(draw);
 })();
 
 /* ── APP LOGIC ── */
-let peer=null,conn=null,myFreq='';
+let peer=null,conn=null,myFreq='', chunks = {};
 const $=id=>document.getElementById(id);
+const CHUNK_SIZE = 16384; // 16KB per packet
 
-function show(id){
-  ['s-enter','s-wait','s-chat'].forEach(s=>$(s).classList.toggle('hidden',s!==id));
-}
-
-function toast(msg,err=false){
-  const t=$('toast');t.textContent=msg;
-  t.className='toast'+(err?' err':'');
-  void t.offsetWidth;t.classList.add('on');
-  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),3400);
-}
-
+function show(id){['s-enter','s-wait','s-chat'].forEach(s=>$(s).classList.toggle('hidden',s!==id));}
+function toast(msg,err=false){const t=$('toast');t.textContent=msg;t.className='toast'+(err?' err':'');void t.offsetWidth;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3400);}
 function st(msg,cls=''){const s=$('st');s.textContent=msg;s.className='st '+cls;}
 
-function buildWave(){
-  const w=$('wave');w.innerHTML='';
-  for(let i=0;i<28;i++){
-    const b=document.createElement('div');b.className='wb';
-    b.style.cssText=`--mn:${3+Math.random()*7}px;--mx:${12+Math.random()*26}px;--d:${(.45+Math.random()*.85).toFixed(2)}s;animation-delay:${(Math.random()*.7).toFixed(2)}s`;
-    w.appendChild(b);
-  }
-}
-
-const ts=()=>{const d=new Date();return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');}
-
-/* ── CONNECT ── */
 function doConnect(){
   const raw=$('freq-input').value.trim();
   if(!raw){st('Insira uma chave','err');return;}
   myFreq=raw.toUpperCase();
   const pid='chatrem-'+myFreq;
   st('Conectando...','info');
-  if(peer){try{peer.destroy()}catch(e){} peer=null;}
+  if(peer)peer.destroy();
   peer=new Peer(pid,{debug:0});
   peer.on('open',()=>{
-    $('w-code').textContent='#'+myFreq;
-    $('hdr-name').textContent='#'+myFreq;
-    buildWave();show('s-wait');
-    peer.on('connection',inc=>{
-        conn=inc;
-        // Ajuste aqui para garantir estabilidade
-        conn.serialization = 'json';
-        setup();
-    });
+    $('w-code').textContent='#'+myFreq;$('hdr-name').textContent='#'+myFreq;show('s-wait');
+    peer.on('connection',inc=>{conn=inc;setup();});
   });
   peer.on('error',err=>{
-    if(err.type==='unavailable-id'){
-      try{peer.destroy()}catch(e){}peer=null;
-      asGuest(pid);
-    } else {
-      st('Erro: '+err.message,'err');
-    }
+    if(err.type==='unavailable-id'){peer.destroy();asGuest(pid);}
+    else st('Erro: '+err.message,'err');
   });
 }
 
 function asGuest(hid){
   peer=new Peer(undefined,{debug:0});
   peer.on('open',()=>{
-    st('Entrando...','info');
-    // Forçamos reliable: true para mensagens longas
-    conn=peer.connect(hid,{reliable:true,serialization:'json'});
+    conn=peer.connect(hid,{reliable:true});
     conn.on('open',()=>{$('hdr-name').textContent='#'+myFreq;setup();});
-    conn.on('error',()=>st('Falha — verifique a chave','err'));
-  });
-  peer.on('error',e=>{
-    if(e.type==='peer-unavailable'){st('Ninguém nessa chave ainda','err');}
-    else st('Erro de rede','err');
   });
 }
 
 function setup(){
-  show('s-chat');toast('Canal aberto!');
-  setTimeout(()=>$('msg-in').focus(),200);
-  conn.on('data',d=>addMsg(typeof d==='string'?d:String(d),'them'));
-  conn.on('close',()=>{toast('Conexão encerrada',true);sysmsg('— CANAL FECHADO —');});
-  conn.on('error',()=>{toast('Erro na conexão',true);sysmsg('— ERRO —');});
+  show('s-chat');
+  conn.on('data', data => {
+    // Sistema de reconstrução de mensagens longas
+    if (data.__chunked) {
+      if (!chunks[data.id]) chunks[data.id] = [];
+      chunks[data.id][data.index] = data.chunk;
+      if (chunks[data.id].length === data.total) {
+        const fullMsg = chunks[data.id].join('');
+        delete chunks[data.id];
+        addMsg(fullMsg, 'them');
+      }
+    } else {
+      addMsg(data, 'them');
+    }
+  });
 }
 
-/* ── MSG ── */
 function doSend(){
-  const inp=$('msg-in'),t=inp.value.trim();
-  if(!t)return;
-  if(!conn||!conn.open){toast('Sem conexão',true);return;}
-  conn.send(t);addMsg(t,'me');
+  const inp=$('msg-in'), text=inp.value.trim();
+  if(!text || !conn || !conn.open) return;
+
+  const msgId = Math.random().toString(36).substr(2, 9);
+  
+  if (text.length > CHUNK_SIZE) {
+    const numChunks = Math.ceil(text.length / CHUNK_SIZE);
+    for (let i = 0; i < numChunks; i++) {
+      const chunk = text.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
+      conn.send({
+        __chunked: true,
+        id: msgId,
+        index: i,
+        total: numChunks,
+        chunk: chunk
+      });
+    }
+  } else {
+    conn.send(text);
+  }
+
+  addMsg(text, 'me');
   inp.value='';inp.style.height='';inp.focus();
 }
 
 function addMsg(text,side){
-  const area=$('msgs'),emp=$('empty');
-  if(emp)emp.remove();
+  const area=$('msgs'),emp=$('empty'); if(emp)emp.remove();
   const wrap=document.createElement('div');wrap.className='mw '+side;
-  const meta=document.createElement('div');meta.className='mmeta';
-  meta.textContent=side==='me'?'Você':'Outro';
-  const bub=document.createElement('div');bub.className='bubble';
-  bub.textContent=text;
-  const cp=document.createElement('button');cp.className='copy-btn';cp.title='Copiar';
-  cp.innerHTML='<svg viewBox="0 0 12 12"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke-width="1.2"/><path d="M1 8V2a1 1 0 011-1h6" stroke-width="1.2" stroke-linecap="round"/></svg>';
-  cp.onclick=e=>{
-    e.stopPropagation();
-    navigator.clipboard.writeText(text).then(()=>{
-      cp.classList.add('copied');
-      setTimeout(()=>cp.classList.remove('copied'),1400);
-    });
-  };
-  bub.appendChild(cp);
-  const tm=document.createElement('div');tm.className='mtime';tm.textContent=ts();
-  wrap.appendChild(meta);wrap.appendChild(bub);wrap.appendChild(tm);
-  area.appendChild(wrap);
+  const bub=document.createElement('div');bub.className='bubble';bub.textContent=text;
+  const tm=document.createElement('div');tm.className='mtime';tm.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  wrap.appendChild(bub);wrap.appendChild(tm);area.appendChild(wrap);
   area.scrollTop=area.scrollHeight;
 }
 
-function sysmsg(t){
-  const area=$('msgs'),d=document.createElement('div');
-  d.className='sys-m';d.textContent=t;area.appendChild(d);area.scrollTop=area.scrollHeight;
-}
-
-function doCancel(){if(peer){try{peer.destroy()}catch(e){}peer=null;}show('s-enter');st('');}
-function doDisc(){
-  if(conn){try{conn.close()}catch(e){}}
-  if(peer){try{peer.destroy()}catch(e){}}
-  conn=null;peer=null;
-  $('msgs').innerHTML='<div class="empty" id="empty"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke="currentColor" stroke-width="1"/><path d="M12 20 Q20 12 28 20 Q20 28 12 20Z" stroke="currentColor" stroke-width="1" fill="none"/><circle cx="20" cy="20" r="3" fill="currentColor"/></svg><p>Mensagens não são salvas</p></div>';
-  show('s-enter');
-}
-
+function doCancel(){if(peer)peer.destroy();show('s-enter');}
+function doDisc(){if(peer)peer.destroy();location.reload();}
 function autoGrow(el){el.style.height='';el.style.height=Math.min(el.scrollHeight,120)+'px';}
 function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSend();}}
-
 window.addEventListener('load',()=>$('freq-input').focus());
 </script>
 </body>

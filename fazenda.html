@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minha Fazendinha</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #e0f2f1; display: flex; flex-direction: column; align-items: center; }
+        #game-container { background: #8d6e63; padding: 20px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .grid { display: grid; grid-template-columns: repeat(3, 100px); gap: 10px; }
+        .slot { width: 100px; height: 100px; background: #6d4c41; border: 2px solid #5d4037; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 40px; transition: 0.3s; }
+        .slot:hover { background: #5d4037; }
+        .status { margin-bottom: 20px; font-size: 24px; color: #2e7d32; font-weight: bold; }
+        .info { margin-top: 15px; color: #fff; font-size: 14px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="status">💰 Moedas: <span id="money">0</span></div>
+
+    <div id="game-container">
+        <div class="grid" id="farm-grid">
+            <div class="slot" onclick="interact(0)"></div>
+            <div class="slot" onclick="interact(1)"></div>
+            <div class="slot" onclick="interact(2)"></div>
+            <div class="slot" onclick="interact(3)"></div>
+            <div class="slot" onclick="interact(4)"></div>
+            <div class="slot" onclick="interact(5)"></div>
+            <div class="slot" onclick="interact(6)"></div>
+            <div class="slot" onclick="interact(7)"></div>
+            <div class="slot" onclick="interact(8)"></div>
+        </div>
+        <div class="info">Clique na terra para plantar café! ☕</div>
+    </div>
+
+    <script>
+        let money = 0;
+        const slots = document.querySelectorAll('.slot');
+        const farmState = Array(9).fill(null); // null = vazio, 'growing' = crescendo, 'ready' = pronto
+
+        function interact(index) {
+            const slot = slots[index];
+            
+            if (!farmState[index]) {
+                // PLANTA
+                farmState[index] = 'growing';
+                slot.innerText = '🌱';
+                
+                // Simula crescimento (3 segundos)
+                setTimeout(() => {
+                    farmState[index] = 'ready';
+                    slot.innerText = '☕';
+                }, 3000);
+                
+            } else if (farmState[index] === 'ready') {
+                // COLHE
+                farmState[index] = null;
+                slot.innerText = '';
+                money += 10;
+                document.getElementById('money').innerText = money;
+                
+                // Efeito rápido de feedback
+                slot.style.background = '#aed581';
+                setTimeout(() => slot.style.background = '#6d4c41', 200);
+            }
+        }
+    </script>
+</body>
+</html>

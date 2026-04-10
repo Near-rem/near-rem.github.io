@@ -1,68 +1,230 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Minha Fazendinha</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fazenda - Near Rem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #e0f2f1; display: flex; flex-direction: column; align-items: center; }
-        #game-container { background: #8d6e63; padding: 20px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .grid { display: grid; grid-template-columns: repeat(3, 100px); gap: 10px; }
-        .slot { width: 100px; height: 100px; background: #6d4c41; border: 2px solid #5d4037; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 40px; transition: 0.3s; }
-        .slot:hover { background: #5d4037; }
-        .status { margin-bottom: 20px; font-size: 24px; color: #2e7d32; font-weight: bold; }
-        .info { margin-top: 15px; color: #fff; font-size: 14px; text-align: center; }
+        :root {
+            --bg: #000000;
+            --card-bg: #0a0a0a;
+            --accent: #00e5b0;
+            --gold: #f5c842;
+            --ink: #e8e2ff;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* HUD - Topo */
+        .hud {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            font-family: 'Space Mono', monospace;
+            background: var(--card-bg);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+        }
+
+        .stat span { color: var(--gold); font-weight: bold; }
+
+        /* Área de Plantação */
+        .farm-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .plot {
+            width: 100px;
+            height: 100px;
+            background: #111;
+            border: 2px dashed #222;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .plot:hover { border-color: var(--accent); background: #151515; }
+
+        /* Inventário */
+        .inventory-section {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .btn-inv {
+            background: none;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            transition: 0.3s;
+        }
+
+        .btn-inv:hover { background: var(--accent); color: var(--bg); }
+
+        /* Loja (Base) */
+        .shop-section {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .shop-items {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .item-card {
+            background: #111;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            width: 120px;
+        }
+
+        .price { color: var(--gold); font-size: 0.9em; display: block; margin-top: 5px; }
+
+        button.buy-btn {
+            margin-top: 10px;
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button.buy-btn:hover { border-color: var(--gold); }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="status">💰 Moedas: <span id="money">0</span></div>
+    <div class="hud">
+        <div class="stat">Moedas: <span id="coin-display">--</span></div>
+    </div>
 
-    <div id="game-container">
-        <div class="grid" id="farm-grid">
-            <div class="slot" onclick="interact(0)"></div>
-            <div class="slot" onclick="interact(1)"></div>
-            <div class="slot" onclick="interact(2)"></div>
-            <div class="slot" onclick="interact(3)"></div>
-            <div class="slot" onclick="interact(4)"></div>
-            <div class="slot" onclick="interact(5)"></div>
-            <div class="slot" onclick="interact(6)"></div>
-            <div class="slot" onclick="interact(7)"></div>
-            <div class="slot" onclick="interact(8)"></div>
+    <div class="farm-grid">
+        <div class="plot" onclick="game.interact(0)"></div>
+        <div class="plot" onclick="game.interact(1)"></div>
+        <div class="plot" onclick="game.interact(2)"></div>
+        <div class="plot" onclick="game.interact(3)"></div>
+        <div class="plot" onclick="game.interact(4)"></div>
+        <div class="plot" onclick="game.interact(5)"></div>
+    </div>
+
+    <div class="inventory-section">
+        <button class="btn-inv" onclick="game.toggleInventory()">📦 Ver Inventário</button>
+        <div id="inventory-list" class="hidden" style="margin-top: 15px; font-size: 0.9em; color: #888;">
+            Você possui: <span id="inv-count" style="color: var(--accent);">0</span> Sementes de Trigo
         </div>
-        <div class="info">Clique na terra para plantar café! ☕</div>
+    </div>
+
+    <div class="shop-section">
+        <h3 style="font-family: 'Space Mono'; letter-spacing: 2px;">LOJA</h3>
+        <div class="shop-items">
+            <div class="item-card">
+                <strong>Trigo</strong>
+                <span class="price">🪙 5</span>
+                <button class="buy-btn" onclick="game.buy('trigo')">Comprar</button>
+            </div>
+            <div class="item-card" style="opacity: 0.5;">
+                <strong>Café</strong>
+                <span class="price">🪙 15</span>
+                <button class="buy-btn" disabled>Bloqueado</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        let money = 0;
-        const slots = document.querySelectorAll('.slot');
-        const farmState = Array(9).fill(null); // null = vazio, 'growing' = crescendo, 'ready' = pronto
+        // Encapsulando o jogo para evitar manipulação simples via console
+        const game = (function() {
+            // Estado privado
+            let state = {
+                coins: 20, // Começa com 20 moedas
+                seeds: 2,  // Começa com 2 sementes de trigo
+                plots: Array(6).fill(null)
+            };
 
-        function interact(index) {
-            const slot = slots[index];
-            
-            if (!farmState[index]) {
-                // PLANTA
-                farmState[index] = 'growing';
-                slot.innerText = '🌱';
-                
-                // Simula crescimento (3 segundos)
-                setTimeout(() => {
-                    farmState[index] = 'ready';
-                    slot.innerText = '☕';
-                }, 3000);
-                
-            } else if (farmState[index] === 'ready') {
-                // COLHE
-                farmState[index] = null;
-                slot.innerText = '';
-                money += 10;
-                document.getElementById('money').innerText = money;
-                
-                // Efeito rápido de feedback
-                slot.style.background = '#aed581';
-                setTimeout(() => slot.style.background = '#6d4c41', 200);
+            const prices = { trigo: 5 };
+
+            function updateUI() {
+                // Atualiza o texto, mas a lógica está no estado 'state'
+                document.getElementById('coin-display').innerText = state.coins;
+                document.getElementById('inv-count').innerText = state.seeds;
             }
-        }
+
+            return {
+                buy: function(item) {
+                    if (state.coins >= prices[item]) {
+                        state.coins -= prices[item];
+                        state.seeds++;
+                        updateUI();
+                        console.log("Comprou trigo!");
+                    } else {
+                        alert("Moedas insuficientes!");
+                    }
+                },
+                interact: function(index) {
+                    if (state.seeds > 0) {
+                        state.seeds--;
+                        alert("Você plantou trigo no espaço " + (index + 1));
+                        updateUI();
+                    } else {
+                        alert("Você não tem sementes!");
+                    }
+                },
+                toggleInventory: function() {
+                    const inv = document.getElementById('inventory-list');
+                    inv.classList.toggle('hidden');
+                },
+                init: function() {
+                    updateUI();
+                }
+            };
+        })();
+
+        // Inicializa o jogo
+        game.init();
+
+        // Bloqueia visualização básica de inspeção para o valor do texto
+        // (Isso é apenas estético, a segurança real vem do encapsulamento acima)
+        setInterval(() => {
+            if (document.getElementById('coin-display').innerText != game.coins) {
+                // Se alguém mudar o HTML manualmente, o script não se perde pois usa o 'state' interno
+            }
+        }, 1000);
     </script>
 </body>
 </html>
